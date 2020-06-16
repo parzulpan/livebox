@@ -4,14 +4,14 @@
 
 @Author    : parzulpan
 
-@Summary   : 请输入该文件所实现的功能描述
+@Summary   : 信息搜索功能
 
 @Attention : 
 """
 
 import sys
 
-from PyQt5.QtWidgets import QWidget, QHBoxLayout, QVBoxLayout, QLabel, QComboBox, QLineEdit, QPushButton, QApplication,\
+from PyQt5.QtWidgets import QHBoxLayout, QVBoxLayout, QLabel, QComboBox, QLineEdit, QPushButton, QApplication,\
     QDialog
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt
@@ -46,11 +46,15 @@ class SearchWidget(QDialog):
 
         self.search_result_label = QLabel('搜索结果: ')
         self.live_result_line_edit = QLineEdit()
+        self.live_result_line_edit.setReadOnly(True)
         self.copy_live_btn = QPushButton('复制直播源')
+        self.copy_live_btn.setDisabled(True)
         self.copy_live_btn.clicked.connect(self.answer_copy_live_btn_clicked)
         self.watch_live_btn = QPushButton('在线观看')
+        self.watch_live_btn.setDisabled(True)
         self.watch_live_btn.clicked.connect(self.answer_watch_live_btn_clicked)
         self.clean_btn = QPushButton('信息清空')
+        self.clean_btn.clicked.connect(self.answer_clean_btn_clicked)
 
         self.init_ui()
 
@@ -129,8 +133,20 @@ class SearchWidget(QDialog):
         :return:
         """
         content = self.search_content_line_edit.text()
-        result = get_real_url_from_platform_content(self.platform_combobox.currentIndex(), content)
-        self.live_result_line_edit.setText(result)
+        if content:
+            result = get_real_url_from_platform_content(self.platform_combobox.currentIndex(), content)
+            if 'http' in result:
+                self.live_result_line_edit.setText(result)
+                self.copy_live_btn.setDisabled(False)
+                self.watch_live_btn.setDisabled(False)
+            else:
+                self.copy_live_btn.setDisabled(True)
+                self.watch_live_btn.setDisabled(True)
+                # TODO: 弹出提示框
+                pass
+        else:
+            # TODO: 弹出提示框
+            pass
 
     def answer_copy_live_btn_clicked(self):
         """
@@ -140,20 +156,26 @@ class SearchWidget(QDialog):
         clipboard = QApplication.clipboard()
         clipboard.setText(self.live_result_line_edit.text())
         # original_text = clipboard.text()
+        # TODO: 弹出提示框
 
     def answer_watch_live_btn_clicked(self):
         """
 
         :return:
         """
-        pass
+        self.close()
 
     def answer_clean_btn_clicked(self):
         """
 
         :return:
         """
-        pass
+        self.platform_combobox.setCurrentIndex(0)
+        self.search_type_combobox.setCurrentIndex(0)
+        self.search_content_line_edit.clear()
+        self.live_result_line_edit.clear()
+        self.copy_live_btn.setDisabled(True)
+        self.watch_live_btn.setDisabled(True)
 
 
 if __name__ == '__main__':

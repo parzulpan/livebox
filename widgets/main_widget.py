@@ -8,12 +8,13 @@
 import sys
 
 from PyQt5.QtWidgets import QMainWindow, QApplication, QMenuBar, QMenu, QAction, QDesktopWidget, QVBoxLayout
-from PyQt5.QtGui import QKeySequence, QIcon
-from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QKeySequence, QIcon, QDesktopServices
+from PyQt5.QtCore import Qt, QSize, QUrl
 
 from util.common import get_window_center_point
 from widgets.search_widget import SearchWidget
 from widgets.live_widget import LiveWidget
+from widgets.about_widget import AboutWidget
 
 
 class MainWindow(QMainWindow):
@@ -30,10 +31,12 @@ class MainWindow(QMainWindow):
         self.open_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_O))
         self.search_action = QAction("搜索(F)", self.file_menu)
         self.search_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_F))
+        self.search_action.triggered.connect(self.show_search_widget)
         self.close_action = QAction("关闭(C)", self.file_menu)
         self.close_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_C))
         self.quit_action = QAction("退出(Q)", self.file_menu)
         self.quit_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_Q))
+        self.quit_action.triggered.connect(lambda: sys.exit())
 
         self.enhance_menu = QMenu("增强(&E)", self.menu_bar)
         self.skin_action = QAction("换肤(S)", self.enhance_menu)
@@ -41,18 +44,46 @@ class MainWindow(QMainWindow):
         self.hide_action = QAction("隐藏(V)", self.enhance_menu)
         self.hide_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_V))
 
+        self.plugin_menu = QMenu("插件(&P)", self.menu_bar)
+        self.screenshot_action = QAction("截图(J)", self.plugin_menu)
+        self.screenshot_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_J))
+
         self.help_menu = QMenu("帮助(&H)", self.menu_bar)
         self.help_action = QAction("帮助文档(H)", self.help_menu)
         self.help_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_H))
+        self.help_action.triggered.connect(self.answer_help_action_triggered)
         self.about_action = QAction("关于软件(A)", self.help_menu)
         self.about_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_A))
+        self.about_action.triggered.connect(self.answer_about_action_triggered)
 
         self.tool_bar = self.addToolBar("tool_bar")
+        self.tool_bar.setIconSize(QSize(32, 32))
+        self.tool_bar.setStyleSheet("QToolBar{spacing:5px; }")
         self.search_tool_action = QAction("", self.tool_bar)
-        self.search_tool_action.setToolTip("搜索")
+        self.search_tool_action.setToolTip("信息搜索")
         self.search_tool_action.setIcon(QIcon("./resources/img/search@128x128.png"))
         self.search_widget = SearchWidget()
         self.search_tool_action.triggered.connect(self.show_search_widget)
+
+        self.attention_tool_action = QAction("", self.tool_bar)
+        self.attention_tool_action.setToolTip("历史关注")
+        self.attention_tool_action.setIcon(QIcon("./resources/img/attention@128x128.png"))
+        self.attention_tool_action.triggered.connect(self.show_search_widget)
+
+        self.pure_tool_action = QAction("", self.tool_bar)
+        self.pure_tool_action.setToolTip("纯净模式")
+        self.pure_tool_action.setIcon(QIcon("./resources/img/pure@128x128.png"))
+        self.pure_tool_action.triggered.connect(self.show_search_widget)
+
+        self.nlp_tool_action = QAction("", self.tool_bar)
+        self.nlp_tool_action.setToolTip("智能字幕")
+        self.nlp_tool_action.setIcon(QIcon("./resources/img/nlp@128x128.png"))
+        self.nlp_tool_action.triggered.connect(self.show_search_widget)
+
+        self.note_tool_action = QAction("", self.tool_bar)
+        self.note_tool_action.setToolTip("边看边记")
+        self.note_tool_action.setIcon(QIcon("./resources/img/note@128x128.png"))
+        self.note_tool_action.triggered.connect(self.show_search_widget)
 
         self.live_widget = LiveWidget()
 
@@ -72,17 +103,27 @@ class MainWindow(QMainWindow):
         self.file_menu.addAction(self.quit_action)
         self.enhance_menu.addAction(self.skin_action)
         self.enhance_menu.addAction(self.hide_action)
+        self.plugin_menu.addAction(self.screenshot_action)
         self.help_menu.addAction(self.help_action)
         self.help_menu.addAction(self.about_action)
 
         self.menu_bar.addMenu(self.file_menu)
         self.menu_bar.addMenu(self.enhance_menu)
+        self.menu_bar.addMenu(self.plugin_menu)
         self.menu_bar.addMenu(self.help_menu)
 
         self.setMenuBar(self.menu_bar)
 
         # 工具栏
         self.tool_bar.addAction(self.search_tool_action)
+        self.tool_bar.addSeparator()
+        self.tool_bar.addAction(self.attention_tool_action)
+        self.tool_bar.addSeparator()
+        self.tool_bar.addAction(self.pure_tool_action)
+        self.tool_bar.addSeparator()
+        self.tool_bar.addAction(self.nlp_tool_action)
+        self.tool_bar.addSeparator()
+        self.tool_bar.addAction(self.note_tool_action)
         self.tool_bar.addSeparator()
 
         # 显示区域
@@ -109,6 +150,26 @@ class MainWindow(QMainWindow):
         width, height = get_window_center_point(self.search_widget)
         self.search_widget.move(width, height)
         self.search_widget.exec_()
+
+    @staticmethod
+    def answer_help_action_triggered():
+        """
+
+        :return:
+        """
+        desktop_services = QDesktopServices()
+        desktop_services.openUrl(QUrl("https://github.com/parzulpan/real-live"))
+
+    @staticmethod
+    def answer_about_action_triggered():
+        """
+
+        :return:
+        """
+        about_widget = AboutWidget()
+        width, height = get_window_center_point(about_widget)
+        about_widget.move(width, height)
+        about_widget.exec_()
 
 
 if __name__ == '__main__':
