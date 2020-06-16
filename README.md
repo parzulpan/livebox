@@ -48,4 +48,10 @@ Pycharm 2020、Python 3、PyQt 5.12
 感谢以上开源项目和资源！
 
 ## 许可
-[MIT License](./LICENSE)
+[GPL-3.0](./LICENSE)
+
+本项目遵循GNU General Public License v3.0，如果要修改源码进行二次开发需要遵守以下协议：
+1. 如果要在网络上分发，那么必须开源
+2. 不能以盈利为目的，不能插入任何形式的广告
+3. 注明原项目出处
+4. 继承相同协议
