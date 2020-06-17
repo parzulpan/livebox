@@ -7,8 +7,7 @@
 
 import sys
 
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QPushButton, QApplication
-from PyQt5.QtGui import QPixmap
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QPushButton, QApplication
 
 from widgets.vlc_widget import VLCWidget
 
@@ -28,14 +27,13 @@ class LiveWidget(QWidget):
         self.vlc_btn = QPushButton('VLC播放')
         self.vlc_widget = VLCWidget()
 
-        self.live_null_label = QLabel()
         self.player_widget = QWidget()
         self.player_layout = QVBoxLayout()
         self._layout = QVBoxLayout()
 
         self.set_player_widget()
 
-        # self.init_ui()
+        self.init_ui()
 
     def init_ui(self):
         """
@@ -52,6 +50,8 @@ class LiveWidget(QWidget):
         main_layout.setSpacing(0)
         main_layout.addLayout(self.player_layout)
         self.setLayout(main_layout)
+
+        self.setStyleSheet("background-image:url(./resources/img/live_null.png); ")
 
     def clear_layout(self):
         """
@@ -70,11 +70,11 @@ class LiveWidget(QWidget):
         :return:
         """
         if visible:
-            self.live_null_label.setVisible(False)
-            self.vlc_widget.setVisible(True)
+            # self.vlc_widget.setVisible(True)
+            self.vlc_widget.show()
         else:
-            self.live_null_label.setVisible(True)
-            self.vlc_widget.setVisible(False)
+            # self.vlc_widget.setVisible(False)
+            self.vlc_widget.hide()
 
     def set_player_widget(self, widget=False):
         """
@@ -86,16 +86,14 @@ class LiveWidget(QWidget):
 
         # self.clear_layout()
 
-        self.live_null_label.setPixmap(QPixmap("./resources/img/live_null.png"))
         self._layout.setContentsMargins(0, 0, 0, 0)
         self._layout.setSpacing(0)
+
         self._layout.addWidget(self.vlc_widget)
-        self._layout.addWidget(self.live_null_label)
 
         self.set_widget_visible(widget)
 
         self.player_widget.setLayout(self._layout)
-        self.init_ui()
 
 
 if __name__ == '__main__':

@@ -7,8 +7,8 @@
 
 from PyQt5.QtWidgets import QHBoxLayout, QVBoxLayout, QLabel, QComboBox, QLineEdit, QPushButton, QApplication,\
     QDialog
-from PyQt5.QtGui import QIcon, QPixmap
-from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QIcon, QPixmap, QDesktopServices
+from PyQt5.QtCore import Qt, QUrl
 
 
 class AboutWidget(QDialog):
@@ -35,7 +35,7 @@ class AboutWidget(QDialog):
 
         self.link_label = QLabel("链接：")
         self.link_content_label = QLabel("https://github.com/parzulpan/real-live")
-        self.copy_link_btn = QPushButton('复制该链接')
+        self.copy_link_btn = QPushButton('访问该链接')
         self.copy_link_btn.clicked.connect(self.answer_copy_link_btn_clicked)
 
         self.star_label = QLabel("如果觉得本项目不错，可以给个★鼓励哦(●ˇ∀ˇ●)")
@@ -105,12 +105,14 @@ class AboutWidget(QDialog):
         self.setWindowIcon(QIcon('./resources/img/about@64x64.png'))
         self.setWindowFlags(Qt.WindowCloseButtonHint)
 
-    def answer_copy_link_btn_clicked(self):
+    @staticmethod
+    def answer_copy_link_btn_clicked():
         """
 
         :return:
         """
-        clipboard = QApplication.clipboard()
-        clipboard.setText(self.link_content_label.text())
-        # original_text = clipboard.text()
-        # TODO: 弹出提示框
+        # clipboard = QApplication.clipboard()
+        # clipboard.setText(self.link_content_label.text())
+        # # original_text = clipboard.text()
+        desktop_services = QDesktopServices()
+        desktop_services.openUrl(QUrl("https://github.com/parzulpan/real-live"))

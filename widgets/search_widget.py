@@ -17,6 +17,7 @@ from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt, pyqtSignal
 
 from util.get_real_url import get_real_url_from_platform_content
+from util.common import PromptBox, get_window_center_point
 
 
 class SearchWidget(QDialog):
@@ -145,11 +146,15 @@ class SearchWidget(QDialog):
             else:
                 self.copy_live_btn.setDisabled(True)
                 self.watch_live_btn.setDisabled(True)
-                # TODO: 弹出提示框
-                pass
+                _box = PromptBox(2, "直播间未开播或不存在!", 1)
+                width, height = get_window_center_point(_box)
+                _box.move(width, height)
+                _box.exec_()
         else:
-            # TODO: 弹出提示框
-            pass
+            _box = PromptBox(3, "输入内容不能为空!", 1)
+            width, height = get_window_center_point(_box)
+            _box.move(width, height)
+            _box.exec_()
 
     def answer_copy_live_btn_clicked(self):
         """
@@ -159,7 +164,10 @@ class SearchWidget(QDialog):
         clipboard = QApplication.clipboard()
         clipboard.setText(self.live_result_line_edit.text())
         # original_text = clipboard.text()
-        # TODO: 弹出提示框
+        _box = PromptBox(0, "已复制直播源到剪切板!", 1)
+        width, height = get_window_center_point(_box)
+        _box.move(width, height)
+        _box.exec_()
 
     def answer_watch_live_btn_clicked(self):
         """

@@ -6,6 +6,7 @@
 # @Attention  :
 
 import sys
+from ctypes import windll, WinDLL, cdll, CDLL
 
 from PyQt5.QtWidgets import QMainWindow, QApplication, QMenuBar, QMenu, QAction, QDesktopWidget, QVBoxLayout
 from PyQt5.QtGui import QKeySequence, QIcon, QDesktopServices
@@ -44,10 +45,13 @@ class MainWindow(QMainWindow):
         self.skin_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_S))
         self.hide_action = QAction("隐藏(V)", self.enhance_menu)
         self.hide_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_V))
+        self.hide_action.setCheckable(True)
+        self.hide_action.triggered.connect(self.answer_hide_action_triggered)
 
         self.plugin_menu = QMenu("插件(&P)", self.menu_bar)
         self.screenshot_action = QAction("截图(J)", self.plugin_menu)
         self.screenshot_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_J))
+        self.screenshot_action.triggered.connect(self.answer_screenshot_action_triggered)
 
         self.help_menu = QMenu("帮助(&H)", self.menu_bar)
         self.help_action = QAction("帮助文档(H)", self.help_menu)
@@ -189,6 +193,29 @@ class MainWindow(QMainWindow):
         """
         self.live_widget.set_player_widget(False)
         self.live_widget.vlc_widget.play_url()
+
+    def answer_hide_action_triggered(self, checked):
+        """
+
+        :param checked:
+        :return:
+        """
+        if checked:
+            self.tool_bar.hide()
+        else:
+            self.tool_bar.show()
+
+    @staticmethod
+    def answer_screenshot_action_triggered():
+        """
+
+        :return:
+        """
+        # dll = windll.LoadLibrary('./bin/OEScreenshot.dll')
+        # dll = WinDLL('./bin/OEScreenshot.dll')
+        # dll = cdll.LoadLibrary('./bin/OEScreenshot.dll')
+        dll = CDLL('./bin/OEScreenshot.dll')
+        print(dll)
 
 
 if __name__ == '__main__':

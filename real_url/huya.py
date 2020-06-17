@@ -21,6 +21,7 @@ def get_real_url(room_id):
                 return '直播录像：' + liveLineUrl
             else:
                 real_url = ["https:" + re.sub(r'_\d{4}.m3u8', '.m3u8', liveLineUrl), "https:" + liveLineUrl]
+                real_url = real_url[0]
         else:
             real_url = '未开播或直播间不存在'
     except:
