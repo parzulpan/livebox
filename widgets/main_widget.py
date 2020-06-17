@@ -192,7 +192,7 @@ class MainWindow(QMainWindow):
         :return:
         """
         self.live_widget.set_player_widget(False)
-        self.live_widget.vlc_widget.play_url()
+        self.live_widget.vlc_widget.release()
 
     def answer_hide_action_triggered(self, checked):
         """
