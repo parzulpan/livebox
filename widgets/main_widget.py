@@ -34,6 +34,7 @@ class MainWindow(QMainWindow):
         self.search_action.triggered.connect(self.show_search_widget)
         self.close_action = QAction("关闭(C)", self.file_menu)
         self.close_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_C))
+        self.close_action.triggered.connect(self.answer_close_action_triggered)
         self.quit_action = QAction("退出(Q)", self.file_menu)
         self.quit_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_Q))
         self.quit_action.triggered.connect(lambda: sys.exit())
@@ -64,6 +65,7 @@ class MainWindow(QMainWindow):
         self.search_tool_action.setIcon(QIcon("./resources/img/search@128x128.png"))
         self.search_widget = SearchWidget()
         self.search_tool_action.triggered.connect(self.show_search_widget)
+        self.search_widget.watch_live_signal.connect(self.answer_watch_live_signal)
 
         self.attention_tool_action = QAction("", self.tool_bar)
         self.attention_tool_action.setToolTip("历史关注")
@@ -170,6 +172,23 @@ class MainWindow(QMainWindow):
         width, height = get_window_center_point(about_widget)
         about_widget.move(width, height)
         about_widget.exec_()
+
+    def answer_watch_live_signal(self, url):
+        """
+
+        :param url:
+        :return:
+        """
+        self.live_widget.set_player_widget(True)
+        self.live_widget.vlc_widget.play_url(url)
+
+    def answer_close_action_triggered(self):
+        """
+
+        :return:
+        """
+        self.live_widget.set_player_widget(False)
+        self.live_widget.vlc_widget.play_url()
 
 
 if __name__ == '__main__':

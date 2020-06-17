@@ -14,7 +14,7 @@ import sys
 from PyQt5.QtWidgets import QHBoxLayout, QVBoxLayout, QLabel, QComboBox, QLineEdit, QPushButton, QApplication,\
     QDialog
 from PyQt5.QtGui import QIcon
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, pyqtSignal
 
 from util.get_real_url import get_real_url_from_platform_content
 
@@ -23,6 +23,9 @@ class SearchWidget(QDialog):
     """
 
     """
+    watch_live_signal = pyqtSignal(str)
+    """在线观看"""
+
     def __init__(self):
         super(SearchWidget, self).__init__()
         self.platform_label = QLabel('直播平台: ')
@@ -164,6 +167,7 @@ class SearchWidget(QDialog):
         :return:
         """
         self.close()
+        self.watch_live_signal.emit(self.live_result_line_edit.text())
 
     def answer_clean_btn_clicked(self):
         """
