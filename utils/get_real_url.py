@@ -1,11 +1,15 @@
 # -*- coding: utf-8 -*-
-# @Date       : 6/15/2020 
-# @Author     : parzulpan
-# @Email      : parzulpan@gmail.com
-# @Description: 请输入此文件的功能描述
-# @Attention  :
+"""
+@Author    : parzulpan
 
-from util.live_enum import LiveEnum
+@Email     : parzulpan@gmail.com
+
+@Summary   : 请输入该文件所实现的功能描述
+
+@Attention :
+"""
+
+from utils.live_enum import LiveEnum
 import real_url.douyu as Douyu
 import real_url.huya as Huya
 import real_url.bilibili as Bilibili

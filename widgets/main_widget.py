@@ -1,18 +1,24 @@
 # -*- coding: utf-8 -*-
-# @Date       : 6/15/2020 
-# @Author     : parzulpan
-# @Email      : parzulpan@gmail.com
-# @Description: 请输入此文件的功能描述
-# @Attention  :
+"""
+@Author    : parzulpan
+
+@Email     : parzulpan@gmail.com
+
+@Summary   : 请输入该文件所实现的功能描述
+
+@Attention :
+"""
 
 import sys
 from ctypes import windll, WinDLL, cdll, CDLL
 
-from PyQt5.QtWidgets import QMainWindow, QApplication, QMenuBar, QMenu, QAction, QDesktopWidget, QVBoxLayout
-from PyQt5.QtGui import QKeySequence, QIcon, QDesktopServices
-from PyQt5.QtCore import Qt, QSize, QUrl
+from PyQt5.QtWidgets import QMainWindow, QApplication, QMenuBar, QMenu, QAction, QDesktopWidget, QVBoxLayout, qApp, \
+    QToolBar, QActionGroup
+from PyQt5.QtGui import QKeySequence, QIcon, QDesktopServices, QPalette, QColor
+from PyQt5.QtCore import Qt, QSize, QUrl, QFile
 
-from util.common import get_window_center_point
+from utils.common import get_window_center_point
+from utils.crud_cfg import *
 from widgets.search_widget import SearchWidget
 from widgets.live_widget import LiveWidget
 from widgets.about_widget import AboutWidget
@@ -40,30 +46,69 @@ class MainWindow(QMainWindow):
         self.quit_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_Q))
         self.quit_action.triggered.connect(lambda: sys.exit())
 
+        self.play_menu = QMenu("播放(&L)", self.menu_bar)
+        self.play_action = QAction("播放(P)", self.play_menu)
+        self.stop_action = QAction("停止(S)", self.play_menu)
+        self.pause_action = QAction("暂停(P)", self.play_menu)
+        self.resume_action = QAction("恢复(R)", self.play_menu)
+        self.rate_action = QAction("倍速(R)", self.play_menu)
+        self.jump_action = QAction("跳转(J)", self.play_menu)
+        self.mute_action = QAction("静音(M)", self.play_menu)
+        self.volume_up_action = QAction("增大音量(U)", self.play_menu)
+        self.volume_down_action = QAction("减小音量(D)", self.play_menu)
+
         self.enhance_menu = QMenu("增强(&E)", self.menu_bar)
-        self.skin_action = QAction("换肤(S)", self.enhance_menu)
-        self.skin_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_S))
+        self.skin_menu = QMenu("换肤", self.enhance_menu)
+        self.dark_skin_action = QAction("暗黑模式", self.skin_menu)
+        self.dark_skin_action.setCheckable(True)
+        self.dark_skin_action.triggered.connect(self.answer_dark_skin_action_triggered)
+        self.white_skin_action = QAction("纯白模式", self.skin_menu)
+        self.white_skin_action.setCheckable(True)
+        self.white_skin_action.triggered.connect(self.answer_white_skin_action_triggered)
+        self.blue_skin_action = QAction("浅蓝模式", self.skin_menu)
+        self.blue_skin_action.setCheckable(True)
+        self.blue_skin_action.triggered.connect(self.answer_blue_skin_action_triggered)
+        self.skin_action_group = QActionGroup(self)
+        self.skin_action_group.addAction(self.dark_skin_action)
+        self.skin_action_group.addAction(self.white_skin_action)
+        self.skin_action_group.addAction(self.blue_skin_action)
+        self.language_action = QAction("语言(L)", self.enhance_menu)
+        self.language_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_S))
+        self.font_action = QAction("字体(F)", self.enhance_menu)
+        self.font_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_S))
         self.hide_action = QAction("隐藏(V)", self.enhance_menu)
         self.hide_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_V))
         self.hide_action.setCheckable(True)
         self.hide_action.triggered.connect(self.answer_hide_action_triggered)
 
-        self.plugin_menu = QMenu("插件(&P)", self.menu_bar)
-        self.screenshot_action = QAction("截图(J)", self.plugin_menu)
+        self.tool_menu = QMenu("工具(&T)", self.menu_bar)
+        self.screenshot_action = QAction("截图(J)", self.tool_menu)
         self.screenshot_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_J))
         self.screenshot_action.triggered.connect(self.answer_screenshot_action_triggered)
+        self.gif_action = QAction("动图(G)", self.tool_menu)
+        self.gif_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_G))
+        self.gif_action.triggered.connect(self.answer_gif_action_triggered)
+        self.screen_record_action = QAction("录屏(L)", self.tool_menu)
+        self.screen_record_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_L))
+        self.screen_record_action.triggered.connect(self.answer_screen_record_action_triggered)
 
         self.help_menu = QMenu("帮助(&H)", self.menu_bar)
         self.help_action = QAction("帮助文档(H)", self.help_menu)
         self.help_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_H))
         self.help_action.triggered.connect(self.answer_help_action_triggered)
+        self.update_action = QAction("更新日志(U)", self.help_menu)
+        self.update_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_U))
+        self.update_action.triggered.connect(self.answer_help_action_triggered)
         self.about_action = QAction("关于软件(A)", self.help_menu)
         self.about_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_A))
         self.about_action.triggered.connect(self.answer_about_action_triggered)
 
-        self.tool_bar = self.addToolBar("tool_bar")
+        self.tool_bar = QToolBar()
+        self.tool_bar.setFloatable(False)
+        self.tool_bar.setMovable(True)
         self.tool_bar.setIconSize(QSize(32, 32))
-        self.tool_bar.setStyleSheet("QToolBar{spacing:5px; }")
+        # self.tool_bar.setStyleSheet("QToolBar{border: 1px solid #313335; spacing:5px; }")
+        self.addToolBar(Qt.TopToolBarArea, self.tool_bar)
         self.search_tool_action = QAction("", self.tool_bar)
         self.search_tool_action.setToolTip("信息搜索")
         self.search_tool_action.setIcon(QIcon("./resources/img/search@128x128.png"))
@@ -94,7 +139,7 @@ class MainWindow(QMainWindow):
         self.live_widget = LiveWidget()
 
         self.init_ui()
-        self.set_window_info()
+        self._init_cfg()
 
     def init_ui(self):
         """
@@ -107,15 +152,42 @@ class MainWindow(QMainWindow):
         self.file_menu.addSeparator()
         self.file_menu.addAction(self.close_action)
         self.file_menu.addAction(self.quit_action)
-        self.enhance_menu.addAction(self.skin_action)
+
+        self.play_menu.addAction(self.play_action)
+        self.play_menu.addAction(self.stop_action)
+        self.play_menu.addAction(self.pause_action)
+        self.play_menu.addAction(self.resume_action)
+        self.play_menu.addSeparator()
+        self.play_menu.addAction(self.rate_action)
+        self.play_menu.addAction(self.jump_action)
+        self.play_menu.addSeparator()
+        self.play_menu.addAction(self.mute_action)
+        self.play_menu.addAction(self.volume_up_action)
+        self.play_menu.addAction(self.volume_down_action)
+
+        self.enhance_menu.addMenu(self.skin_menu)
+        self.skin_menu.addAction(self.dark_skin_action)
+        self.skin_menu.addAction(self.white_skin_action)
+        self.skin_menu.addAction(self.blue_skin_action)
+        self.enhance_menu.addAction(self.language_action)
+        self.enhance_menu.addAction(self.font_action)
+        self.enhance_menu.addSeparator()
         self.enhance_menu.addAction(self.hide_action)
-        self.plugin_menu.addAction(self.screenshot_action)
+
+        self.tool_menu.addAction(self.screenshot_action)
+        self.tool_menu.addAction(self.gif_action)
+        self.tool_menu.addAction(self.screen_record_action)
+        self.tool_menu.addSeparator()
+
         self.help_menu.addAction(self.help_action)
+        self.help_menu.addAction(self.update_action)
+        self.help_menu.addSeparator()
         self.help_menu.addAction(self.about_action)
 
         self.menu_bar.addMenu(self.file_menu)
+        self.menu_bar.addMenu(self.play_menu)
         self.menu_bar.addMenu(self.enhance_menu)
-        self.menu_bar.addMenu(self.plugin_menu)
+        self.menu_bar.addMenu(self.tool_menu)
         self.menu_bar.addMenu(self.help_menu)
 
         self.setMenuBar(self.menu_bar)
@@ -135,6 +207,37 @@ class MainWindow(QMainWindow):
         # 显示区域
         self.setCentralWidget(self.live_widget)
 
+        self.set_window_info()
+
+    def _init_cfg(self):
+        """
+
+        :return:
+        """
+        # 工具栏可见性
+        visible = retrieve_content("preferences", "tool_bar_visible")
+        if visible == "True":
+            self.hide_action.setChecked(False)
+            self.hide_action.triggered.emit(False)
+        else:
+            self.hide_action.setChecked(True)
+            self.hide_action.triggered.emit(True)
+
+        # 工具栏位置
+        position = retrieve_content("preferences", "tool_bar_position")
+
+        # 皮肤设置
+        skin = retrieve_content("preferences", "skin")
+        if skin == "dark":
+            self.dark_skin_action.setChecked(True)
+            self.dark_skin_action.triggered.emit()
+        elif skin == "white":
+            self.white_skin_action.setChecked(True)
+            self.white_skin_action.triggered.emit()
+        else:
+            self.blue_skin_action.setChecked(True)
+            self.blue_skin_action.triggered.emit()
+
     def set_window_info(self):
         """
 
@@ -142,9 +245,10 @@ class MainWindow(QMainWindow):
         """
         desktop_widget = QDesktopWidget()
         screen_rect = desktop_widget.screenGeometry()
-        print(screen_rect.width(), screen_rect.height())
         self.setGeometry(screen_rect)
-        self.setWindowTitle("网络直播观看平台 V1.0.0")
+        title = retrieve_content("software_info", "software_name") + " " + retrieve_content("software_info",
+                                                                                            "software_version")
+        self.setWindowTitle(title)
         self.setWindowIcon(QIcon('./resources/img/logo@48x48.png'))
         self.showMaximized()
 
@@ -184,6 +288,7 @@ class MainWindow(QMainWindow):
         :return:
         """
         self.live_widget.set_player_widget(True)
+        self.live_widget.vlc_widget.get_player()
         self.live_widget.vlc_widget.play_url(url)
 
     def answer_close_action_triggered(self):
@@ -192,7 +297,7 @@ class MainWindow(QMainWindow):
         :return:
         """
         self.live_widget.set_player_widget(False)
-        self.live_widget.vlc_widget.release()
+        self.live_widget.vlc_widget.release_player()
 
     def answer_hide_action_triggered(self, checked):
         """
@@ -202,8 +307,28 @@ class MainWindow(QMainWindow):
         """
         if checked:
             self.tool_bar.hide()
+            update_contents("preferences", "tool_bar_visible", "False")
         else:
             self.tool_bar.show()
+            update_contents("preferences", "tool_bar_visible", "True")
+
+    def answer_tool_bar_top_level_changed(self, area):
+        """
+
+        :return:
+        """
+        print("top_level_changed")
+        print(area)
+        if self.tool_bar.allowedAreas() == Qt.LeftToolBarArea:
+            print("LeftToolBarArea")
+        elif self.tool_bar.allowedAreas() == Qt.RightToolBarArea:
+            print("RightToolBarArea")
+        elif self.tool_bar.allowedAreas() == Qt.BottomToolBarArea:
+            print("BottomToolBarArea")
+        elif self.tool_bar.allowedAreas() == Qt.TopToolBarArea:
+            print("TopToolBarArea")
+        else:
+            print("else")
 
     @staticmethod
     def answer_screenshot_action_triggered():
@@ -214,8 +339,58 @@ class MainWindow(QMainWindow):
         # dll = windll.LoadLibrary('./bin/OEScreenshot.dll')
         # dll = WinDLL('./bin/OEScreenshot.dll')
         # dll = cdll.LoadLibrary('./bin/OEScreenshot.dll')
-        dll = CDLL('./bin/OEScreenshot.dll')
+        dll = CDLL('./bin/screenshot/OEScreenshot.dll')
         print(dll)
+
+    def answer_gif_action_triggered(self):
+        """
+
+        :return:
+        """
+        pass
+
+    def answer_screen_record_action_triggered(self):
+        """
+
+        :return:
+        """
+        pass
+
+    @staticmethod
+    def answer_dark_skin_action_triggered(checked):
+        """
+
+        :param checked:
+        :return:
+        """
+        with open("./resources/qss/dark.qss", "r", encoding="utf-8") as f:
+            qss = f.read()
+            qApp.setStyleSheet(qss)
+        update_contents("preferences", "skin", "dark")
+
+    @staticmethod
+    def answer_white_skin_action_triggered(checked):
+        """
+
+        :param checked:
+        :return:
+        """
+        with open("./resources/qss/white.qss", "r", encoding="utf-8") as f:
+            qss = f.read()
+            qApp.setStyleSheet(qss)
+        update_contents("preferences", "skin", "white")
+
+    @staticmethod
+    def answer_blue_skin_action_triggered(checked):
+        """
+
+        :param checked:
+        :return:
+        """
+        with open("./resources/qss/blue.qss", "r", encoding="utf-8") as f:
+            qss = f.read()
+            qApp.setStyleSheet(qss)
+        update_contents("preferences", "skin", "blue")
 
 
 if __name__ == '__main__':

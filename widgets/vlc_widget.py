@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*-
-# @Date       : 6/15/2020 
-# @Author     : parzulpan
-# @Email      : parzulpan@gmail.com
-# @Description: 请输入此文件的功能描述
-# @Attention  :
+"""
+@Author    : parzulpan
+
+@Email     : parzulpan@gmail.com
+
+@Summary   : 请输入该文件所实现的功能描述
+
+@Attention :
+"""
 
 import sys
 import os
@@ -24,6 +28,25 @@ class VLCWidget(QWidget):
 
     def __init__(self, *args):
         super(VLCWidget, self).__init__()
+
+        self.media_player = None
+        self.instance = None
+        self.get_player(args)
+        self._init_ui()
+
+    def _init_ui(self):
+        """
+
+        :return:
+        """
+        pass
+
+    def get_player(self, *args):
+        """
+
+        :param args:
+        :return:
+        """
         if args:
             self.instance = vlc.Instance(*args)
             self.media_player = self.instance.media_player_new()
@@ -35,14 +58,12 @@ class VLCWidget(QWidget):
         else:
             self.media_player.set_xwindow(self.winId())
 
-        self._init_ui()
-
-    def _init_ui(self):
-        """
+    def release_player(self):
+        """ 释放资源
 
         :return:
         """
-        pass
+        return self.media_player.release_player()
 
     def play_url(self, url=None):
         """
@@ -59,7 +80,8 @@ class VLCWidget(QWidget):
             else:
                 pass
         except Exception as e:
-            print('Exception {0}'.format(e))
+            print('[play_url exception] {0}'.format(e))
+            return False
 
     def pause(self):
         """ 暂停
@@ -81,13 +103,6 @@ class VLCWidget(QWidget):
         :return:
         """
         self.media_player.stop()
-
-    def release(self):
-        """ 释放资源
-
-        :return:
-        """
-        return self.media_player.release()
 
     def is_playing(self):
         """ 是否正在播放

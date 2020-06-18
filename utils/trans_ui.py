@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 """
-@Time      : 2020/6/16
-
 @Author    : parzulpan
 
-@Summary   : 通过Python脚本把.ui文件转换为.py文件
+@Email     : parzulpan@gmail.com
 
-@Attention : 
+@Summary   : 请输入该文件所实现的功能描述
+
+@Attention :
 """
 
 import os

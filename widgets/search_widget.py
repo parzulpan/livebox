@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 """
-@Time      : 2020/6/16
-
 @Author    : parzulpan
 
-@Summary   : 信息搜索功能
+@Email     : parzulpan@gmail.com
 
-@Attention : 
+@Summary   : 请输入该文件所实现的功能描述
+
+@Attention :
 """
 
 import sys
@@ -16,8 +16,8 @@ from PyQt5.QtWidgets import QHBoxLayout, QVBoxLayout, QLabel, QComboBox, QLineEd
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt, pyqtSignal
 
-from util.get_real_url import get_real_url_from_platform_content
-from util.common import PromptBox, get_window_center_point
+from utils.get_real_url import get_real_url_from_platform_content
+from utils.common import PromptBox, get_window_center_point
 
 
 class SearchWidget(QDialog):

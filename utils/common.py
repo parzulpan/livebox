@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 """
-@Time      : 2020/6/16
-
 @Author    : parzulpan
 
-@Summary   : 通用功能
+@Email     : parzulpan@gmail.com
 
-@Attention : 
+@Summary   : 请输入该文件所实现的功能描述
+
+@Attention :
 """
 
 from PyQt5.QtWidgets import QDesktopWidget, QDialog, QLabel, QPushButton, QHBoxLayout, QVBoxLayout
