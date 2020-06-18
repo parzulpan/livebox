@@ -63,7 +63,7 @@ class VLCWidget(QWidget):
 
         :return:
         """
-        return self.media_player.release_player()
+        return self.media_player.release()
 
     def play_url(self, url=None):
         """

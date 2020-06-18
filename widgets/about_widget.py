@@ -14,6 +14,8 @@ from PyQt5.QtWidgets import QHBoxLayout, QVBoxLayout, QLabel, QComboBox, QLineEd
 from PyQt5.QtGui import QIcon, QPixmap, QDesktopServices
 from PyQt5.QtCore import Qt, QUrl
 
+from utils.crud_cfg import *
+
 
 class AboutWidget(QDialog):
     """
@@ -24,13 +26,15 @@ class AboutWidget(QDialog):
 
         self.logo_label = QLabel()
         self.logo_label.setPixmap(QPixmap('./resources/img/logo@64x64.png'))
-        self.logo_content_label = QLabel('网络直播观看平台 V1.0.0')
+        title = retrieve_content("software_info", "software_name") + " " + retrieve_content("software_info",
+                                                                                            "software_version")
+        self.logo_content_label = QLabel(title)
 
         self.h_line = QLabel('------------------------------------------------------------------------')
 
         self.intro_label = QLabel('简介：')
         self.intro_content_label = QLabel(
-            'real-live是一个网络直播观看平台，它支持当前几十种主流的直播平台，\n'
+            'real-live是一个网络直播聚合平台，它支持当前几十种主流的直播平台，\n'
             '通过选择直播平台和输入查询信息即可获取直播平台的直播源，可以选择在本平台上在线观看，\n'
             '或者将直播源复制到PotPlayer、VLC等播放器中观看。')
 

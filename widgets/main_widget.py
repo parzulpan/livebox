@@ -268,7 +268,7 @@ class MainWindow(QMainWindow):
         :return:
         """
         desktop_services = QDesktopServices()
-        desktop_services.openUrl(QUrl("https://github.com/parzulpan/real-live"))
+        desktop_services.openUrl(QUrl("https://github.com/parzulpan/real-live/blob/master/resources/ChangeLog.md"))
 
     @staticmethod
     def answer_about_action_triggered():
@@ -297,6 +297,7 @@ class MainWindow(QMainWindow):
         :return:
         """
         self.live_widget.set_player_widget(False)
+        self.live_widget.vlc_widget.get_player()
         self.live_widget.vlc_widget.release_player()
 
     def answer_hide_action_triggered(self, checked):
