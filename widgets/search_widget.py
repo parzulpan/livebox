@@ -139,6 +139,7 @@ class SearchWidget(QDialog):
         content = self.search_content_line_edit.text()
         if content:
             result = get_real_url_from_platform_content(self.platform_combobox.currentIndex(), content)
+            print("search result: ", result)
             if 'http' in result:
                 self.live_result_line_edit.setText(result)
                 self.copy_live_btn.setDisabled(False)

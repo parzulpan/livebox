@@ -133,22 +133,22 @@ class MainWindow(QMainWindow):
         self.attention_tool_action = QAction("", self.tool_bar)
         self.attention_tool_action.setToolTip("历史关注")
         self.attention_tool_action.setIcon(QIcon("./resources/img/attention@128x128.png"))
-        self.attention_tool_action.triggered.connect(self.show_search_widget)
+        # self.attention_tool_action.triggered.connect(self.show_search_widget)
 
         self.pure_tool_action = QAction("", self.tool_bar)
         self.pure_tool_action.setToolTip("纯净模式")
         self.pure_tool_action.setIcon(QIcon("./resources/img/pure@128x128.png"))
-        self.pure_tool_action.triggered.connect(self.show_search_widget)
+        # self.pure_tool_action.triggered.connect(self.show_search_widget)
 
         self.nlp_tool_action = QAction("", self.tool_bar)
         self.nlp_tool_action.setToolTip("智能字幕")
         self.nlp_tool_action.setIcon(QIcon("./resources/img/nlp@128x128.png"))
-        self.nlp_tool_action.triggered.connect(self.show_search_widget)
+        # self.nlp_tool_action.triggered.connect(self.show_search_widget)
 
         self.note_tool_action = QAction("", self.tool_bar)
         self.note_tool_action.setToolTip("边看边记")
         self.note_tool_action.setIcon(QIcon("./resources/img/note@128x128.png"))
-        self.note_tool_action.triggered.connect(self.show_search_widget)
+        # self.note_tool_action.triggered.connect(self.show_search_widget)
 
         self.live_widget = LiveWidget()
 
@@ -334,9 +334,9 @@ class MainWindow(QMainWindow):
         :param url:
         :return:
         """
-        self.live_widget.set_player_widget(True)
-        self.live_widget.vlc_widget.get_player()
+        # self.live_widget.vlc_widget.get_player()
         self.live_widget.vlc_widget.play_url(url)
+        self.live_widget.set_player_widget(True)
 
     def answer_close_action_triggered(self):
         """
@@ -344,8 +344,9 @@ class MainWindow(QMainWindow):
         :return:
         """
         self.live_widget.set_player_widget(False)
-        self.live_widget.vlc_widget.get_player()
-        self.live_widget.vlc_widget.release_player()
+        # self.live_widget.vlc_widget.get_player()
+        # self.live_widget.vlc_widget.release_player()
+        self.live_widget.vlc_widget.stop()
 
     def answer_hide_action_triggered(self, checked):
         """
@@ -470,6 +471,15 @@ class MainWindow(QMainWindow):
         :return:
         """
         pass
+
+    def closeEvent(self, event) -> None:
+        """
+
+        :param event:
+        :return:
+        """
+        print("closeEvent")
+        self.live_widget.vlc_widget.release_player()
 
 
 if __name__ == '__main__':

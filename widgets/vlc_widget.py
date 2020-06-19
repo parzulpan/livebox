@@ -31,7 +31,17 @@ class VLCWidget(QWidget):
 
         self.media_player = None
         self.instance = None
-        self.get_player(args)
+        # self.get_player(args)
+        if args:
+            self.instance = vlc.Instance(*args)
+            self.media_player = self.instance.media_player_new()
+        else:
+            self.media_player = vlc.MediaPlayer()
+
+        if platform.system() == "Windows":
+            self.media_player.set_hwnd(self.winId())
+        else:
+            self.media_player.set_xwindow(self.winId())
         self._init_ui()
 
     def _init_ui(self):
@@ -72,7 +82,6 @@ class VLCWidget(QWidget):
         :return:
         """
         try:
-            print("url {0}".format(url))
             # url = "http://tx2play1.douyucdn.cn/live/288016rlols5.flv?uuid="
             if url:
                 self.media_player.set_mrl(url)
