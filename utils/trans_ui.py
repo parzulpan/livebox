@@ -14,7 +14,7 @@ import os.path
 
 
 # 文件所在的路径
-file_dir = './'
+file_dir = '.'
 
 
 def ui_file_list():

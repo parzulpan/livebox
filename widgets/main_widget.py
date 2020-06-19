@@ -13,8 +13,8 @@ import sys
 from ctypes import windll, WinDLL, cdll, CDLL
 
 from PyQt5.QtWidgets import QMainWindow, QApplication, QMenuBar, QMenu, QAction, QDesktopWidget, QVBoxLayout, qApp, \
-    QToolBar, QActionGroup
-from PyQt5.QtGui import QKeySequence, QIcon, QDesktopServices, QPalette, QColor
+    QToolBar, QActionGroup, QFontDialog
+from PyQt5.QtGui import QKeySequence, QIcon, QDesktopServices, QPalette, QColor, QFont
 from PyQt5.QtCore import Qt, QSize, QUrl, QFile
 
 from utils.common import get_window_center_point
@@ -72,10 +72,21 @@ class MainWindow(QMainWindow):
         self.skin_action_group.addAction(self.dark_skin_action)
         self.skin_action_group.addAction(self.white_skin_action)
         self.skin_action_group.addAction(self.blue_skin_action)
-        self.language_action = QAction("语言(L)", self.enhance_menu)
-        self.language_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_S))
+
+        self.language_menu = QMenu("语言", self.enhance_menu)
+        self.zh_CN_action = QAction("简体中文", self.language_menu)
+        self.zh_CN_action.setCheckable(True)
+        self.zh_CN_action.triggered.connect(self.answer_zh_CN_action_triggered)
+        self.en_action = QAction("English", self.language_menu)
+        self.en_action.setCheckable(True)
+        self.en_action.triggered.connect(self.answer_en_action_triggered)
+        self.language_action_group = QActionGroup(self)
+        self.language_action_group.addAction(self.zh_CN_action)
+        self.language_action_group.addAction(self.en_action)
+
         self.font_action = QAction("字体(F)", self.enhance_menu)
         self.font_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_S))
+        self.font_action.triggered.connect(self.answer_font_action_triggered)
         self.hide_action = QAction("隐藏(V)", self.enhance_menu)
         self.hide_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_V))
         self.hide_action.setCheckable(True)
@@ -96,9 +107,12 @@ class MainWindow(QMainWindow):
         self.help_action = QAction("帮助文档(H)", self.help_menu)
         self.help_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_H))
         self.help_action.triggered.connect(self.answer_help_action_triggered)
-        self.update_action = QAction("更新日志(U)", self.help_menu)
-        self.update_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_U))
-        self.update_action.triggered.connect(self.answer_help_action_triggered)
+        self.change_log_action = QAction("更新日志(U)", self.help_menu)
+        self.change_log_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_U))
+        self.change_log_action.triggered.connect(self.answer_change_log_action_triggered)
+        self.check_version_action = QAction("检查版本(C)", self.help_menu)
+        self.check_version_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_C))
+        self.check_version_action.triggered.connect(self.answer_check_version_action_triggered)
         self.about_action = QAction("关于软件(A)", self.help_menu)
         self.about_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_A))
         self.about_action.triggered.connect(self.answer_about_action_triggered)
@@ -169,7 +183,9 @@ class MainWindow(QMainWindow):
         self.skin_menu.addAction(self.dark_skin_action)
         self.skin_menu.addAction(self.white_skin_action)
         self.skin_menu.addAction(self.blue_skin_action)
-        self.enhance_menu.addAction(self.language_action)
+        self.enhance_menu.addMenu(self.language_menu)
+        self.language_menu.addAction(self.zh_CN_action)
+        self.language_menu.addAction(self.en_action)
         self.enhance_menu.addAction(self.font_action)
         self.enhance_menu.addSeparator()
         self.enhance_menu.addAction(self.hide_action)
@@ -180,7 +196,8 @@ class MainWindow(QMainWindow):
         self.tool_menu.addSeparator()
 
         self.help_menu.addAction(self.help_action)
-        self.help_menu.addAction(self.update_action)
+        self.help_menu.addAction(self.change_log_action)
+        self.help_menu.addAction(self.check_version_action)
         self.help_menu.addSeparator()
         self.help_menu.addAction(self.about_action)
 
@@ -238,6 +255,17 @@ class MainWindow(QMainWindow):
             self.blue_skin_action.setChecked(True)
             self.blue_skin_action.triggered.emit()
 
+        # 字体设置
+        font_family = retrieve_content("preferences", "font-family")
+        font_style = retrieve_content("preferences", "font-style")
+        font_size = retrieve_content("preferences", "font-size")
+        font = QFont()
+        font.setFamily(font_family)
+        font.setStyleName(font_style)
+        font.setPointSize(int(font_size))
+        qApp.setFont(font)
+        qApp.processEvents()
+
     def set_window_info(self):
         """
 
@@ -268,7 +296,26 @@ class MainWindow(QMainWindow):
         :return:
         """
         desktop_services = QDesktopServices()
+        desktop_services.openUrl(QUrl("https://github.com/parzulpan/real-live/blob/master/resources/Help.md"))
+
+    @staticmethod
+    def answer_change_log_action_triggered():
+        """
+
+        :return:
+        """
+        desktop_services = QDesktopServices()
         desktop_services.openUrl(QUrl("https://github.com/parzulpan/real-live/blob/master/resources/ChangeLog.md"))
+
+    @staticmethod
+    def answer_check_version_action_triggered():
+        """
+
+        :return:
+        """
+        # TODO: 获取GitHub API 进行检查并弹窗
+        desktop_services = QDesktopServices()
+        desktop_services.openUrl(QUrl("https://github.com/parzulpan/real-live/releases"))
 
     @staticmethod
     def answer_about_action_triggered():
@@ -392,6 +439,37 @@ class MainWindow(QMainWindow):
             qss = f.read()
             qApp.setStyleSheet(qss)
         update_contents("preferences", "skin", "blue")
+
+    def answer_font_action_triggered(self, checked):
+        """
+
+        :param checked:
+        :return:
+        """
+        font = qApp.font()
+        font, changed = QFontDialog().getFont(font, self, caption="字体设置")
+        if changed:
+            qApp.setFont(font)
+            qApp.processEvents()
+            update_contents("preferences", "font-family", font.family())
+            update_contents("preferences", "font-style", font.styleName())
+            update_contents("preferences", "font-size", str(font.pointSize()))
+
+    def answer_zh_CN_action_triggered(self, checked):
+        """
+
+        :param checked:
+        :return:
+        """
+        pass
+
+    def answer_en_action_triggered(self, checked):
+        """
+
+        :param checked:
+        :return:
+        """
+        pass
 
 
 if __name__ == '__main__':

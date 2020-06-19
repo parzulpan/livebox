@@ -43,9 +43,9 @@ class PromptBox(QDialog):
 
         self._content_label = QLabel(content)
 
-        self._btn_one = QPushButton("确定")
+        self._btn_one = QPushButton("确 定")
         self._btn_one.clicked.connect(self.answer_btn_one_clicked)
-        self._btn_two = QPushButton("取消")
+        self._btn_two = QPushButton("取 消")
         self._btn_two.clicked.connect(self.answer_btn_two_clicked)
 
         self._btn_layout = QHBoxLayout()

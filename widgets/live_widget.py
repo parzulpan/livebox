@@ -86,8 +86,6 @@ class LiveWidget(QWidget):
         :param widget:
         :return:
         """
-        print("widget {0}".format(widget))
-
         # self.clear_layout()
 
         self._layout.setContentsMargins(0, 0, 0, 0)

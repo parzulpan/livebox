@@ -1,51 +1,47 @@
 # real-live 网络直播聚合平台
 
 ## 简介
-real-live是一个网络直播聚合平台，它支持当前几十种主流的直播平台，通过选择直播平台和输入查询信息即可获取直播平台的直播源，可以选择在本平台上在线观看，或者将直播源复制到PotPlayer、VLC等播放器中观看。
+real-live是一个网络直播聚合平台，它支持当前几十种主流的直播平台，通过选择直播平台和输入查询信息即可获取相应的直播源。可以选择在本平台上在线观看，在线观看播放器分为：1. 采用FFmpeg+SDL自研的RealPlayer；2. 开源的VLC接口封装的VLCPlayer；选择一种自己喜欢的Player即可。或者将直播源复制到PotPlayer、VLC等播放器中观看。
 
 ### 架构
 待更新...
 
 ### 首页
-![首页](./docs/img/home.png)
+![首页-暗黑模式](./docs/img/home_dark_v1.1.0.png)
 
-### 播放
-![播放](./docs/img/vlc.png)
+![首页-浅蓝模式](./docs/img/home_blue_v1.1.0.png)
+
+### 播放-VLC
+![播放-VLC](./docs/img/playing_vlc.png)
 
 ### 搜索
-![搜索](./docs/img/search.png)
+![搜索](./docs/img/search_v1.1.0.png)
 
 ## 特色
-* [x] 支持多种主流直播平台
-* [x] 无需登录，高清晰度低延迟
-* [x] 简洁易用，勿扰模式看直播涨姿势
-* [x] 支持直播房间号和主播名搜索(支持模糊搜索)
-* [ ] 多窗口模式
-* [ ] 多语言和换肤功能
-* [ ] 历史查询记录和偏好设置(关注)
-* [ ] 智能字幕匹配
+* [x] 支持多种主流直播平台，无需登录，高清晰度低延迟在线观看
+* [x] 多播放器支持，包括自研的RealPlayer和封装的VLCPlayer
+* [x] 支持直播房间号和主播名搜索并关注
+* [ ] 平台热榜查看功能，无需搜索也可观看
+* [ ] 智能字幕匹配(机翻)功能，听不懂也能看
+* [x] 纯净/勿扰模式，安安静静涨姿势
+* [ ] 边看边记功能，浮动笔记本，支持Markdown格式写入和PDF格式导出
+* [x] 支持在线截图、制作gif图、录屏等功能，让你不错过每个经常瞬间
+* [x] 换肤设置、语言设置、字体设置等用户偏好设置功能
+* [ ] 弹幕功能(考虑到纯净性可能不会开发)
+* [ ] 自动检查更新功能
 
 ## 使用
 ### Debug
-**技术选型：**
-
-Cpp、Python、Qt、PyQt5、NLP
-
-**开发环境：**
-
-Pycharm 2020、Python 3、PyQt 5.12
-
-**编译调试：**
-
+#### 编译调试
 配置好Python开发环境后，点击[requirements.txt](./requirements.txt)文件安装依赖包，然后运行[real_live.py](./real_live.py)即可。
 
-**打包安装：**
-
+#### 打包安装
 推荐使用Pyinstaller打包，NSIS制作安装包。
 
+[配置参考文档](./docs/cmd.md)
 
 ### Release
-直接下载最新的 [release](https://github.com/parzulpan/real-live/releases) 安装包安装使用即可。
+直接到最新的 [release](https://github.com/parzulpan/real-live/releases) 页面下载即可，分为安装包版和免安装版。
 
 ## 反馈
 有任何疑问和建议<br/>

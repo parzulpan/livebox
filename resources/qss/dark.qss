@@ -177,8 +177,10 @@ QLineEdit {
     selection-background-color: #8BF;
     border: 1px solid #999999;
     border-radius: 2px;
-    border-style: inset;
+    /*border-style: inset;*/
     padding: 0 1px;
+    min-width: 90px;
+    min-height: 25px;
 }
 
 QLineEdit:hover{
@@ -193,12 +195,12 @@ QLineEdit[echoMode="2"]{
 }
 
 QLineEdit:read-only {
-    color: lightgray;
+    color: gray;
 }
 
 QLineEdit:disabled{
-    color: lightgray;
-    background: lightgray;
+    color: gray;
+    background: gray;
 }
 
 QTextEdit{
@@ -222,13 +224,18 @@ QPushButton {
         stop: 0 #EEEEEF, stop: 0.05 #DADADF,stop: 0.5 #DADADF, 
         stop: 0.9 #EEEEEF, stop: 1 #EEEEEF);*/
     padding: 1px 4px;
-    min-width: 50px;
-    min-height: 16px;
+    min-width: 90px;
+    min-height: 25px;
 }
 
 QPushButton:hover{
     background-color: #8BF;
     border-color: #23ADE5;
+}
+
+QPushButton:disabled{
+    background-color: gray;
+    border-color: lightgray;
 }
 
 QPushButton:pressed
@@ -297,6 +304,9 @@ QToolButton::menu-button {
 /* =============================================== */
 QComboBox{
     border: 1px solid #999999;
+    border-radius: 2px;
+    min-width: 90px;
+    min-height:25px;
 }
 QComboBox:editable{
     border-style: inset;
@@ -311,13 +321,17 @@ QComboBox:on { /* shift the text when the popup opens */
     padding-top: 2px;
     padding-left: 2px;
 }
+/* 需要设置comboBox.setView(QListView())否则会使用默认的item样式 */
 QComboBox QAbstractItemView {
     border: 1px solid #999999;
     selection-background-color: #8BF;
+    outline:0px;
+    border:0px;
+    height: 25px;
 }
-/*QComboBox QAbstractItemView::item {
-    height: 12px;需要设置comboBox.setView(QListView())否则会使用默认的item样式
-}*/
+QComboBox QAbstractItemView::item {
+    height: 25px;
+}
 /* =============================================== */
 /* SpinBox DateTime                                */
 /* =============================================== */
