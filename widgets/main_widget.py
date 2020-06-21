@@ -10,7 +10,7 @@
 """
 
 import sys
-from ctypes import windll, WinDLL, cdll, CDLL
+import os
 
 from PyQt5.QtWidgets import QMainWindow, QApplication, QMenuBar, QMenu, QAction, QDesktopWidget, QVBoxLayout, qApp, \
     QToolBar, QActionGroup, QFontDialog
@@ -385,11 +385,9 @@ class MainWindow(QMainWindow):
 
         :return:
         """
-        # dll = windll.LoadLibrary('./bin/OEScreenshot.dll')
-        # dll = WinDLL('./bin/OEScreenshot.dll')
-        # dll = cdll.LoadLibrary('./bin/OEScreenshot.dll')
-        dll = CDLL('./bin/screenshot/OEScreenshot.dll')
-        print(dll)
+        result = os.system("E:/projects/GitHub/real-live/bin/screenshot/screenshot.exe")
+        return
+        # print(result)
 
     def answer_gif_action_triggered(self):
         """
