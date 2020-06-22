@@ -110,6 +110,18 @@ class PromptBox(QDialog):
         self.reject()
 
 
+class CommonBtn(QPushButton):
+    """
+
+    """
+    def __init__(self, img, clicked_img, width=32, height=32):
+        super(CommonBtn, self).__init__()
+        self.setFixedSize(width, height)
+        self.setAutoFillBackground(True)
+        # self.setStyleSheet('QPushButton{border:0px; border-image:url(%s); }'
+        #                    'QPushButton:pressed{border:0px; border-image:url(%s); }'
+        #                    'QPushButton::menu-indicator{image: None; }' % (img, clicked_img))
+
 
 
 

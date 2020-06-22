@@ -13,7 +13,11 @@ import sys
 import os
 import platform
 
-from PyQt5.QtWidgets import QWidget, QApplication
+from PyQt5.QtGui import QPalette, QColor
+from PyQt5.QtWidgets import QWidget, QApplication, QPushButton, QSlider, QHBoxLayout, QVBoxLayout, QFrame, QMainWindow
+from PyQt5.QtCore import Qt
+
+from utils.common import CommonBtn
 
 # 设置VLC库路径，需在import vlc之前
 os.environ['PYTHON_VLC_MODULE_PATH'] = "./bin/vlc_3.0.9.2"
@@ -21,7 +25,7 @@ os.environ['PYTHON_VLC_MODULE_PATH'] = "./bin/vlc_3.0.9.2"
 import vlc
 
 
-class VLCWidget(QWidget):
+class VLCWidget(QMainWindow):
     """
 
     """
@@ -31,7 +35,6 @@ class VLCWidget(QWidget):
 
         self.media_player = None
         self.instance = None
-        # self.get_player(args)
         if args:
             self.instance = vlc.Instance(*args)
             self.media_player = self.instance.media_player_new()
@@ -39,9 +42,45 @@ class VLCWidget(QWidget):
             self.media_player = vlc.MediaPlayer()
 
         if platform.system() == "Windows":
-            self.media_player.set_hwnd(self.winId())
-        else:
-            self.media_player.set_xwindow(self.winId())
+            self.media_player_frame = QFrame()
+            self.media_player.set_hwnd(self.media_player_frame.winId())
+        elif platform.system() == "Linux":
+            self.media_player_frame = QFrame()
+            self.media_player.set_xwindow(self.media_player_frame.winId())
+        elif platform.system() == "Darwin":
+            # self.media_player_frame = QMacCocoaViewContainer(0)
+            self.media_player.set_nsobject(self.media_player_frame.winId())
+        self.widget = QWidget(self)
+        self.setCentralWidget(self.widget)
+        self.palette = self.media_player_frame.palette()
+        self.palette.setColor(QPalette.Window, QColor(0, 0, 0))
+        self.media_player_frame.setPalette(self.palette)
+        self.media_player_frame.setAutoFillBackground(True)
+
+        self.main_layout = QVBoxLayout()
+        self.main_layout.setContentsMargins(0, 0, 0, 0)
+        self.main_layout.setSpacing(0)
+        self.control_widget = QWidget()
+        self.control_layout = QHBoxLayout()
+        self.control_layout.setContentsMargins(5, 5, 5, 5)
+        self.control_layout.setSpacing(0)
+        self.play_pause_btn = CommonBtn("./resources/img/pause@64x64.png", "./resources/img/play@64x64.png")
+
+        self.rewind_btn = CommonBtn("./resources/img/rewind@64x64.png", "./resources/img/rewind@64x64.png")
+        self.stop_btn = CommonBtn("./resources/img/stop@64x64.png", "./resources/img/stop@64x64.png")
+        self.fast_forward_btn = CommonBtn("./resources/img/fast_forward@64x64.png",
+                                          "./resources/img/fast_forward@64x64.png")
+
+        self.fullscreen_narrow_btn = CommonBtn("./resources/img/fullscreen@64x64.png",
+                                               "./resources/img/narrow@64x64.png")
+        self.record_btn = CommonBtn("./resources/img/record@64x64.png", "./resources/img/record@64x64.png")
+        self.collect_btn = CommonBtn("./resources/img/collect@64x64.png", "./resources/img/collect@64x64.png")
+        self.menu_btn = CommonBtn("./resources/img/menu@64x64.png", "./resources/img/menu@64x64.png")
+
+        self.mute_btn = CommonBtn("./resources/img/mute@64x64.png", "./resources/img/mute@64x64.png")
+        self.volume_btn = CommonBtn("./resources/img/volume@64x64.png", "./resources/img/volume@64x64.png")
+        self.volume_slider = QSlider(Qt.Horizontal)
+
         self._init_ui()
 
     def _init_ui(self):
@@ -49,24 +88,28 @@ class VLCWidget(QWidget):
 
         :return:
         """
-        pass
+        self.control_layout.addWidget(self.play_pause_btn)
+        self.control_layout.addSpacing(10)
+        self.control_layout.addWidget(self.rewind_btn)
+        self.control_layout.addWidget(self.stop_btn)
+        self.control_layout.addWidget(self.fast_forward_btn)
+        self.control_layout.addSpacing(10)
+        self.control_layout.addWidget(self.fullscreen_narrow_btn)
+        self.control_layout.addWidget(self.record_btn)
+        self.control_layout.addWidget(self.collect_btn)
+        self.control_layout.addWidget(self.menu_btn)
+        self.control_layout.addSpacing(10)
+        self.control_layout.addStretch()
+        self.control_layout.addWidget(self.mute_btn)
+        self.control_layout.addWidget(self.volume_btn)
+        self.control_layout.addWidget(self.volume_slider)
 
-    def get_player(self, *args):
-        """
+        self.main_layout.addWidget(self.media_player_frame)
+        # self.main_layout.addWidget(self.control_widget)
+        self.main_layout.addSpacing(5)
+        self.main_layout.addLayout(self.control_layout)
 
-        :param args:
-        :return:
-        """
-        if args:
-            self.instance = vlc.Instance(*args)
-            self.media_player = self.instance.media_player_new()
-        else:
-            self.media_player = vlc.MediaPlayer()
-
-        if platform.system() == "Windows":
-            self.media_player.set_hwnd(self.winId())
-        else:
-            self.media_player.set_xwindow(self.winId())
+        self.widget.setLayout(self.main_layout)
 
     def release_player(self):
         """ 释放资源
@@ -82,7 +125,7 @@ class VLCWidget(QWidget):
         :return:
         """
         try:
-            # url = "http://tx2play1.douyucdn.cn/live/288016rlols5.flv?uuid="
+            url = "http://tx2play1.douyucdn.cn/live/288016rlols5.flv?uuid="
             if url:
                 self.media_player.set_mrl(url)
                 return self.media_player.play()

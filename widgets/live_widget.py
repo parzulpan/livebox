@@ -80,10 +80,10 @@ class LiveWidget(QWidget):
             # self.vlc_widget.setVisible(False)
             self.vlc_widget.hide()
 
-    def set_player_widget(self, widget=False):
+    def set_player_widget(self, is_visible=False):
         """
 
-        :param widget:
+        :param is_visible:
         :return:
         """
         # self.clear_layout()
@@ -93,7 +93,7 @@ class LiveWidget(QWidget):
 
         self._layout.addWidget(self.vlc_widget)
 
-        self.set_widget_visible(widget)
+        self.set_widget_visible(is_visible)
 
         self.player_widget.setLayout(self._layout)
 
