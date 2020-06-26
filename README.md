@@ -31,6 +31,11 @@ real-live是一个网络直播聚合平台，它支持当前几十种主流的�
 * [ ] 自动检查更新功能
 
 ## 使用
+## Branch
+**master**为最初分支<br/>
+**stable**为Release发布分支<br/>
+**dev**为一直开发的分支，欢迎大家克隆该分支进行开发<br/>
+
 ### Debug
 #### 编译调试
 配置好Python开发环境后，点击[requirements.txt](./requirements.txt)文件安装依赖包，然后运行[real_live.py](./real_live.py)即可。

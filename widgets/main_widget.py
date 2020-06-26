@@ -12,10 +12,10 @@
 import sys
 import os
 
-from PyQt5.QtWidgets import QMainWindow, QApplication, QMenuBar, QMenu, QAction, QDesktopWidget, QVBoxLayout, qApp, \
+from PyQt5.QtWidgets import QMainWindow, QApplication, QMenuBar, QMenu, QAction, QDesktopWidget, qApp, \
     QToolBar, QActionGroup, QFontDialog
-from PyQt5.QtGui import QKeySequence, QIcon, QDesktopServices, QPalette, QColor, QFont
-from PyQt5.QtCore import Qt, QSize, QUrl, QFile
+from PyQt5.QtGui import QKeySequence, QIcon, QDesktopServices, QFont
+from PyQt5.QtCore import Qt, QSize, QUrl
 
 from utils.common import get_window_center_point
 from utils.crud_cfg import *
@@ -152,10 +152,10 @@ class MainWindow(QMainWindow):
 
         self.live_widget = LiveWidget()
 
-        self.init_ui()
+        self._init_ui()
         self._init_cfg()
 
-    def init_ui(self):
+    def _init_ui(self):
         """
 
         :return:
@@ -255,6 +255,17 @@ class MainWindow(QMainWindow):
             self.blue_skin_action.setChecked(True)
             self.blue_skin_action.triggered.emit()
 
+        # 语言设置
+        language = retrieve_content("preferences", "language")
+        if language == "zh_CN":
+            self.zh_CN_action.setChecked(True)
+            self.zh_CN_action.triggered.emit()
+        elif language == "en":
+            self.en_action.setChecked(True)
+            self.en_action.triggered.emit()
+        else:
+            pass
+
         # 字体设置
         font_family = retrieve_content("preferences", "font-family")
         font_style = retrieve_content("preferences", "font-style")
@@ -334,7 +345,6 @@ class MainWindow(QMainWindow):
         :param url:
         :return:
         """
-        # self.live_widget.vlc_widget.get_player()
         self.live_widget.vlc_widget.play_url(url)
         self.live_widget.set_player_widget(True)
 
@@ -344,8 +354,6 @@ class MainWindow(QMainWindow):
         :return:
         """
         self.live_widget.set_player_widget(False)
-        # self.live_widget.vlc_widget.get_player()
-        # self.live_widget.vlc_widget.release_player()
         self.live_widget.vlc_widget.stop()
 
     def answer_hide_action_triggered(self, checked):
@@ -357,9 +365,11 @@ class MainWindow(QMainWindow):
         if checked:
             self.tool_bar.hide()
             update_contents("preferences", "tool_bar_visible", "False")
+            self.live_widget.vlc_widget.control_widget.hide()
         else:
             self.tool_bar.show()
             update_contents("preferences", "tool_bar_visible", "True")
+            self.live_widget.vlc_widget.control_widget.show()
 
     def answer_tool_bar_top_level_changed(self, area):
         """
@@ -385,9 +395,7 @@ class MainWindow(QMainWindow):
 
         :return:
         """
-        result = os.system("E:/projects/GitHub/real-live/bin/screenshot/screenshot.exe")
-        return
-        # print(result)
+        pass
 
     def answer_gif_action_triggered(self):
         """
@@ -460,6 +468,7 @@ class MainWindow(QMainWindow):
         :param checked:
         :return:
         """
+        update_contents("preferences", "language", "zh_CN")
         pass
 
     def answer_en_action_triggered(self, checked):
@@ -468,6 +477,7 @@ class MainWindow(QMainWindow):
         :param checked:
         :return:
         """
+        update_contents("preferences", "language", "en")
         pass
 
     def closeEvent(self, event) -> None:
@@ -477,7 +487,7 @@ class MainWindow(QMainWindow):
         :return:
         """
         print("closeEvent")
-        self.live_widget.vlc_widget.release_player()
+        # self.live_widget.vlc_widget.release_player()
 
 
 if __name__ == '__main__':

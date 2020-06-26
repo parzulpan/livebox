@@ -114,14 +114,15 @@ class CommonBtn(QPushButton):
     """
 
     """
-    def __init__(self, img, clicked_img, width=32, height=32):
+    def __init__(self, img, clicked_img):
         super(CommonBtn, self).__init__()
-        self.setFixedSize(width, height)
-        self.setAutoFillBackground(True)
-        # self.setStyleSheet('QPushButton{border:0px; border-image:url(%s); }'
-        #                    'QPushButton:pressed{border:0px; border-image:url(%s); }'
-        #                    'QPushButton::menu-indicator{image: None; }' % (img, clicked_img))
-
+        # self.setAutoFillBackground(True)
+        self.setCheckable(True)
+        self.setStyleSheet(
+            "QPushButton{border-radius:5px;min-width:24px; min-height:24px; max-width:24px; max-height:24px; "
+            "border-image:url(\"%s\"); }"
+            "QPushButton:checked{border-image:url(\"%s\"); }"
+            "QPushButton::menu-indicator{image: None; }" % (img, clicked_img))
 
 
 
