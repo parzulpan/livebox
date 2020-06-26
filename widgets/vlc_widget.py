@@ -21,8 +21,7 @@ from PyQt5.QtCore import Qt
 from utils.common import CommonBtn
 
 # 设置VLC库路径，需在import vlc之前
-os.environ['PYTHON_VLC_MODULE_PATH'] = "./bin/vlc_3.0.9.2"
-# os.environ['PYTHON_VLC_LIB_PATH'] = "./bin/vlc_3.0.9.2/libvlc.dll"
+os.environ['PYTHON_VLC_MODULE_PATH'] = "./core/vlc_3.0.9.2"
 import vlc
 
 
