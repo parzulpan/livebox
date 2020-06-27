@@ -14,7 +14,7 @@ import os
 import platform
 
 from PyQt5.QtGui import QPalette, QColor
-from PyQt5.QtWidgets import QWidget, QApplication, QPushButton, QSlider, QHBoxLayout, QVBoxLayout, QFrame, QMainWindow, \
+from PyQt5.QtWidgets import QWidget, QApplication, QSlider, QHBoxLayout, QVBoxLayout, QFrame, QMainWindow, \
     QLabel
 from PyQt5.QtCore import Qt
 
@@ -169,11 +169,10 @@ class VLCWidget(QMainWindow):
             if url:
                 self.current_url = url
                 self.media_player.set_mrl(url)
-                self.current_volume = self.get_volume()
-                self.volume_slider.setValue(self.current_volume)
+                self.media_player_frame.show()
+                self.control_widget.show()
+                self.volume_slider.setValue(80)
                 self.play_pause_btn.setChecked(False)
-                self.media_player_frame.setVisible(True)
-                self.control_widget.setVisible(True)
                 return self.media_player.play()
             else:
                 pass
@@ -200,8 +199,8 @@ class VLCWidget(QMainWindow):
 
         :return:
         """
-        self.media_player_frame.setVisible(False)
-        self.control_widget.setVisible(False)
+        self.media_player_frame.hide()
+        self.control_widget.hide()
         self.media_player.stop()
         # self.release_player()
 
