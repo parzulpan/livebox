@@ -25,13 +25,13 @@ os.environ['PYTHON_VLC_MODULE_PATH'] = "./core/vlc_3.0.9.2"
 import vlc
 
 
-class VLCWidget(QMainWindow):
+class VlcPlayerWidget(QMainWindow):
     """
 
     """
 
     def __init__(self, *args):
-        super(VLCWidget, self).__init__()
+        super(VlcPlayerWidget, self).__init__()
 
         self.media_player = None
         self.instance = None
@@ -455,7 +455,7 @@ class VLCWidget(QMainWindow):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    vlc_widget = VLCWidget()
+    vlc_widget = VlcPlayerWidget()
     vlc_widget.show()
     vlc_widget.play_url()
     sys.exit(app.exec_())

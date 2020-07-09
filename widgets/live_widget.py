@@ -13,7 +13,7 @@ import sys
 
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QPushButton, QApplication
 
-from widgets.vlc_widget import VLCWidget
+from widgets.vlc_player_widget import VlcPlayerWidget
 
 
 class LiveWidget(QWidget):
@@ -29,7 +29,7 @@ class LiveWidget(QWidget):
         self.pot_btn = QPushButton('PotPlayer播放')
 
         self.vlc_btn = QPushButton('VLC播放')
-        self.vlc_widget = VLCWidget()
+        self.vlc_widget = VlcPlayerWidget()
 
         self.player_widget = QWidget()
         self.player_layout = QVBoxLayout()

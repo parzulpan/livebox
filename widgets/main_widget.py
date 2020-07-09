@@ -486,8 +486,7 @@ class MainWindow(QMainWindow):
         :param event:
         :return:
         """
-        print("closeEvent")
-        # self.live_widget.vlc_widget.release_player()
+        pass
 
 
 if __name__ == '__main__':
