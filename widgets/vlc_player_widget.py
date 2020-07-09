@@ -151,6 +151,17 @@ class VlcPlayerWidget(QMainWindow):
 
         self.widget.setLayout(self.main_layout)
 
+    def moveEvent(self, event) -> None:
+        """
+
+        :param event:
+        :return:
+        """
+        # width, height = self.width(), self.height()
+        # print(width, height)
+        # self.control_widget.move(width, height - 50)
+        pass
+
     def release_player(self):
         """ 释放资源
 
