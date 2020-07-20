@@ -123,15 +123,27 @@ class MainWindow(QMainWindow):
         self.tool_bar.setIconSize(QSize(32, 32))
         # self.tool_bar.setStyleSheet("QToolBar{border: 1px solid #313335; spacing:5px; }")
         self.addToolBar(Qt.TopToolBarArea, self.tool_bar)
-        self.search_tool_action = QAction("", self.tool_bar)
-        self.search_tool_action.setToolTip("信息搜索")
-        self.search_tool_action.setIcon(QIcon("./resources/img/search@128x128.png"))
+        self.live_tool_action = QAction("", self.tool_bar)
+        self.live_tool_action.setToolTip("直播搜索")
+        self.live_tool_action.setIcon(QIcon("./resources/img/search@128x128.png"))
         self.search_widget = SearchWidget()
-        self.search_tool_action.triggered.connect(self.show_search_widget)
+        self.live_tool_action.triggered.connect(self.show_search_widget)
         self.search_widget.watch_live_signal.connect(self.answer_watch_live_signal)
 
+        self.hot_live_tool_action = QAction("", self.tool_bar)
+        self.hot_live_tool_action.setToolTip("热门直播")
+        self.hot_live_tool_action.setIcon(QIcon("./resources/img/hot@128x128.png"))
+
+        self.tv_live_tool_action = QAction("", self.tool_bar)
+        self.tv_live_tool_action.setToolTip("高清电视")
+        self.tv_live_tool_action.setIcon(QIcon("./resources/img/tv@128x128.png"))
+
+        self.radio_station_tool_action = QAction("", self.tool_bar)
+        self.radio_station_tool_action.setToolTip("广播电台")
+        self.radio_station_tool_action.setIcon(QIcon("./resources/img/radio_station@128x128.png"))
+
         self.attention_tool_action = QAction("", self.tool_bar)
-        self.attention_tool_action.setToolTip("历史关注")
+        self.attention_tool_action.setToolTip("我的关注")
         self.attention_tool_action.setIcon(QIcon("./resources/img/attention@128x128.png"))
         # self.attention_tool_action.triggered.connect(self.show_search_widget)
 
@@ -210,8 +222,10 @@ class MainWindow(QMainWindow):
         self.setMenuBar(self.menu_bar)
 
         # 工具栏
-        self.tool_bar.addAction(self.search_tool_action)
-        self.tool_bar.addSeparator()
+        self.tool_bar.addAction(self.live_tool_action)
+        self.tool_bar.addAction(self.hot_live_tool_action)
+        self.tool_bar.addAction(self.tv_live_tool_action)
+        self.tool_bar.addAction(self.radio_station_tool_action)
         self.tool_bar.addAction(self.attention_tool_action)
         self.tool_bar.addSeparator()
         self.tool_bar.addAction(self.pure_tool_action)
