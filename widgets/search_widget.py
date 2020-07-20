@@ -121,7 +121,8 @@ class SearchWidget(QDialog):
         :param index:
         :return:
         """
-        pass
+        self.copy_live_btn.setDisabled(True)
+        self.watch_live_btn.setDisabled(True)
 
     def answer_search_type_combobox_current_index_changed(self, index):
         """
@@ -129,7 +130,8 @@ class SearchWidget(QDialog):
         :param index:
         :return:
         """
-        pass
+        self.copy_live_btn.setDisabled(True)
+        self.watch_live_btn.setDisabled(True)
 
     def answer_get_live_btn_clicked(self):
         """

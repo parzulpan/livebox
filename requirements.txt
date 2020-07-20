@@ -10,7 +10,6 @@ PyInstaller==3.6
 PyQt5==5.15.0
 PyQt5-sip==12.8.0
 PyQt5-stubs==5.14.2.2
-PyQtWebEngine==5.15.0
 python-vlc==3.0.10114
 pywin32-ctypes==0.2.0
 requests==2.23.0

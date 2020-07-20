@@ -37,6 +37,8 @@ import core.real_url.youku as Youku
 import core.real_url.look as Look
 import core.real_url.qf as Qf
 
+import core.real_url.tv as TV
+
 
 def get_real_url_from_platform_content(platform, content):
     """
@@ -129,3 +131,14 @@ def get_real_url_from_platform_content(platform, content):
         pass
 
     return result
+
+
+def get_real_url_from_tv_name_content(tv_name, tv_quality):
+    """
+
+    :param tv_name:
+    :param tv_quality:
+    :return:
+    """
+
+    return TV.get_tv_url(tv_name, tv_quality)

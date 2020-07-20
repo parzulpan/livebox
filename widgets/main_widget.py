@@ -20,6 +20,7 @@ from PyQt5.QtCore import Qt, QSize, QUrl
 from utils.common import get_window_center_point
 from utils.crud_cfg import *
 from widgets.search_widget import SearchWidget
+from widgets.tv_widget import TvWidget
 from widgets.live_widget import LiveWidget
 from widgets.about_widget import AboutWidget
 
@@ -120,7 +121,7 @@ class MainWindow(QMainWindow):
         self.tool_bar = QToolBar()
         self.tool_bar.setFloatable(False)
         self.tool_bar.setMovable(True)
-        self.tool_bar.setIconSize(QSize(32, 32))
+        self.tool_bar.setIconSize(QSize(40, 40))
         # self.tool_bar.setStyleSheet("QToolBar{border: 1px solid #313335; spacing:5px; }")
         self.addToolBar(Qt.TopToolBarArea, self.tool_bar)
         self.live_tool_action = QAction("", self.tool_bar)
@@ -130,17 +131,20 @@ class MainWindow(QMainWindow):
         self.live_tool_action.triggered.connect(self.show_search_widget)
         self.search_widget.watch_live_signal.connect(self.answer_watch_live_signal)
 
-        self.hot_live_tool_action = QAction("", self.tool_bar)
-        self.hot_live_tool_action.setToolTip("热门直播")
-        self.hot_live_tool_action.setIcon(QIcon("./resources/img/hot@128x128.png"))
-
         self.tv_live_tool_action = QAction("", self.tool_bar)
         self.tv_live_tool_action.setToolTip("高清电视")
         self.tv_live_tool_action.setIcon(QIcon("./resources/img/tv@128x128.png"))
+        self.tv_widget = TvWidget()
+        self.tv_live_tool_action.triggered.connect(self.show_tv_widget)
+        self.tv_widget.watch_live_signal.connect(self.answer_watch_live_signal)
 
         self.radio_station_tool_action = QAction("", self.tool_bar)
         self.radio_station_tool_action.setToolTip("广播电台")
         self.radio_station_tool_action.setIcon(QIcon("./resources/img/radio_station@128x128.png"))
+
+        self.hot_live_tool_action = QAction("", self.tool_bar)
+        self.hot_live_tool_action.setToolTip("热门直播")
+        self.hot_live_tool_action.setIcon(QIcon("./resources/img/hot@128x128.png"))
 
         self.attention_tool_action = QAction("", self.tool_bar)
         self.attention_tool_action.setToolTip("我的关注")
@@ -223,9 +227,9 @@ class MainWindow(QMainWindow):
 
         # 工具栏
         self.tool_bar.addAction(self.live_tool_action)
-        self.tool_bar.addAction(self.hot_live_tool_action)
         self.tool_bar.addAction(self.tv_live_tool_action)
         self.tool_bar.addAction(self.radio_station_tool_action)
+        self.tool_bar.addAction(self.hot_live_tool_action)
         self.tool_bar.addAction(self.attention_tool_action)
         self.tool_bar.addSeparator()
         self.tool_bar.addAction(self.pure_tool_action)
@@ -313,6 +317,15 @@ class MainWindow(QMainWindow):
         width, height = get_window_center_point(self.search_widget)
         self.search_widget.move(width, height)
         self.search_widget.exec_()
+
+    def show_tv_widget(self):
+        """
+
+        :return:
+        """
+        width, height = get_window_center_point(self.tv_widget)
+        self.tv_widget.move(width, height)
+        self.tv_widget.exec_()
 
     @staticmethod
     def answer_help_action_triggered():
