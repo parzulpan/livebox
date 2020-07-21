@@ -39,6 +39,8 @@ import core.real_url.qf as Qf
 
 import core.real_url.tv as TV
 
+import core.real_url.radio_station as RadioStation
+
 
 def get_real_url_from_platform_content(platform, content):
     """
@@ -142,3 +144,13 @@ def get_real_url_from_tv_name_content(tv_name, tv_quality):
     """
 
     return TV.get_tv_url(tv_name, tv_quality)
+
+
+def get_real_url_from_radio_station_content(radio_station_type, radio_station_id):
+    """
+
+    :param radio_station_type:
+    :param radio_station_id:
+    :return:
+    """
+    return RadioStation.get_radio_station_url(radio_station_type, radio_station_id)

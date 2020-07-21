@@ -44,7 +44,7 @@ class TvWidget(QDialog):
                              "CCTV-9 记录",
                              "CCTV-10 科教",
                              "CCTV-12 社会与法",
-                             "CCTV-14H 少儿",
+                             "CCTV-14 少儿",
                              "CCTV-第一剧场",
                              "CCTV-国防军事",
                              "CCTV-怀旧剧场",

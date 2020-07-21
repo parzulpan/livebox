@@ -296,7 +296,7 @@ QToolButton::menu-button {
 QComboBox{
     border: 1px solid #999999;
     border-radius: 2px;
-    min-width: 90px;
+    min-width: 170px;
     min-height:25px;
 }
 QComboBox:editable{

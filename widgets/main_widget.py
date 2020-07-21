@@ -19,6 +19,7 @@ from PyQt5.QtCore import Qt, QSize, QUrl
 
 from utils.common import get_window_center_point
 from utils.crud_cfg import *
+from widgets.radio_station_widget import RadioStationWidget
 from widgets.search_widget import SearchWidget
 from widgets.tv_widget import TvWidget
 from widgets.live_widget import LiveWidget
@@ -121,7 +122,7 @@ class MainWindow(QMainWindow):
         self.tool_bar = QToolBar()
         self.tool_bar.setFloatable(False)
         self.tool_bar.setMovable(True)
-        self.tool_bar.setIconSize(QSize(40, 40))
+        self.tool_bar.setIconSize(QSize(35, 35))
         # self.tool_bar.setStyleSheet("QToolBar{border: 1px solid #313335; spacing:5px; }")
         self.addToolBar(Qt.TopToolBarArea, self.tool_bar)
         self.live_tool_action = QAction("", self.tool_bar)
@@ -141,6 +142,9 @@ class MainWindow(QMainWindow):
         self.radio_station_tool_action = QAction("", self.tool_bar)
         self.radio_station_tool_action.setToolTip("广播电台")
         self.radio_station_tool_action.setIcon(QIcon("./resources/img/radio_station@128x128.png"))
+        self.radio_station_widget = RadioStationWidget()
+        self.radio_station_tool_action.triggered.connect(self.show_radio_station_widget)
+        self.radio_station_widget.listen_radio_station_signal.connect(self.answer_listen_radio_station_signal)
 
         self.hot_live_tool_action = QAction("", self.tool_bar)
         self.hot_live_tool_action.setToolTip("热门直播")
@@ -151,10 +155,10 @@ class MainWindow(QMainWindow):
         self.attention_tool_action.setIcon(QIcon("./resources/img/attention@128x128.png"))
         # self.attention_tool_action.triggered.connect(self.show_search_widget)
 
-        self.pure_tool_action = QAction("", self.tool_bar)
-        self.pure_tool_action.setToolTip("纯净模式")
-        self.pure_tool_action.setIcon(QIcon("./resources/img/pure@128x128.png"))
-        # self.pure_tool_action.triggered.connect(self.show_search_widget)
+        self.preferences_tool_action = QAction("", self.tool_bar)
+        self.preferences_tool_action.setToolTip("偏好设置")
+        self.preferences_tool_action.setIcon(QIcon("./resources/img/preferences@128x128.png"))
+        # self.preferences_tool_action.triggered.connect(self.show_search_widget)
 
         self.nlp_tool_action = QAction("", self.tool_bar)
         self.nlp_tool_action.setToolTip("智能字幕")
@@ -232,12 +236,10 @@ class MainWindow(QMainWindow):
         self.tool_bar.addAction(self.hot_live_tool_action)
         self.tool_bar.addAction(self.attention_tool_action)
         self.tool_bar.addSeparator()
-        self.tool_bar.addAction(self.pure_tool_action)
-        self.tool_bar.addSeparator()
         self.tool_bar.addAction(self.nlp_tool_action)
-        self.tool_bar.addSeparator()
         self.tool_bar.addAction(self.note_tool_action)
         self.tool_bar.addSeparator()
+        self.tool_bar.addAction(self.preferences_tool_action)
 
         # 显示区域
         self.setCentralWidget(self.live_widget)
@@ -327,6 +329,15 @@ class MainWindow(QMainWindow):
         self.tv_widget.move(width, height)
         self.tv_widget.exec_()
 
+    def show_radio_station_widget(self):
+        """
+
+        :return:
+        """
+        width, height = get_window_center_point(self.radio_station_widget)
+        self.radio_station_widget.move(width, height)
+        self.radio_station_widget.exec_()
+
     @staticmethod
     def answer_help_action_triggered():
         """
@@ -374,6 +385,14 @@ class MainWindow(QMainWindow):
         """
         self.live_widget.vlc_widget.play_url(url)
         self.live_widget.set_player_widget(True)
+
+    def answer_listen_radio_station_signal(self, url):
+        """
+
+        :param url:
+        :return:
+        """
+        pass
 
     def answer_close_action_triggered(self):
         """
