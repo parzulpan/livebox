@@ -101,9 +101,9 @@ class TvWidget(QDialog):
         self.live_result_line_edit = QLineEdit()
         self.live_result_line_edit.setReadOnly(True)
 
-        self.get_live_btn = QPushButton('获取直播源')
+        self.get_live_btn = QPushButton('获取电视源')
         self.get_live_btn.clicked.connect(self.answer_get_live_btn_clicked)
-        self.copy_live_btn = QPushButton('复制直播源')
+        self.copy_live_btn = QPushButton('复制电视源')
         self.copy_live_btn.setDisabled(True)
         self.copy_live_btn.clicked.connect(self.answer_copy_live_btn_clicked)
         self.watch_live_btn = QPushButton('在线观看')

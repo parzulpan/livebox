@@ -13,7 +13,7 @@ import sys
 import os
 import platform
 
-from PyQt5.QtGui import QPalette, QColor
+from PyQt5.QtGui import QPalette, QColor, QCursor
 from PyQt5.QtWidgets import QWidget, QApplication, QSlider, QHBoxLayout, QVBoxLayout, QFrame, QMainWindow, \
     QLabel
 from PyQt5.QtCore import Qt
@@ -48,7 +48,7 @@ class VlcPlayerWidget(QMainWindow):
             self.media_player_frame = QFrame()
             self.media_player.set_xwindow(self.media_player_frame.winId())
         elif platform.system() == "Darwin":
-            # self.media_player_frame = QMacCocoaViewContainer(0)
+            self.media_player_frame = QFrame()
             self.media_player.set_nsobject(self.media_player_frame.winId())
         self.widget = QWidget(self)
         self.setCentralWidget(self.widget)
@@ -60,8 +60,9 @@ class VlcPlayerWidget(QMainWindow):
         self.main_layout = QVBoxLayout()
         self.main_layout.setContentsMargins(0, 0, 0, 0)
         self.main_layout.setSpacing(0)
-        self.control_widget = QWidget()
-        self.control_widget.setFixedHeight(24+5+5)
+        self.control_widget = QWidget(self)
+        # self.control_widget.setStyleSheet("background-color: black; ")
+        # self.control_widget.setMouseTracking(True)
         self.control_layout = QHBoxLayout(self.control_widget)
         self.control_layout.setContentsMargins(5, 5, 5, 5)
         self.control_layout.setSpacing(0)
@@ -120,6 +121,8 @@ class VlcPlayerWidget(QMainWindow):
         self.volume_slider_value_label = QLabel("")
         self.current_url = None
 
+        # self.startTimer(1000)
+
         self._init_ui()
 
     def _init_ui(self):
@@ -145,11 +148,38 @@ class VlcPlayerWidget(QMainWindow):
         self.control_layout.addSpacing(10)
 
         self.main_layout.addWidget(self.media_player_frame)
-        self.main_layout.addWidget(self.control_widget)
+        # self.main_layout.addWidget(self.control_widget)
         # self.main_layout.addSpacing(1)
         # self.main_layout.addLayout(self.control_layout)
 
         self.widget.setLayout(self.main_layout)
+
+        self.setMouseTracking(True)
+        self.control_widget.setMouseTracking(True)
+        self.widget.setMouseTracking(True)
+        self.centralWidget().setMouseTracking(True)
+
+    def get_control_widget(self):
+        """
+
+        :return:
+        """
+        self.control_layout.addWidget(self.play_pause_btn)
+        self.control_layout.addWidget(self.refresh_btn)
+        self.control_layout.addSpacing(10)
+        self.control_layout.addWidget(self.rewind_btn)
+        self.control_layout.addWidget(self.stop_btn)
+        self.control_layout.addWidget(self.fast_forward_btn)
+        self.control_layout.addSpacing(10)
+        self.control_layout.addWidget(self.fullscreen_narrow_btn)
+        self.control_layout.addWidget(self.collect_btn)
+        self.control_layout.addWidget(self.menu_btn)
+        self.control_layout.addSpacing(10)
+        self.control_layout.addStretch()
+        self.control_layout.addWidget(self.volume_btn)
+        self.control_layout.addWidget(self.volume_slider_value_label)
+        self.control_layout.addWidget(self.volume_slider)
+        self.control_layout.addSpacing(10)
 
     def moveEvent(self, event) -> None:
         """
@@ -161,6 +191,53 @@ class VlcPlayerWidget(QMainWindow):
         # print(width, height)
         # self.control_widget.move(width, height - 50)
         pass
+
+    def resizeEvent(self, event) -> None:
+        """
+
+        :param event:
+        :return:
+        """
+        self.control_widget.setGeometry(0, self.height() - 40, self.width() - 5, 34)
+
+    def mouseMoveEvent(self, event) -> None:
+        """
+
+        :param event:
+        :return:
+        """
+        print("mouse move event", event)
+        if self.control_widget.rect().contains(event.pos()):
+            self.control_widget.show()
+            print("show: ")
+        else:
+            self.control_widget.hide()
+            print("hide: ")
+
+    # def timerEvent(self, event) -> None:
+    #     """
+    #
+    #     :param event:
+    #     :return:
+    #     """
+    #     print("event: ", event)
+    #     if self.control_widget and self.control_widget.isVisible():
+    #         point = QCursor.pos()
+    #         print("point: ", point)
+    #         self_point = self.mapFromGlobal(point)
+    #         print("self_point: ", self_point)
+    #         widget_point = self.control_widget.mapFromGlobal(point)
+    #         print("widget_point: ", widget_point)
+    #         self_rect = self.rect()
+    #         print("self_rect: ", self_rect)
+    #         widget_rect = self.control_widget.rect()
+    #         print("widget_rect: ", widget_rect)
+    #         if not self_rect.contains(self_point) and not widget_rect.contains(widget_point):
+    #             self.control_widget.hide()
+    #             print("hide: ", point)
+    #         else:
+    #             self.control_widget.show()
+    #             print("show: ", point)
 
     def release_player(self):
         """ 释放资源

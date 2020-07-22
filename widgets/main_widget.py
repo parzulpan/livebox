@@ -392,7 +392,8 @@ class MainWindow(QMainWindow):
         :param url:
         :return:
         """
-        pass
+        self.live_widget.vlc_widget.play_url(url)
+        self.live_widget.set_player_widget(True)
 
     def answer_close_action_triggered(self):
         """

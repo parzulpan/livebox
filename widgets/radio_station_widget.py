@@ -24,7 +24,7 @@ class RadioStationWidget(QDialog):
 
     """
     listen_radio_station_signal = pyqtSignal(str)
-    """在线观看"""
+    """在线收听"""
 
     def __init__(self):
         super(RadioStationWidget, self).__init__()
@@ -39,20 +39,93 @@ class RadioStationWidget(QDialog):
         self.radio_station_id_combobox = QComboBox()
         self.radio_station_id_combobox.currentIndexChanged.connect(
             self.answer_radio_station_id_combobox_current_index_changed)
-        self.radio_station_id_list = ['环球资讯广播 FM90.5', '中文环球广播']
+        self.universal_radio_station_id_list = ["中国交通广播",
+                                                "环球资讯广播 FM90.5",
+                                                "中文环球广播",
+                                                "经典音乐广播 101.8",
+                                                "哈语广播",
+                                                "藏语广播",
+                                                "维语广播",
+                                                "中国乡村之声",
+                                                "经济之声",
+                                                "中国之声",
+                                                "音乐之声",
+                                                "中华之声",
+                                                "神州之声",
+                                                "华夏之声",
+                                                "香港之声",
+                                                "文艺之声",
+                                                "老年之声",
+                                                "闽南之音",
+                                                "南海之声",
+                                                "客家之声",
+                                                "海峡飞虹",
+                                                "轻松调频 FM91.5",
+                                                "Hit FM FM88.7", ]
+        self.local_radio_station_id_list = ["北京新闻广播 FM100.6",
+                                            "北京音乐广播 FM97.4",
+                                            "北京交通广播 FM103.9",
+                                            "北京文艺广播 FM87.6",
+                                            "北京欢乐时光 FM106.5",
+                                            "北京怀旧金曲 FM107.5",
+                                            "北京古典音乐 FM98.6",
+                                            "北京教学广播 FM99.4",
+                                            "北京长书广播 FM104.3",
+                                            "北京戏曲曲艺 FM105.1",
+                                            "北京房山经典音乐 FM96.9",
+                                            "北京好音乐 FM95.9",
+                                            "重庆新闻广播 FM96.8",
+                                            "重庆经济广播 FM101.5",
+                                            "重庆交通广播 FM95.5",
+                                            "重庆音乐广播 FM88.1",
+                                            "重庆都市广播 FM93.8",
+                                            "重庆文艺广播 FM103.5",
+                                            "巴渝之声 FM104.5"
+                                            "南川人民广播电台 FM107.0",
+                                            "万盛旅游交通广播 FM92.2",
+                                            "万州交通广播",
+                                            "福建新闻广播 FM103.6",
+                                            "福建经济广播 FM96.1",
+                                            "福建音乐广播 FM91.3",
+                                            "福建交通广播 FM100.7",
+                                            "福建东南广播 AM585",
+                                            "福建私家车广播 FM98.7",
+                                            "甘肃新闻综合广播 FM96.1",
+                                            "甘肃都市调频 FM106.6",
+                                            "甘肃交通广播 FM93.4",
+                                            "甘肃经济广播 FM93.4",
+                                            "甘肃农村广播 FM92.2",
+                                            "兰州新闻综合广播 FM97.3",
+                                            "兰州交通音乐广播 FM99.5",
+                                            "兰州生活文艺广播 FM100.8",
+                                            "广东新闻频道 FM91.4",
+                                            "广东珠江经济台 FM97.4",
+                                            "广东音乐之声 FM99.3",
+                                            "广东城市之声 FM103.6",
+                                            "广东南方生活广播 FM93.6",
+                                            "广东羊城交通广播 FM105.2",
+                                            "广东文体广播 FM107.7",
+                                            "广东股市广播 FM95.3",
+                                            "广东优悦广播 FM105.7",
+                                            "广州新闻电台 FM96.2",
+                                            "广州汽车音乐电台 FM102.7",
+                                            "广州交通电台 FM106.1",
+                                            "东莞音乐广播 FM104",
+                                            "东莞交通广播",
+                                            "当涂人民广播电台 FM90.1", ]
 
         self.search_result_label = QLabel('获取结果: ')
         self.audio_result_line_edit = QLineEdit()
-        # self.audio_result_line_edit.setReadOnly(True)
+        self.audio_result_line_edit.setReadOnly(True)
 
         self.get_audio_btn = QPushButton('获取音频源')
         self.get_audio_btn.clicked.connect(self.answer_get_audio_btn_clicked)
         self.copy_audio_btn = QPushButton('复制音频源')
         self.copy_audio_btn.setDisabled(True)
         self.copy_audio_btn.clicked.connect(self.answer_copy_audio_btn_clicked)
-        self.watch_audio_btn = QPushButton('在线观看')
-        self.watch_audio_btn.setDisabled(True)
-        self.watch_audio_btn.clicked.connect(self.answer_watch_audio_btn_clicked)
+        self.listen_audio_btn = QPushButton('在线收听')
+        self.listen_audio_btn.setDisabled(True)
+        self.listen_audio_btn.clicked.connect(self.answer_watch_audio_btn_clicked)
         self.clean_btn = QPushButton('信息清空')
         self.clean_btn.clicked.connect(self.answer_clean_btn_clicked)
 
@@ -64,7 +137,7 @@ class RadioStationWidget(QDialog):
         :return:
         """
         self.radio_station_type_combobox.addItems(self.radio_station_type_list)
-        self.radio_station_id_combobox.addItems(self.radio_station_id_list)
+        self.radio_station_id_combobox.addItems(self.universal_radio_station_id_list)
 
         radio_station_type_layout = QHBoxLayout()
         radio_station_type_layout.setContentsMargins(10, 10, 10, 10)
@@ -87,7 +160,7 @@ class RadioStationWidget(QDialog):
         search_result_layout.addWidget(self.audio_result_line_edit)
         search_result_layout.addWidget(self.get_audio_btn)
         search_result_layout.addWidget(self.copy_audio_btn)
-        search_result_layout.addWidget(self.watch_audio_btn)
+        search_result_layout.addWidget(self.listen_audio_btn)
         search_result_layout.addWidget(self.clean_btn)
         search_result_layout.addStretch()
 
@@ -109,8 +182,13 @@ class RadioStationWidget(QDialog):
         :param index:
         :return:
         """
+        self.radio_station_id_combobox.clear()
+        if index == 0:
+            self.radio_station_id_combobox.addItems(self.universal_radio_station_id_list)
+        else:
+            self.radio_station_id_combobox.addItems(self.local_radio_station_id_list)
         self.copy_audio_btn.setDisabled(True)
-        self.watch_audio_btn.setDisabled(True)
+        self.listen_audio_btn.setDisabled(True)
 
     def answer_radio_station_id_combobox_current_index_changed(self, index):
         """
@@ -119,7 +197,7 @@ class RadioStationWidget(QDialog):
         :return:
         """
         self.copy_audio_btn.setDisabled(True)
-        self.watch_audio_btn.setDisabled(True)
+        self.listen_audio_btn.setDisabled(True)
 
     def answer_get_audio_btn_clicked(self):
         """
@@ -127,15 +205,15 @@ class RadioStationWidget(QDialog):
         :return:
         """
         result = get_real_url_from_radio_station_content(self.radio_station_type_combobox.currentText(),
-                                                         self.radio_station_id_combobox.currentIndex())
+                                                         self.radio_station_id_combobox.currentText())
         print("search result: ", result)
         if result:
             self.audio_result_line_edit.setText(result)
             self.copy_audio_btn.setDisabled(False)
-            self.watch_audio_btn.setDisabled(False)
+            self.listen_audio_btn.setDisabled(False)
         else:
             self.copy_audio_btn.setDisabled(True)
-            self.watch_audio_btn.setDisabled(True)
+            self.listen_audio_btn.setDisabled(True)
             _box = PromptBox(2, "获取结果失败!", 1)
             width, height = get_window_center_point(_box)
             _box.move(width, height)
@@ -170,7 +248,7 @@ class RadioStationWidget(QDialog):
         self.radio_station_id_combobox.setCurrentIndex(0)
         self.audio_result_line_edit.clear()
         self.copy_audio_btn.setDisabled(True)
-        self.watch_audio_btn.setDisabled(True)
+        self.listen_audio_btn.setDisabled(True)
 
 
 if __name__ == '__main__':

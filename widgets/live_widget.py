@@ -26,10 +26,7 @@ class LiveWidget(QWidget):
         """
         super(LiveWidget, self).__init__()
 
-        self.pot_btn = QPushButton('PotPlayer播放')
-
-        self.vlc_btn = QPushButton('VLC播放')
-        self.vlc_widget = VlcPlayerWidget()
+        self.vlc_widget = VlcPlayerWidget("--audio-visual=visual", "--effect-list=spectrometer", "--effect-fft-window=flattop")
 
         self.player_widget = QWidget()
         self.player_layout = QVBoxLayout()
