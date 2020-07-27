@@ -33,10 +33,10 @@ class AboutWidget(QDialog):
         self.h_line.setFrameShape(QFrame.HLine)
         self.h_line.setFrameShadow(QFrame.Sunken)
 
-        self.intro_content_label = QLabel("简介：real-live是一个网络直播聚合平台，它支持当前几十种主流的直播平台，\n通过选择直播平台和输入查询信息即可获取相应的直播源。"
-                                          "可以选择在本平台上在线观看，\n在线观看播放器分为：1. 采用FFmpeg+SDL自研的RealPlayer；\n"
-                                          "2. 开源的VLC接口封装的VLCPlayer；选择一种自己喜欢的Player即可。\n"
-                                          "或者将直播源复制到PotPlayer、VLC等播放器中观看。")
+        self.intro_content_label = QLabel("简介：real-live是网络直播聚合平台，支持视频直播、高清电视和广播电台等。\n"
+                                          "通过输入查询信息即可获取相应的直播源，可以选择在本平台上在线欣赏，\n"
+                                          "在线播放器分为采用FFmpeg+SDL自研的RealPlayer和开源的VLC接口封装的VLCPlayer，\n"
+                                          "选择一种自己喜欢的Player即可。或者将直播源复制到PotPlayer、VLC等播放器中进行欣赏。")
 
         self.author_content_label = QLabel("作者：Parzulpan")
 
