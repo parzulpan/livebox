@@ -412,11 +412,11 @@ class MainWindow(QMainWindow):
         if checked:
             self.tool_bar.hide()
             update_contents("preferences", "tool_bar_visible", "False")
-            self.live_widget.vlc_widget.control_widget.hide()
+            # self.live_widget.vlc_widget.control_widget.hide()
         else:
             self.tool_bar.show()
             update_contents("preferences", "tool_bar_visible", "True")
-            self.live_widget.vlc_widget.control_widget.show()
+            # self.live_widget.vlc_widget.control_widget.show()
 
     def answer_tool_bar_top_level_changed(self, area):
         """

@@ -60,61 +60,61 @@ class VlcPlayerWidget(QMainWindow):
         self.main_layout = QVBoxLayout()
         self.main_layout.setContentsMargins(0, 0, 0, 0)
         self.main_layout.setSpacing(0)
-        self.control_widget = QWidget(self)
+        # self.control_widget = QWidget(self)
         # self.control_widget.setStyleSheet("background-color: black; ")
         # self.control_widget.setMouseTracking(True)
-        self.control_layout = QHBoxLayout(self.control_widget)
-        self.control_layout.setContentsMargins(5, 5, 5, 5)
-        self.control_layout.setSpacing(0)
-        self.play_pause_btn = CommonBtn("./resources/img/pause@64x64.png",
-                                        "./resources/img/play@64x64.png")
-        self.play_pause_btn.setToolTip("播放/暂停")
-        self.play_pause_btn.setShortcut(Qt.Key_Space)
-        self.play_pause_btn.clicked.connect(self.answer_play_pause_btn_clicked)
-        self.refresh_btn = CommonBtn("./resources/img/refresh@64x64.png",
-                                     "./resources/img/refresh@64x64.png")
-        self.refresh_btn.setToolTip("刷新")
-        self.refresh_btn.clicked.connect(self.answer_refresh_btn_clicked)
-
-        self.rewind_btn = CommonBtn("./resources/img/rewind@64x64.png",
-                                    "./resources/img/rewind@64x64.png")
-        self.rewind_btn.setToolTip("后退10秒")
-        self.rewind_btn.clicked.connect(self.answer_rewind_btn_clicked)
-        self.stop_btn = CommonBtn("./resources/img/stop@64x64.png",
-                                  "./resources/img/stop@64x64.png")
-        self.stop_btn.setToolTip("停止")
-        self.stop_btn.clicked.connect(self.answer_stop_btn_clicked)
-        self.fast_forward_btn = CommonBtn("./resources/img/fast_forward@64x64.png",
-                                          "./resources/img/fast_forward@64x64.png")
-        self.fast_forward_btn.setToolTip("前进10秒")
-        self.fast_forward_btn.clicked.connect(self.answer_fast_forward_btn_clicked)
-
-        self.fullscreen_narrow_btn = CommonBtn("./resources/img/fullscreen@64x64.png",
-                                               "./resources/img/narrow@64x64.png")
-        self.fullscreen_narrow_btn.setToolTip("最大化/最小化")
-        self.fullscreen_narrow_btn.setShortcut(Qt.Key_Escape)
-        self.fullscreen_narrow_btn.clicked.connect(self.answer_fullscreen_narrow_btn_clicked)
-        self.collect_btn = CommonBtn("./resources/img/collect@64x64.png",
-                                     "./resources/img/collect@64x64.png")
-        self.collect_btn.setToolTip("收藏")
-        self.collect_btn.clicked.connect(self.answer_collect_btn_clicked)
-        self.menu_btn = CommonBtn("./resources/img/menu@64x64.png",
-                                  "./resources/img/menu@64x64.png")
-        self.menu_btn.setToolTip("菜单")
-        self.menu_btn.clicked.connect(self.answer_menu_btn_clicked)
-
-        self.volume_btn = CommonBtn("./resources/img/volume@64x64.png",
-                                    "./resources/img/mute@64x64.png")
-        self.volume_btn.setToolTip("音量")
-        self.volume_btn.clicked.connect(self.answer_volume_btn_clicked)
-        self.volume_slider = QSlider(Qt.Horizontal)
-        self.volume_slider.setFixedWidth(150)
-        self.volume_slider.setMinimum(0)
-        self.volume_slider.setMaximum(100)
-        self.volume_slider.setSingleStep(1)
-        self.volume_slider.setTickInterval(1)
-        self.volume_slider.setTickPosition(QSlider.TicksAbove)
-        self.volume_slider.valueChanged.connect(self.answer_volume_slider_value_changed)
+        # self.control_layout = QHBoxLayout(self.control_widget)
+        # self.control_layout.setContentsMargins(5, 5, 5, 5)
+        # self.control_layout.setSpacing(0)
+        # self.play_pause_btn = CommonBtn("./resources/img/pause@64x64.png",
+        #                                 "./resources/img/play@64x64.png")
+        # self.play_pause_btn.setToolTip("播放/暂停")
+        # self.play_pause_btn.setShortcut(Qt.Key_Space)
+        # self.play_pause_btn.clicked.connect(self.answer_play_pause_btn_clicked)
+        # self.refresh_btn = CommonBtn("./resources/img/refresh@64x64.png",
+        #                              "./resources/img/refresh@64x64.png")
+        # self.refresh_btn.setToolTip("刷新")
+        # self.refresh_btn.clicked.connect(self.answer_refresh_btn_clicked)
+        #
+        # self.rewind_btn = CommonBtn("./resources/img/rewind@64x64.png",
+        #                             "./resources/img/rewind@64x64.png")
+        # self.rewind_btn.setToolTip("后退10秒")
+        # self.rewind_btn.clicked.connect(self.answer_rewind_btn_clicked)
+        # self.stop_btn = CommonBtn("./resources/img/stop@64x64.png",
+        #                           "./resources/img/stop@64x64.png")
+        # self.stop_btn.setToolTip("停止")
+        # self.stop_btn.clicked.connect(self.answer_stop_btn_clicked)
+        # self.fast_forward_btn = CommonBtn("./resources/img/fast_forward@64x64.png",
+        #                                   "./resources/img/fast_forward@64x64.png")
+        # self.fast_forward_btn.setToolTip("前进10秒")
+        # self.fast_forward_btn.clicked.connect(self.answer_fast_forward_btn_clicked)
+        #
+        # self.fullscreen_narrow_btn = CommonBtn("./resources/img/fullscreen@64x64.png",
+        #                                        "./resources/img/narrow@64x64.png")
+        # self.fullscreen_narrow_btn.setToolTip("最大化/最小化")
+        # self.fullscreen_narrow_btn.setShortcut(Qt.Key_Escape)
+        # self.fullscreen_narrow_btn.clicked.connect(self.answer_fullscreen_narrow_btn_clicked)
+        # self.collect_btn = CommonBtn("./resources/img/collect@64x64.png",
+        #                              "./resources/img/collect@64x64.png")
+        # self.collect_btn.setToolTip("收藏")
+        # self.collect_btn.clicked.connect(self.answer_collect_btn_clicked)
+        # self.menu_btn = CommonBtn("./resources/img/menu@64x64.png",
+        #                           "./resources/img/menu@64x64.png")
+        # self.menu_btn.setToolTip("菜单")
+        # self.menu_btn.clicked.connect(self.answer_menu_btn_clicked)
+        #
+        # self.volume_btn = CommonBtn("./resources/img/volume@64x64.png",
+        #                             "./resources/img/mute@64x64.png")
+        # self.volume_btn.setToolTip("音量")
+        # self.volume_btn.clicked.connect(self.answer_volume_btn_clicked)
+        # self.volume_slider = QSlider(Qt.Horizontal)
+        # self.volume_slider.setFixedWidth(150)
+        # self.volume_slider.setMinimum(0)
+        # self.volume_slider.setMaximum(100)
+        # self.volume_slider.setSingleStep(1)
+        # self.volume_slider.setTickInterval(1)
+        # self.volume_slider.setTickPosition(QSlider.TicksAbove)
+        # self.volume_slider.valueChanged.connect(self.answer_volume_slider_value_changed)
 
         self.current_volume = None
         self.current_slider_value = None
@@ -130,114 +130,25 @@ class VlcPlayerWidget(QMainWindow):
 
         :return:
         """
-        self.control_layout.addWidget(self.play_pause_btn)
-        self.control_layout.addWidget(self.refresh_btn)
-        self.control_layout.addSpacing(10)
-        self.control_layout.addWidget(self.rewind_btn)
-        self.control_layout.addWidget(self.stop_btn)
-        self.control_layout.addWidget(self.fast_forward_btn)
-        self.control_layout.addSpacing(10)
-        self.control_layout.addWidget(self.fullscreen_narrow_btn)
-        self.control_layout.addWidget(self.collect_btn)
-        self.control_layout.addWidget(self.menu_btn)
-        self.control_layout.addSpacing(10)
-        self.control_layout.addStretch()
-        self.control_layout.addWidget(self.volume_btn)
-        self.control_layout.addWidget(self.volume_slider_value_label)
-        self.control_layout.addWidget(self.volume_slider)
-        self.control_layout.addSpacing(10)
+        # self.control_layout.addWidget(self.play_pause_btn)
+        # self.control_layout.addWidget(self.refresh_btn)
+        # self.control_layout.addSpacing(10)
+        # self.control_layout.addWidget(self.rewind_btn)
+        # self.control_layout.addWidget(self.stop_btn)
+        # self.control_layout.addWidget(self.fast_forward_btn)
+        # self.control_layout.addSpacing(10)
+        # self.control_layout.addWidget(self.fullscreen_narrow_btn)
+        # self.control_layout.addWidget(self.collect_btn)
+        # self.control_layout.addWidget(self.menu_btn)
+        # self.control_layout.addSpacing(10)
+        # self.control_layout.addStretch()
+        # self.control_layout.addWidget(self.volume_btn)
+        # self.control_layout.addWidget(self.volume_slider_value_label)
+        # self.control_layout.addWidget(self.volume_slider)
+        # self.control_layout.addSpacing(10)
 
         self.main_layout.addWidget(self.media_player_frame)
-        # self.main_layout.addWidget(self.control_widget)
-        # self.main_layout.addSpacing(1)
-        # self.main_layout.addLayout(self.control_layout)
-
         self.widget.setLayout(self.main_layout)
-
-        self.setMouseTracking(True)
-        self.control_widget.setMouseTracking(True)
-        self.widget.setMouseTracking(True)
-        self.centralWidget().setMouseTracking(True)
-
-    def get_control_widget(self):
-        """
-
-        :return:
-        """
-        self.control_layout.addWidget(self.play_pause_btn)
-        self.control_layout.addWidget(self.refresh_btn)
-        self.control_layout.addSpacing(10)
-        self.control_layout.addWidget(self.rewind_btn)
-        self.control_layout.addWidget(self.stop_btn)
-        self.control_layout.addWidget(self.fast_forward_btn)
-        self.control_layout.addSpacing(10)
-        self.control_layout.addWidget(self.fullscreen_narrow_btn)
-        self.control_layout.addWidget(self.collect_btn)
-        self.control_layout.addWidget(self.menu_btn)
-        self.control_layout.addSpacing(10)
-        self.control_layout.addStretch()
-        self.control_layout.addWidget(self.volume_btn)
-        self.control_layout.addWidget(self.volume_slider_value_label)
-        self.control_layout.addWidget(self.volume_slider)
-        self.control_layout.addSpacing(10)
-
-    def moveEvent(self, event) -> None:
-        """
-
-        :param event:
-        :return:
-        """
-        # width, height = self.width(), self.height()
-        # print(width, height)
-        # self.control_widget.move(width, height - 50)
-        pass
-
-    def resizeEvent(self, event) -> None:
-        """
-
-        :param event:
-        :return:
-        """
-        self.control_widget.setGeometry(0, self.height() - 40, self.width() - 5, 34)
-
-    def mouseMoveEvent(self, event) -> None:
-        """
-
-        :param event:
-        :return:
-        """
-        print("mouse move event", event)
-        if self.control_widget.rect().contains(event.pos()):
-            self.control_widget.show()
-            print("show: ")
-        else:
-            self.control_widget.hide()
-            print("hide: ")
-
-    # def timerEvent(self, event) -> None:
-    #     """
-    #
-    #     :param event:
-    #     :return:
-    #     """
-    #     print("event: ", event)
-    #     if self.control_widget and self.control_widget.isVisible():
-    #         point = QCursor.pos()
-    #         print("point: ", point)
-    #         self_point = self.mapFromGlobal(point)
-    #         print("self_point: ", self_point)
-    #         widget_point = self.control_widget.mapFromGlobal(point)
-    #         print("widget_point: ", widget_point)
-    #         self_rect = self.rect()
-    #         print("self_rect: ", self_rect)
-    #         widget_rect = self.control_widget.rect()
-    #         print("widget_rect: ", widget_rect)
-    #         if not self_rect.contains(self_point) and not widget_rect.contains(widget_point):
-    #             self.control_widget.hide()
-    #             print("hide: ", point)
-    #         else:
-    #             self.control_widget.show()
-    #             print("show: ", point)
 
     def release_player(self):
         """ 释放资源
@@ -258,9 +169,6 @@ class VlcPlayerWidget(QMainWindow):
                 self.current_url = url
                 self.media_player.set_mrl(url)
                 self.media_player_frame.show()
-                self.control_widget.show()
-                self.volume_slider.setValue(80)
-                self.play_pause_btn.setChecked(False)
                 return self.media_player.play()
             else:
                 pass
@@ -288,7 +196,6 @@ class VlcPlayerWidget(QMainWindow):
         :return:
         """
         self.media_player_frame.hide()
-        self.control_widget.hide()
         self.media_player.stop()
         # self.release_player()
 

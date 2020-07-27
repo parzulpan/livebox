@@ -26,7 +26,8 @@ class LiveWidget(QWidget):
         """
         super(LiveWidget, self).__init__()
 
-        self.vlc_widget = VlcPlayerWidget("--audio-visual=visual", "--effect-list=spectrometer", "--effect-fft-window=flattop")
+        # self.vlc_widget = VlcPlayerWidget("--audio-visual=visual", "--effect-list=spectrometer", "--effect-fft-window=flattop")
+        self.vlc_widget = VlcPlayerWidget()
 
         self.player_widget = QWidget()
         self.player_layout = QVBoxLayout()
