@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['real_live.py'],
-             pathex=['E:\\projects\\GitHub\\real-live'],
+             pathex=['/home/parzulpan/Pro/real-live'],
              binaries=[],
              datas=[('docs', 'docs'), ('resources', 'resources'), ('_license', '_license'), ('core', 'core')],
              hiddenimports=[],
@@ -21,12 +21,12 @@ exe = EXE(pyz,
           a.scripts,
           [],
           exclude_binaries=True,
-          name='网络直播聚合平台V1.2.0',
+          name='网络直播聚合平台V1.3.0',
           debug=False,
           bootloader_ignore_signals=False,
           strip=False,
           upx=True,
-          console=False , icon='E:\\projects\\GitHub\\real-live\\resources\\img\\logo@48x48.ico')
+          console=False , icon='/home/parzulpan/Pro/real-live/resources/img/logo@48x48.ico')
 coll = COLLECT(exe,
                a.binaries,
                a.zipfiles,

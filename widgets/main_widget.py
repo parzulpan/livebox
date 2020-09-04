@@ -19,6 +19,7 @@ from PyQt5.QtCore import Qt, QSize, QUrl
 
 from utils.common import get_window_center_point
 from utils.crud_cfg import *
+from utils.path_helper import PathHelper
 from widgets.radio_station_widget import RadioStationWidget
 from widgets.search_widget import SearchWidget
 from widgets.tv_widget import TvWidget
@@ -127,47 +128,47 @@ class MainWindow(QMainWindow):
         self.addToolBar(Qt.TopToolBarArea, self.tool_bar)
         self.live_tool_action = QAction("", self.tool_bar)
         self.live_tool_action.setToolTip("直播搜索")
-        self.live_tool_action.setIcon(QIcon("./resources/img/search@128x128.png"))
+        self.live_tool_action.setIcon(QIcon(PathHelper.get_img_path("search@128x128.png")))
         self.search_widget = SearchWidget()
         self.live_tool_action.triggered.connect(self.show_search_widget)
         self.search_widget.watch_live_signal.connect(self.answer_watch_live_signal)
 
         self.tv_live_tool_action = QAction("", self.tool_bar)
         self.tv_live_tool_action.setToolTip("高清电视")
-        self.tv_live_tool_action.setIcon(QIcon("./resources/img/tv@128x128.png"))
+        self.tv_live_tool_action.setIcon(QIcon(PathHelper.get_img_path("tv@128x128.png")))
         self.tv_widget = TvWidget()
         self.tv_live_tool_action.triggered.connect(self.show_tv_widget)
         self.tv_widget.watch_live_signal.connect(self.answer_watch_live_signal)
 
         self.radio_station_tool_action = QAction("", self.tool_bar)
         self.radio_station_tool_action.setToolTip("广播电台")
-        self.radio_station_tool_action.setIcon(QIcon("./resources/img/radio_station@128x128.png"))
+        self.radio_station_tool_action.setIcon(QIcon(PathHelper.get_img_path("radio_station@128x128.png")))
         self.radio_station_widget = RadioStationWidget()
         self.radio_station_tool_action.triggered.connect(self.show_radio_station_widget)
         self.radio_station_widget.listen_radio_station_signal.connect(self.answer_listen_radio_station_signal)
 
         self.hot_live_tool_action = QAction("", self.tool_bar)
         self.hot_live_tool_action.setToolTip("热门直播")
-        self.hot_live_tool_action.setIcon(QIcon("./resources/img/hot@128x128.png"))
+        self.hot_live_tool_action.setIcon(QIcon(PathHelper.get_img_path("hot@128x128.png")))
 
         self.attention_tool_action = QAction("", self.tool_bar)
         self.attention_tool_action.setToolTip("我的关注")
-        self.attention_tool_action.setIcon(QIcon("./resources/img/attention@128x128.png"))
+        self.attention_tool_action.setIcon(QIcon(PathHelper.get_img_path("attention@128x128.png")))
         # self.attention_tool_action.triggered.connect(self.show_search_widget)
 
         self.preferences_tool_action = QAction("", self.tool_bar)
         self.preferences_tool_action.setToolTip("偏好设置")
-        self.preferences_tool_action.setIcon(QIcon("./resources/img/preferences@128x128.png"))
+        self.preferences_tool_action.setIcon(QIcon(PathHelper.get_img_path("preferences@128x128.png")))
         # self.preferences_tool_action.triggered.connect(self.show_search_widget)
 
         self.nlp_tool_action = QAction("", self.tool_bar)
         self.nlp_tool_action.setToolTip("智能字幕")
-        self.nlp_tool_action.setIcon(QIcon("./resources/img/nlp@128x128.png"))
+        self.nlp_tool_action.setIcon(QIcon(PathHelper.get_img_path("nlp@128x128.png")))
         # self.nlp_tool_action.triggered.connect(self.show_search_widget)
 
         self.note_tool_action = QAction("", self.tool_bar)
         self.note_tool_action.setToolTip("边看边记")
-        self.note_tool_action.setIcon(QIcon("./resources/img/note@128x128.png"))
+        self.note_tool_action.setIcon(QIcon(PathHelper.get_img_path("note@128x128.png")))
         # self.note_tool_action.triggered.connect(self.show_search_widget)
 
         self.live_widget = LiveWidget()
@@ -308,7 +309,7 @@ class MainWindow(QMainWindow):
         title = retrieve_content("software_info", "software_name") + " " + retrieve_content("software_info",
                                                                                             "software_version")
         self.setWindowTitle(title)
-        self.setWindowIcon(QIcon('./resources/img/logo@48x48.png'))
+        self.setWindowIcon(QIcon(PathHelper.get_img_path("logo@48x48.png")))
         self.showMaximized()
 
     def show_search_widget(self):
@@ -465,7 +466,7 @@ class MainWindow(QMainWindow):
         :param checked:
         :return:
         """
-        with open("./resources/qss/dark.qss", "r", encoding="utf-8") as f:
+        with open(PathHelper.get_qss_path("dark.qss"), "r", encoding="utf-8") as f:
             qss = f.read()
             qApp.setStyleSheet(qss)
         update_contents("preferences", "skin", "dark")
@@ -477,7 +478,7 @@ class MainWindow(QMainWindow):
         :param checked:
         :return:
         """
-        with open("./resources/qss/white.qss", "r", encoding="utf-8") as f:
+        with open(PathHelper.get_qss_path("white.qss"), "r", encoding="utf-8") as f:
             qss = f.read()
             qApp.setStyleSheet(qss)
         update_contents("preferences", "skin", "white")
@@ -489,7 +490,7 @@ class MainWindow(QMainWindow):
         :param checked:
         :return:
         """
-        with open("./resources/qss/blue.qss", "r", encoding="utf-8") as f:
+        with open(PathHelper.get_qss_path("blue.qss"), "r", encoding="utf-8") as f:
             qss = f.read()
             qApp.setStyleSheet(qss)
         update_contents("preferences", "skin", "blue")

@@ -18,6 +18,7 @@ from PyQt5.QtCore import Qt, pyqtSignal
 
 from utils.get_real_url import get_real_url_from_platform_content
 from utils.common import PromptBox, get_window_center_point
+from utils.path_helper import PathHelper
 
 
 class SearchWidget(QDialog):
@@ -32,10 +33,11 @@ class SearchWidget(QDialog):
         self.platform_label = QLabel('直播平台: ')
         self.platform_combobox = QComboBox()
         self.platform_combobox.currentIndexChanged.connect(self.answer_platform_combobox_current_index_changed)
-        self.platform_list = ["斗鱼直播", "虎牙直播", "哔哩哔哩直播", "战旗直播", "网易CC直播", "火猫直播", "企鹅电竞", "YY直播", "一直播", "快手直播", "花椒直播",
-                              "映客直播", "西瓜直播", "触手直播", "NOW直播", "抖音直播", "爱奇艺直播", "酷狗直播", "龙珠直播", "PPS奇秀直播", "六间房",
-                              "17直播",
-                              "来疯直播", "优酷轮播台", "网易LOOK直播", "千帆直播"]
+        self.platform_list = ["斗鱼直播", "虎牙直播", "哔哩哔哩直播", "企鹅电竞", "企鹅体育", "战旗直播", "AcFun直播", "龙珠直播",
+                              "抖音直播", "快手直播", "西瓜直播", "爱奇艺直播", "酷狗直播", "一直播", "YY直播", "映客直播",
+                              "火猫直播", "陌陌直播", "京东直播", "人人直播", "花椒直播", "触手直播", "小米直播", "迅雷直播",
+                              "NOW直播", "网易CC直播", "奇秀直播", "六间房", "17直播", "来疯直播", "优酷轮播台", "网易LOOK直播",
+                              "千帆直播", "秀色直播", "我秀直播", "艺气山直播"]
         self.platform_result = None
 
         self.search_type_label = QLabel('搜索类型: ')
@@ -112,7 +114,7 @@ class SearchWidget(QDialog):
         self.setLayout(main_layout)
 
         self.setWindowTitle("信息搜索")
-        self.setWindowIcon(QIcon('./resources/img/search@64x64.png'))
+        self.setWindowIcon(QIcon(PathHelper.get_img_path('search@64x64.png')))
         self.setWindowFlags(Qt.WindowCloseButtonHint)
 
     def answer_platform_combobox_current_index_changed(self, index):
@@ -141,8 +143,7 @@ class SearchWidget(QDialog):
         content = self.search_content_line_edit.text()
         if content:
             result = get_real_url_from_platform_content(self.platform_combobox.currentIndex(), content)
-            print("search result: ", result)
-            if 'http' in result:
+            if result:
                 self.live_result_line_edit.setText(result)
                 self.copy_live_btn.setDisabled(False)
                 self.watch_live_btn.setDisabled(False)

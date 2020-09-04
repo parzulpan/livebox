@@ -24,7 +24,7 @@ class AboutWidget(QDialog):
         super(AboutWidget, self).__init__()
 
         self.logo_label = QLabel()
-        self.logo_label.setPixmap(QPixmap('./resources/img/logo@64x64.png'))
+        self.logo_label.setPixmap(QPixmap(PathHelper.get_img_path("logo@64x64.png")))
         title = retrieve_content("software_info", "software_name") + " " + retrieve_content("software_info",
                                                                                             "software_version")
         self.logo_content_label = QLabel(title)

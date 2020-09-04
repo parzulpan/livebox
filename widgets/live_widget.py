@@ -14,6 +14,9 @@ import sys
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QPushButton, QApplication
 
 from widgets.vlc_player_widget import VlcPlayerWidget
+from widgets.control_widget import ControlWidget
+
+from utils.path_helper import PathHelper
 
 
 class LiveWidget(QWidget):
@@ -28,6 +31,7 @@ class LiveWidget(QWidget):
 
         # self.vlc_widget = VlcPlayerWidget("--audio-visual=visual", "--effect-list=spectrometer", "--effect-fft-window=flattop")
         self.vlc_widget = VlcPlayerWidget()
+        self.control_widget = ControlWidget()
 
         self.player_widget = QWidget()
         self.player_layout = QVBoxLayout()
@@ -53,7 +57,7 @@ class LiveWidget(QWidget):
         main_layout.addLayout(self.player_layout)
         self.setLayout(main_layout)
 
-        self.setStyleSheet("background-image:url(./resources/img/live_null.png); ")
+        self.setStyleSheet(f"background-image:url({PathHelper.get_img_path('live_null.png')}); ")
 
     def clear_layout(self):
         """
@@ -74,9 +78,11 @@ class LiveWidget(QWidget):
         if visible:
             # self.vlc_widget.setVisible(True)
             self.vlc_widget.show()
+            self.control_widget.show()
         else:
             # self.vlc_widget.setVisible(False)
             self.vlc_widget.hide()
+            self.control_widget.hide()
 
     def set_player_widget(self, is_visible=False):
         """
@@ -90,6 +96,7 @@ class LiveWidget(QWidget):
         self._layout.setSpacing(0)
 
         self._layout.addWidget(self.vlc_widget)
+        self._layout.addWidget(self.control_widget)
 
         self.set_widget_visible(is_visible)
 

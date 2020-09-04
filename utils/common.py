@@ -13,6 +13,8 @@ from PyQt5.QtWidgets import QDesktopWidget, QDialog, QLabel, QPushButton, QHBoxL
 from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5.QtCore import Qt
 
+from utils.path_helper import PathHelper
+
 
 def get_window_center_point(widget):
     """ 使窗口居中显示
@@ -54,13 +56,13 @@ class PromptBox(QDialog):
         self._btn_layout.addStretch()
 
         if box_type == 0:
-            self._icon_label.setPixmap(QPixmap('./resources/img/box_success@32x32.png'))
+            self._icon_label.setPixmap(QPixmap(PathHelper.get_img_path("box_success@32x32.png")))
         elif box_type == 1:
-            self._icon_label.setPixmap(QPixmap('./resources/img/box_question@32x32.png'))
+            self._icon_label.setPixmap(QPixmap(PathHelper.get_img_path("box_question@32x32.png")))
         elif box_type == 2:
-            self._icon_label.setPixmap(QPixmap('./resources/img/box_warning@32x32.png'))
+            self._icon_label.setPixmap(QPixmap(PathHelper.get_img_path("box_warning@32x32.png")))
         elif box_type == 3:
-            self._icon_label.setPixmap(QPixmap('./resources/img/box_error@32x32.png'))
+            self._icon_label.setPixmap(QPixmap(PathHelper.get_img_path("box_error@32x32.png")))
         else:
             pass
 
@@ -87,7 +89,7 @@ class PromptBox(QDialog):
         self.setLayout(self._main_layout)
 
         self.setWindowTitle("提示")
-        self.setWindowIcon(QIcon('./resources/img/logo@48x48.png'))
+        self.setWindowIcon(QIcon(PathHelper.get_img_path("logo@48x48.png")))
         self.setWindowFlags(Qt.WindowCloseButtonHint)
         self.setFixedSize(280, 140)
 
@@ -116,7 +118,9 @@ class CommonBtn(QPushButton):
     """
     def __init__(self, img, clicked_img):
         super(CommonBtn, self).__init__()
-        # self.setAutoFillBackground(True)
+        self.setAutoFillBackground(True)
+        img = PathHelper.get_img_path(img)
+        clicked_img = PathHelper.get_img_path(clicked_img)
         self.setCheckable(True)
         self.setStyleSheet(
             "QPushButton{border-radius:5px;min-width:24px; min-height:24px; max-width:24px; max-height:24px; "

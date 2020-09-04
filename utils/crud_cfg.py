@@ -11,7 +11,9 @@
 
 import configparser
 
-cfg_file = "./resources/config.ini"
+from utils.path_helper import PathHelper
+
+cfg_file = PathHelper.get_config_path()
 
 cfg = configparser.ConfigParser()
 

@@ -8,6 +8,6 @@ pip freeze > requirements.txt
 
 
 # Pyinstaller cmd
-pyinstaller -D -c -i E:\projects\GitHub\real-live\resources\img\logo@48x48.ico real_live.py
+pyinstaller -D -w -i /home/parzulpan/Pro/real-live/resources/img/logo@48x48.ico real_live.py
 
 pyinstaller real_live.spec

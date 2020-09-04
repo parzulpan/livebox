@@ -13,15 +13,14 @@ import sys
 import os
 import platform
 
-from PyQt5.QtGui import QPalette, QColor, QCursor
-from PyQt5.QtWidgets import QWidget, QApplication, QSlider, QHBoxLayout, QVBoxLayout, QFrame, QMainWindow, \
+from PyQt5.QtGui import QPalette, QColor
+from PyQt5.QtWidgets import QWidget, QApplication, QVBoxLayout, QFrame, QMainWindow, \
     QLabel
-from PyQt5.QtCore import Qt
 
-from utils.common import CommonBtn
+from utils.path_helper import PathHelper
 
 # 设置VLC库路径，需在import vlc之前
-os.environ['PYTHON_VLC_MODULE_PATH'] = "./core/vlc_3.0.9.2"
+os.environ['PYTHON_VLC_MODULE_PATH'] = PathHelper.get_python_vlc_module_path()
 import vlc
 
 
@@ -60,68 +59,11 @@ class VlcPlayerWidget(QMainWindow):
         self.main_layout = QVBoxLayout()
         self.main_layout.setContentsMargins(0, 0, 0, 0)
         self.main_layout.setSpacing(0)
-        # self.control_widget = QWidget(self)
-        # self.control_widget.setStyleSheet("background-color: black; ")
-        # self.control_widget.setMouseTracking(True)
-        # self.control_layout = QHBoxLayout(self.control_widget)
-        # self.control_layout.setContentsMargins(5, 5, 5, 5)
-        # self.control_layout.setSpacing(0)
-        # self.play_pause_btn = CommonBtn("./resources/img/pause@64x64.png",
-        #                                 "./resources/img/play@64x64.png")
-        # self.play_pause_btn.setToolTip("播放/暂停")
-        # self.play_pause_btn.setShortcut(Qt.Key_Space)
-        # self.play_pause_btn.clicked.connect(self.answer_play_pause_btn_clicked)
-        # self.refresh_btn = CommonBtn("./resources/img/refresh@64x64.png",
-        #                              "./resources/img/refresh@64x64.png")
-        # self.refresh_btn.setToolTip("刷新")
-        # self.refresh_btn.clicked.connect(self.answer_refresh_btn_clicked)
-        #
-        # self.rewind_btn = CommonBtn("./resources/img/rewind@64x64.png",
-        #                             "./resources/img/rewind@64x64.png")
-        # self.rewind_btn.setToolTip("后退10秒")
-        # self.rewind_btn.clicked.connect(self.answer_rewind_btn_clicked)
-        # self.stop_btn = CommonBtn("./resources/img/stop@64x64.png",
-        #                           "./resources/img/stop@64x64.png")
-        # self.stop_btn.setToolTip("停止")
-        # self.stop_btn.clicked.connect(self.answer_stop_btn_clicked)
-        # self.fast_forward_btn = CommonBtn("./resources/img/fast_forward@64x64.png",
-        #                                   "./resources/img/fast_forward@64x64.png")
-        # self.fast_forward_btn.setToolTip("前进10秒")
-        # self.fast_forward_btn.clicked.connect(self.answer_fast_forward_btn_clicked)
-        #
-        # self.fullscreen_narrow_btn = CommonBtn("./resources/img/fullscreen@64x64.png",
-        #                                        "./resources/img/narrow@64x64.png")
-        # self.fullscreen_narrow_btn.setToolTip("最大化/最小化")
-        # self.fullscreen_narrow_btn.setShortcut(Qt.Key_Escape)
-        # self.fullscreen_narrow_btn.clicked.connect(self.answer_fullscreen_narrow_btn_clicked)
-        # self.collect_btn = CommonBtn("./resources/img/collect@64x64.png",
-        #                              "./resources/img/collect@64x64.png")
-        # self.collect_btn.setToolTip("收藏")
-        # self.collect_btn.clicked.connect(self.answer_collect_btn_clicked)
-        # self.menu_btn = CommonBtn("./resources/img/menu@64x64.png",
-        #                           "./resources/img/menu@64x64.png")
-        # self.menu_btn.setToolTip("菜单")
-        # self.menu_btn.clicked.connect(self.answer_menu_btn_clicked)
-        #
-        # self.volume_btn = CommonBtn("./resources/img/volume@64x64.png",
-        #                             "./resources/img/mute@64x64.png")
-        # self.volume_btn.setToolTip("音量")
-        # self.volume_btn.clicked.connect(self.answer_volume_btn_clicked)
-        # self.volume_slider = QSlider(Qt.Horizontal)
-        # self.volume_slider.setFixedWidth(150)
-        # self.volume_slider.setMinimum(0)
-        # self.volume_slider.setMaximum(100)
-        # self.volume_slider.setSingleStep(1)
-        # self.volume_slider.setTickInterval(1)
-        # self.volume_slider.setTickPosition(QSlider.TicksAbove)
-        # self.volume_slider.valueChanged.connect(self.answer_volume_slider_value_changed)
 
         self.current_volume = None
         self.current_slider_value = None
         self.volume_slider_value_label = QLabel("")
         self.current_url = None
-
-        # self.startTimer(1000)
 
         self._init_ui()
 
@@ -130,23 +72,6 @@ class VlcPlayerWidget(QMainWindow):
 
         :return:
         """
-        # self.control_layout.addWidget(self.play_pause_btn)
-        # self.control_layout.addWidget(self.refresh_btn)
-        # self.control_layout.addSpacing(10)
-        # self.control_layout.addWidget(self.rewind_btn)
-        # self.control_layout.addWidget(self.stop_btn)
-        # self.control_layout.addWidget(self.fast_forward_btn)
-        # self.control_layout.addSpacing(10)
-        # self.control_layout.addWidget(self.fullscreen_narrow_btn)
-        # self.control_layout.addWidget(self.collect_btn)
-        # self.control_layout.addWidget(self.menu_btn)
-        # self.control_layout.addSpacing(10)
-        # self.control_layout.addStretch()
-        # self.control_layout.addWidget(self.volume_btn)
-        # self.control_layout.addWidget(self.volume_slider_value_label)
-        # self.control_layout.addWidget(self.volume_slider)
-        # self.control_layout.addSpacing(10)
-
         self.main_layout.addWidget(self.media_player_frame)
         self.widget.setLayout(self.main_layout)
 

@@ -10,32 +10,43 @@
 """
 
 from utils.live_enum import LiveEnum
-import core.real_url.douyu as Douyu
-import core.real_url.huya as Huya
-import core.real_url.bilibili as Bilibili
-import core.real_url.zhanqi as Zhanqi
-import core.real_url.cc as Cc
-import core.real_url.huomao as Huomao
-import core.real_url.egame as Egame
-import core.real_url.yy as Yy
-import core.real_url.yizhibo as Yizhibo
-import core.real_url.kuaishou as Kuaishou
-import core.real_url.huajiao as Huajiao
-import core.real_url.inke as Inke
-import core.real_url.ixigua as Ixigua
-import core.real_url.chushou as Chushou
-import core.real_url.now as Now
-import core.real_url.douyin as Douyin
-import core.real_url.iqiyi as Iqiyi
-import core.real_url.kugou as Kugou
-import core.real_url.longzhu as Longzhu
-import core.real_url.pps as Pps
-import core.real_url.v6cn as V6cn
-import core.real_url.live17 as Live17
-import core.real_url.laifeng as Laifeng
-import core.real_url.youku as Youku
-import core.real_url.look as Look
-import core.real_url.qf as Qf
+from core.real_url.douyu import get_real_url as DouYu
+from core.real_url.huya import get_real_url as HuYa
+from core.real_url.bilibili import get_real_url as BiliBili
+from core.real_url.egame import get_real_url as EGame
+from core.real_url.esport import get_real_url as ESport
+from core.real_url.zhanqi import get_real_url as ZhanQi
+from core.real_url.acfun import get_real_url as AcFun
+from core.real_url.longzhu import get_real_url as LongZhu
+from core.real_url.douyin import get_real_url as DouYin
+from core.real_url.kuaishou import get_real_url as KuaiShou
+from core.real_url.ixigua import get_real_url as IXiGua
+from core.real_url.iqiyi import get_real_url as IQiYi
+from core.real_url.kugou import get_real_url as KuGou
+from core.real_url.yizhibo import get_real_url as YiZhiBo
+from core.real_url.yy import get_real_url as YY
+from core.real_url.inke import get_real_url as InKe
+from core.real_url.huomao import get_real_url as HuoMao
+from core.real_url.immomo import get_real_url as ImMoMo
+from core.real_url.jd import get_real_url as JD
+from core.real_url.renren import get_real_url as RenRen
+from core.real_url.huajiao import get_real_url as HuaJiao
+from core.real_url.chushou import get_real_url as ChuShou
+from core.real_url.wali import get_real_url as WaLi
+from core.real_url.xunlei import get_real_url as XunLei
+from core.real_url.now import get_real_url as Now
+from core.real_url.cc import get_real_url as CC
+from core.real_url.pps import get_real_url as PPS
+from core.real_url.v6cn import get_real_url as V6CN
+from core.real_url.live17 import get_real_url as Live17
+from core.real_url.laifeng import get_real_url as LaiFeng
+from core.real_url.youku import get_real_url as YouKu
+from core.real_url.look import get_real_url as Look
+from core.real_url.qf import get_real_url as QF
+from core.real_url.showself import get_real_url as ShowSelf
+from core.real_url.woxiu import get_real_url as WoXiu
+from core.real_url.yqs import get_real_url as YQS
+
 
 import core.real_url.tv as TV
 
@@ -50,87 +61,116 @@ def get_real_url_from_platform_content(platform, content):
     :return:
     """
 
-    if platform == LiveEnum.Douyu.value:
-        result = Douyu.get_real_url(content)
+    if platform == LiveEnum.DouYu.value:
+        result = DouYu(content)
 
-    elif platform == LiveEnum.Huya.value:
-        result = Huya.get_real_url(content)
+    elif platform == LiveEnum.HuYa.value:
+        result = HuYa(content)
 
-    elif platform == LiveEnum.Bilibili.value:
-        result = Bilibili.get_real_url_flv(content)
+    elif platform == LiveEnum.BiliBili.value:
+        result = BiliBili(content)
 
-    elif platform == LiveEnum.Zhanqi.value:
-        result = Zhanqi.get_real_url(content)
+    elif platform == LiveEnum.EGame.value:
+        result = EGame(content)
 
-    elif platform == LiveEnum.Cc.value:
-        result = Cc.get_real_url(content)
+    elif platform == LiveEnum.ESport.value:
+        result = ESport(content)
 
-    elif platform == LiveEnum.Huomao.value:
-        result = Huomao.get_real_url(content)
+    elif platform == LiveEnum.ZhanQi.value:
+        result = ZhanQi(content)
 
-    elif platform == LiveEnum.Egame.value:
-        result = Egame.get_real_url(content)
+    elif platform == LiveEnum.AcFun.value:
+        result = AcFun(content)
 
-    elif platform == LiveEnum.Yy.value:
-        result = Yy.get_real_url(content)
+    elif platform == LiveEnum.LongZhu.value:
+        result = LongZhu(content)
 
-    elif platform == LiveEnum.Yizhibo.value:
-        result = Yizhibo.get_real_url(content)
+    elif platform == LiveEnum.DouYin.value:
+        result = DouYin(content)
 
-    elif platform == LiveEnum.Kuaishou.value:
-        result = Kuaishou.get_real_url(content)
+    elif platform == LiveEnum.KuaiShou.value:
+        result = KuaiShou(content)
 
-    elif platform == LiveEnum.Huajiao.value:
-        result = Huajiao.get_real_url(content)
+    elif platform == LiveEnum.IXiGua.value:
+        result = IXiGua(content)
 
-    elif platform == LiveEnum.Inke.value:
-        result = Inke.get_real_url(content)
+    elif platform == LiveEnum.IQiYi.value:
+        result = IQiYi(content)
 
-    elif platform == LiveEnum.Ixigua.value:
-        result = Ixigua.get_real_url(content)
+    elif platform == LiveEnum.KuGou.value:
+        result = KuGou(content)
 
-    elif platform == LiveEnum.Chushou.value:
-        result = Chushou.get_real_url(content)
+    elif platform == LiveEnum.YiZhiBo.value:
+        result = YiZhiBo(content)
+
+    elif platform == LiveEnum.YY.value:
+        result = YY(content)
+
+    elif platform == LiveEnum.InKe.value:
+        result = InKe(content)
+
+    elif platform == LiveEnum.HuoMao.value:
+        result = HuoMao(content)
+
+    elif platform == LiveEnum.ImMoMo.value:
+        result = ImMoMo(content)
+
+    elif platform == LiveEnum.JD.value:
+        result = JD(content)
+
+    elif platform == LiveEnum.RenRen.value:
+        result = RenRen(content)
+
+    elif platform == LiveEnum.HuaJiao.value:
+        result = HuaJiao(content)
+
+    elif platform == LiveEnum.ChuShou.value:
+        result = ChuShou(content)
+
+    elif platform == LiveEnum.WaLi.value:
+        result = WaLi(content)
+
+    elif platform == LiveEnum.XunLei.value:
+        result = XunLei(content)
 
     elif platform == LiveEnum.Now.value:
-        result = Now.get_real_url(content)
+        result = Now(content)
 
-    elif platform == LiveEnum.Douyin.value:
-        result = Douyin.get_real_url(content)
+    elif platform == LiveEnum.CC.value:
+        result = CC(content)
 
-    elif platform == LiveEnum.Iqiyi.value:
-        result = Iqiyi.get_real_url(content)
+    elif platform == LiveEnum.PPS.value:
+        result = PPS(content)
 
-    elif platform == LiveEnum.Kugou.value:
-        result = Kugou.get_real_url(content)
-
-    elif platform == LiveEnum.Longzhu.value:
-        result = Longzhu.get_real_url(content)
-
-    elif platform == LiveEnum.Pps.value:
-        result = Pps.get_real_url(content)
-
-    elif platform == LiveEnum.V6cn.value:
-        result = V6cn.get_real_url(content)
+    elif platform == LiveEnum.V6CN.value:
+        result = V6CN(content)
 
     elif platform == LiveEnum.Live17.value:
-        result = Live17.get_real_url(content)
+        result = Live17(content)
 
-    elif platform == LiveEnum.Laifeng.value:
-        result = Laifeng.get_real_url(content)
+    elif platform == LiveEnum.LaiFeng.value:
+        result = LaiFeng(content)
 
-    elif platform == LiveEnum.Youku.value:
-        result = Youku.get_real_url(content)
+    elif platform == LiveEnum.YouKu.value:
+        result = YouKu(content)
 
     elif platform == LiveEnum.Look.value:
-        result = Look.get_real_url(content)
+        result = Look(content)
 
-    elif platform == LiveEnum.Qf.value:
-        result = Qf.get_real_url(content)
+    elif platform == LiveEnum.QF.value:
+        result = QF(content)
+
+    elif platform == LiveEnum.ShowSelf.value:
+        result = ShowSelf(content)
+
+    elif platform == LiveEnum.WoXiu.value:
+        result = WoXiu(content)
+
+    elif platform == LiveEnum.YQS.value:
+        result = YQS(content)
 
     else:
-        result = ""
-        pass
+        result = False
 
     return result
 
