@@ -1,4 +1,13 @@
+# -*- coding: utf-8 -*-
+"""
+@Author    : parzulpan
 
+@Email     : parzulpan@gmail.com
+
+@Summary   : 路径帮助工具
+
+@Attention :
+"""
 import os
 
 
@@ -11,9 +20,10 @@ class PathHelper:
         return root_path
 
     @staticmethod
-    def get_python_vlc_module_path():
+    def get_python_vlc_module_path(sys_type):
+        sys_type_dict = {"Windows": "vlc_3.0.9.2_windows", "Linux": "vlc_3.0.9.2_linux", "Darwin": "vlc_3.0.9.2_macos"}
         _path = os.path.abspath(
-            PathHelper.get_root_path() + os.path.sep + "core" + os.path.sep + "vlc_3.0.9.2")
+            PathHelper.get_root_path() + os.path.sep + "core" + os.path.sep + sys_type_dict[sys_type])
         return _path
 
     @staticmethod

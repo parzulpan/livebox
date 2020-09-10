@@ -20,7 +20,13 @@ from PyQt5.QtWidgets import QWidget, QApplication, QVBoxLayout, QFrame, QMainWin
 from utils.path_helper import PathHelper
 
 # 设置VLC库路径，需在import vlc之前
-os.environ['PYTHON_VLC_MODULE_PATH'] = PathHelper.get_python_vlc_module_path()
+if platform.system() == "Windows":
+    os.environ['PYTHON_VLC_MODULE_PATH'] = PathHelper.get_python_vlc_module_path("Windows")
+elif platform.system() == "Linux":
+    os.environ['PYTHON_VLC_MODULE_PATH'] = PathHelper.get_python_vlc_module_path("Linux")
+elif platform.system() == "Darwin":
+    os.environ['PYTHON_VLC_MODULE_PATH'] = PathHelper.get_python_vlc_module_path("Darwin")
+
 import vlc
 
 
