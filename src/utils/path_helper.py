@@ -21,9 +21,10 @@ class PathHelper:
 
     @staticmethod
     def get_python_vlc_module_path(sys_type):
-        sys_type_dict = {"Windows": "vlc_3.0.9.2_windows", "Linux": "vlc_3.0.9.2_linux", "Darwin": "vlc_3.0.9.2_macos"}
+        sys_type_dict = {"Windows": "vlc_3.0.9.2_windows_64", "Linux": "vlc_3.0.9.2_linux_64",
+                         "Darwin": "vlc_3.0.9.2_macos_64"}
         _path = os.path.abspath(
-            PathHelper.get_root_path() + os.path.sep + "core" + os.path.sep + sys_type_dict[sys_type])
+            PathHelper.get_root_path() + os.path.sep + "resources" + os.path.sep + sys_type_dict[sys_type])
         return _path
 
     @staticmethod
