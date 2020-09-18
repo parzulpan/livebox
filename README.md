@@ -97,13 +97,13 @@ real-live 是一个跨平台网络直播聚合平台，支持视频直播、高�
 
 ### Branch
 
-**master**为最初分支 <br/>
-**stable**为 Release 发布分支 <br/>
-**dev**为一直开发的分支，欢迎大家 Fork 该分支 <br/>
+**master** 为最初分支 <br/>
+**stable** 为 Release 发布分支 <br/>
+**dev** 为一直开发的分支，欢迎大家 Fork 该分支 <br/>
 
 ### Debug
 
-配置好 Python 开发环境后，点击[requirements.txt](./src/requirements.txt)文件安装依赖包，然后运行[real_live.py](./src/real_live.py)即可。[配置参考文档](./docs/cmd.md)
+配置好 Python 开发环境后，点击 [requirements.txt](./src/requirements.txt) 文件安装依赖包，然后运行 [real_live.py](./src/real_live.py) 即可。 [配置参考文档](./docs/cmd.md)
 
 ### Release
 

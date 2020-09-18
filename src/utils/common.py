@@ -112,18 +112,18 @@ class PromptBox(QDialog):
         self.reject()
 
 
-class CommonBtn(QPushButton):
+class ControlBtn(QPushButton):
     """
 
     """
     def __init__(self, img, clicked_img):
-        super(CommonBtn, self).__init__()
+        super(ControlBtn, self).__init__()
         self.setAutoFillBackground(True)
         img = PathHelper.get_img_path(img)
         clicked_img = PathHelper.get_img_path(clicked_img)
         self.setCheckable(True)
         self.setStyleSheet(
-            "QPushButton{border-radius:5px;min-width:24px; min-height:24px; max-width:24px; max-height:24px; "
+            "QPushButton{min-width:32px; min-height:32px; max-width:32px; max-height:32px; "
             "border-image:url(\"%s\"); }"
             "QPushButton:checked{border-image:url(\"%s\"); }"
             "QPushButton::menu-indicator{image: None; }" % (img, clicked_img))

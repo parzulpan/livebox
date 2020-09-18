@@ -4,7 +4,7 @@
 
 @Email     : parzulpan@gmail.com
 
-@Summary   : 请输入该文件所实现的功能描述
+@Summary   : 软件启动，使用单例模式
 
 @Attention :
 """
@@ -14,8 +14,10 @@ import sys
 from PyQt5.QtWidgets import QApplication
 
 from widgets.main_widget import MainWindow
+from utils.singleton import SingletonFunctionVersion
 
 
+@SingletonFunctionVersion
 def run():
     app = QApplication(sys.argv)
     main_window = MainWindow()

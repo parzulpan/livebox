@@ -353,6 +353,7 @@ QProgressBar::chunk {
     margin: 1px;
 }
 
+
 QSlider{
     border: 1px solid transparent;
 }
@@ -360,31 +361,33 @@ QSlider::groove{
     border: 1px solid #999999;
     background: #F0F0F0;
 }
-QSlider::handle {/*设置中间的那个滑动的键*/                           
-    border: 1px solid #999999;
-    background: #8BF;
-}
 QSlider::groove:horizontal {
-    height: 3px; /* the groove expands to the size of the slider by default. by giving it a height, it has a fixed size */
+    height: 12px;
     left:5px; right: 5px;
 }
 QSlider::groove:vertical{
-    width: 3px;
+    width: 12px;
     top: 5px; bottom: 5px;
 }
+QSlider::handle {   /* 设置中间的那个滑动的键 */
+    border: 1px solid #999999;
+    background: #D1E8FB;
+    height: 16px;
+	width: 16px;
+	margin: 0px -4px 0px -4px;
+	border-radius: 8px;
+}
 QSlider::handle:horizontal{
-    width: 6px;
-    margin: -7px; /* height */
+    margin: -4px;   /* height */
 }
 QSlider::handle:vertical{
-    height: 6px;
-    margin: -7px; /* height */
+    margin: -4px;   /* height */
 }
-QSlider::add-page{/*还没有滑上去的地方*/
+QSlider::add-page{  /* 还没有滑上去的地方 */
     border: 1px solid #999999;
     background:#EEEEEF;
 }
-QSlider::sub-page{/*已经划过的从地方*/                            
+QSlider::sub-page{  /* 已经划过的从地方* */
     background: #55AAFF;
 }
 
