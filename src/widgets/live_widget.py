@@ -12,9 +12,9 @@
 import sys
 
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QPushButton, QApplication
+import vlc
 
 from widgets.vlc_player_widget import VlcPlayerWidget
-
 from utils.path_helper import PathHelper
 
 
@@ -30,6 +30,13 @@ class LiveWidget(QWidget):
 
         # self.vlc_widget = VlcPlayerWidget("--audio-visual=visual", "--effect-list=spectrometer", "--effect-fft-window=flattop")
         self.vlc_widget = VlcPlayerWidget()
+        self.vlc_widget.add_callback(vlc.EventType.MediaPlayerNothingSpecial, self.callback_vlc_nothing_special)
+        self.vlc_widget.add_callback(vlc.EventType.MediaPlayerOpening, self.callback_vlc_opening)
+        self.vlc_widget.add_callback(vlc.EventType.MediaPlayerBuffering, self.callback_vlc_buffering)
+        self.vlc_widget.add_callback(vlc.EventType.MediaPlayerPlaying, self.callback_vlc_playing)
+        self.vlc_widget.add_callback(vlc.EventType.MediaPlayerPlaying, self.callback_vlc_playing)
+        self.vlc_widget.add_callback(vlc.EventType.MediaPlayerPlaying, self.callback_vlc_playing)
+        self.vlc_widget.add_callback(vlc.EventType.MediaPlayerPlaying, self.callback_vlc_playing)
 
         self.player_widget = QWidget()
         self.player_layout = QVBoxLayout()
@@ -96,6 +103,77 @@ class LiveWidget(QWidget):
         self.set_widget_visible(is_visible)
 
         self.player_widget.setLayout(self._layout)
+
+    def callback_vlc_nothing_special(self, event):
+        """
+
+        :param event:
+        :return:
+        """
+        print(event, "vlc处于空闲状态，只是等待发出命令")
+
+    def callback_vlc_opening(self, event):
+        """
+
+        :return:
+        """
+        print(event, "vlc正在打开媒体资源定位器（MRL）")
+
+    def callback_vlc_buffering(self, event):
+        """
+        
+        :param event:
+        :return:
+        """
+        print(event, "vlc正在缓冲")
+
+    def callback_vlc_playing(self, event):
+        """
+
+        :param event:
+        :return:
+        """
+        print(event, "vlc正在播放媒体")
+
+    def callback_vlc_paused(self, event):
+        """
+
+        :param event:
+        :return:
+        """
+        print(event, "vlc处于暂停状态")
+
+    def callback_vlc_stopped(self, event):
+        """
+
+        :param event:
+        :return:
+        """
+        print(event, "vlc处于停止状态")
+
+    def callback_vlc_muted(self, event):
+        """
+
+        :param event:
+        :return:
+        """
+        print(event, "vlc已经静音")
+
+    def callback_vlc_unmuted(self, event):
+        """
+
+        :param event:
+        :return:
+        """
+        print(event, "vlc已经取消静音")
+
+    def callback_vlc_audio_volume(self, event):
+        """
+
+        :param event:
+        :return:
+        """
+        print(event, "vlc音量发生改变")
 
 
 if __name__ == '__main__':

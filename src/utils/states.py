@@ -4,10 +4,11 @@
 
 @Email     : parzulpan@gmail.com
 
-@Summary   : VLC 播放器当前状态，使用状态模式
+@Summary   : 客户端的状态管理，使用 Qt 状态机
 
 @Attention :
 """
+
 from enum import Enum
 
 

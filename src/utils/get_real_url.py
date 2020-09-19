@@ -9,7 +9,7 @@
 @Attention :
 """
 
-from utils.live_enum import LiveEnum
+from utils.enums import LiveEnum
 from core.real_url.douyu import get_real_url as DouYu
 from core.real_url.huya import get_real_url as HuYa
 from core.real_url.bilibili import get_real_url as BiliBili

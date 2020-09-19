@@ -361,20 +361,20 @@ QSlider::groove{
     background: #3C3F41;
 }
 QSlider::groove:horizontal {
-    height: 12px;
-    left:5px; right: 5px;
+    height: 8px;
+    left:2px; right: 2px;
 }
 QSlider::groove:vertical{
-    width: 12px;
-    top: 5px; bottom: 5px;
+    width: 8px;
+    top: 2px; bottom: 2px;
 }
 QSlider::handle {   /* 设置中间的那个滑动的键 */
     border: 1px solid #999999;
     background: #D1E8FB;
-    height: 16px;
-	width: 16px;
+    height: 10px;
+	width: 10px;
 	margin: 0px -4px 0px -4px;
-	border-radius: 8px;
+	border-radius: 6px;
 }
 QSlider::handle:horizontal{
     margin: -4px;   /* height */
