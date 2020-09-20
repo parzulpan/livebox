@@ -207,7 +207,7 @@
 
 平台和频道持续更新中，有任何疑问和建议 <br/>
 欢迎提 [issue](https://github.com/parzulpan/real-live/issues) <br>
-或者加入Telegram群组 [RealLive讨论群](https://t.me/GitHubRealLive)
+或者加入 QQ 群![RealLive项目讨论群](./docs/img/QQ群.jpg)
 
 ## 致谢
 
