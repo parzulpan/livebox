@@ -216,7 +216,7 @@ class MainWindow(QMainWindow):
         self.live_widget = LiveWidget()
 
         self._init_ui()
-        self._init_cfg()
+        # self._init_cfg()
 
     def _init_ui(self):
         """

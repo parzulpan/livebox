@@ -19,9 +19,9 @@ from PyQt5.QtCore import Qt, pyqtSignal
 from utils.get_real_url import get_real_url_from_platform_content
 from utils.common import PromptBox, get_window_center_point
 from utils.path_helper import PathHelper
-from utils.completer import set_completer
-from db.recent_search import add_update_search, remove_search, get_recent_search_list
-from db.db_helper import get_redis_pipeline, get_redis_client
+# from utils.completer import set_completer
+# from db.recent_search import add_update_search, remove_search, get_recent_search_list
+# from db.db_helper import get_redis_pipeline, get_redis_client
 
 
 class SearchWidget(QDialog):
@@ -50,7 +50,7 @@ class SearchWidget(QDialog):
 
         self.search_content_label = QLabel('搜索内容: ')
         self.search_content_line_edit = QLineEdit()
-        set_completer(get_recent_search_list(get_redis_client()), self.search_content_line_edit)
+        # set_completer(get_recent_search_list(get_redis_client()), self.search_content_line_edit)
         self.get_live_btn = QPushButton('获取直播源')
         self.get_live_btn.clicked.connect(self.answer_get_live_btn_clicked)
 
@@ -145,8 +145,8 @@ class SearchWidget(QDialog):
         :return:
         """
         content = self.search_content_line_edit.text()
-        add_update_search(get_redis_pipeline(), content)
-        set_completer(get_recent_search_list(get_redis_client()), self.search_content_line_edit)
+        # add_update_search(get_redis_pipeline(), content)
+        # set_completer(get_recent_search_list(get_redis_client()), self.search_content_line_edit)
         if content:
             result = get_real_url_from_platform_content(self.platform_combobox.currentIndex(), content)
             if result:
