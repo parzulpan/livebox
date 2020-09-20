@@ -98,7 +98,7 @@ class AboutWidget(QDialog):
         self.setLayout(main_layout)
 
         self.setWindowTitle("关于软件")
-        self.setWindowIcon(QIcon('./resources/img/about@64x64.png'))
+        self.setWindowIcon(QIcon(PathHelper.get_img_path("about@64x64.png")))
         self.setWindowFlags(Qt.WindowCloseButtonHint)
 
     @staticmethod

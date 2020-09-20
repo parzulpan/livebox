@@ -4,8 +4,13 @@
 
 @Email     : parzulpan@gmail.com
 
-@Summary   : 请输入该文件所实现的功能描述
+@Summary   : 截图页面
 
 @Attention :
 """
 
+from PyQt5.QtWidgets import QWidget
+
+
+class ScreenShotWidget(QWidget):
+    pass

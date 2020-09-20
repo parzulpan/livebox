@@ -4,7 +4,7 @@
 
 @Email     : parzulpan@gmail.com
 
-@Summary   : 请输入该文件所实现的功能描述
+@Summary   : .ui 文件转为 .py 文件工具，一般不使用，直接手写 UI 更好管理
 
 @Attention :
 """

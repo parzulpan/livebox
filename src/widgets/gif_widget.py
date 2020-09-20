@@ -4,7 +4,13 @@
 
 @Email     : parzulpan@gmail.com
 
-@Summary   : 请输入该文件所实现的功能描述
+@Summary   : 制作 gif 图页面
 
 @Attention :
 """
+
+from PyQt5.QtWidgets import QWidget
+
+
+class GifWidget(QWidget):
+    pass

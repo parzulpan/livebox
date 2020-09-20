@@ -4,11 +4,16 @@
 
 @Email     : parzulpan@gmail.com
 
-@Summary   : 请输入该文件所实现的功能描述
+@Summary   : 录屏页面
 
 @Attention :
 """
 
+from PyQt5.QtWidgets import QWidget
+
+
+class ScreenRecordWidget(QWidget):
+    pass
 
 
 

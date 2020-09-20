@@ -4,7 +4,7 @@
 
 @Email     : parzulpan@gmail.com
 
-@Summary   : 开源的 VLC 接口封装的 vlc_player
+@Summary   : 开源的 VLC 接口封装的 媒体播放器
 
 @Attention :
 """

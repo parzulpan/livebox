@@ -4,10 +4,11 @@
 
 @Email     : parzulpan@gmail.com
 
-@Summary   : 请输入该文件所实现的功能描述
+@Summary   : 高清电视页面
 
 @Attention :
 """
+
 import sys
 
 from PyQt5.QtWidgets import QHBoxLayout, QVBoxLayout, QLabel, QComboBox, QLineEdit, QPushButton, QApplication,\
@@ -227,10 +228,3 @@ class TvWidget(QDialog):
         self.live_result_line_edit.clear()
         self.copy_live_btn.setDisabled(True)
         self.watch_live_btn.setDisabled(True)
-
-
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    tv_widget = TvWidget()
-    tv_widget.show()
-    sys.exit(app.exec_())

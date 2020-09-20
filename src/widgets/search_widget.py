@@ -4,7 +4,7 @@
 
 @Email     : parzulpan@gmail.com
 
-@Summary   : 请输入该文件所实现的功能描述
+@Summary   : 直播搜索页面
 
 @Attention :
 """
