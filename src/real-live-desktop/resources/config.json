@@ -1,3 +1,24 @@
 {
-  
+    "preferences": {
+        "personalise": {
+            "skin": "blue",
+            "language": "cn",
+            "font-family": "\u5fae\u8f6f\u96c5\u9ed1",
+            "font-style": "Regular",
+            "font-size": 11,
+            "tool_bar_visible": 1
+        },
+        "player": {}
+    },
+    "app_info": {
+        "name": "\u7f51\u7edc\u76f4\u64ad\u805a\u5408\u5e73\u53f0",
+        "version": "V1.3.0",
+        "intro": "\u7b80\u4ecb\uff1a\u4e00\u4e2a\u7f51\u7edc\u76f4\u64ad\u805a\u5408\u5e73\u53f0\uff0c\u652f\u6301\u89c6\u9891\u76f4\u64ad\u3001\u9ad8\u6e05\u7535\u89c6\u548c\u5e7f\u64ad\u7535\u53f0\u7b49\u89c2\u770b\u6216\u6536\u542c\u3002",
+        "author": "\u4f5c\u8005\uff1aParzulpan",
+        "website_url": "https://real-live.parzulpan.cn",
+        "src_url": "https://github.com/parzulpan/real-live",
+        "help_url": "https://real-live.parzulpan.cn/#/desktop/%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E4%B9%A6",
+        "change_log_url": "https://real-live.parzulpan.cn/#/desktop/%E6%9B%B4%E6%96%B0%E8%AE%B0%E5%BD%95%E5%8D%95",
+        "update": "https://github.com/parzulpan/real-live/releases"
+    }
 }

@@ -4,9 +4,9 @@
 
 @Email     : parzulpan@gmail.com
 
-@Summary   : 请输入该文件所实现的功能描述
+@Summary   : .ini 文件的增删改查
 
-@Attention :
+@Attention : 已弃用，改用 json 数据交互
 """
 
 import configparser

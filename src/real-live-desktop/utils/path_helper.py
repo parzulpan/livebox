@@ -40,9 +40,15 @@ class PathHelper:
         return _path
 
     @staticmethod
-    def get_config_path():
+    def get_config_path(file_name="config.ini"):
         _path = os.path.abspath(
-            PathHelper.get_root_path() + os.path.sep + "resources" + os.path.sep + "config.ini")
+            PathHelper.get_root_path() + os.path.sep + "resources" + os.path.sep + file_name)
+        return _path
+
+    @staticmethod
+    def get_json_path(file_name="config.json"):
+        _path = os.path.abspath(
+            PathHelper.get_root_path() + os.path.sep + "resources" + os.path.sep + file_name)
         return _path
 
 

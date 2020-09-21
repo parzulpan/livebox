@@ -15,7 +15,7 @@ from PyQt5.QtWidgets import QWidget, QStackedWidget, QListWidget, QListWidgetIte
 from PyQt5.QtGui import QIcon, QFont
 from PyQt5.QtCore import Qt, QSize
 
-from utils.crud_cfg import *
+from utils.common import *
 
 
 class PreferencesWidget(QDialog):
@@ -94,6 +94,7 @@ class PreferencesWidget(QDialog):
         self.setLayout(self._main_layout)
 
         self.setWindowTitle("偏好设置")
+        self.setMinimumSize(500, 400)
         self.setWindowIcon(QIcon(PathHelper.get_img_path("preferences@64x64.png")))
         self.setWindowFlags(Qt.WindowCloseButtonHint)
 
@@ -178,14 +179,7 @@ class PreferencesWidget(QDialog):
         :param checked:
         :return:
         """
-        font: QFont = qApp.font()
-        font, changed = QFontDialog().getFont(font, self, caption="字体设置")
-        if changed:
-            qApp.setFont(font)
-            qApp.processEvents()
-            update_contents("preferences", "font-family", font.family())
-            update_contents("preferences", "font-style", font.styleName())
-            update_contents("preferences", "font-size", str(font.pointSize()))
+        set_font()
 
 
 if __name__ == '__main__':

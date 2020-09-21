@@ -4,16 +4,17 @@
 
 @Email     : parzulpan@gmail.com
 
-@Summary   : 请输入该文件所实现的功能描述
+@Summary   : 通用功能
 
 @Attention :
 """
 
-from PyQt5.QtWidgets import QDesktopWidget, QDialog, QLabel, QPushButton, QHBoxLayout, QVBoxLayout
+from PyQt5.QtWidgets import QDesktopWidget, QDialog, QLabel, QPushButton, QHBoxLayout, QVBoxLayout, qApp, QFontDialog
 from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5.QtCore import Qt
 
 from utils.path_helper import PathHelper
+from utils.crud_json import *
 
 
 def get_window_center_point(widget):
@@ -25,6 +26,111 @@ def get_window_center_point(widget):
     desktop_widget = QDesktopWidget()
     screen_rect = desktop_widget.screenGeometry()
     return (screen_rect.width()-widget.width()) / 2, (screen_rect.height()-widget.height()) / 2
+
+
+def set_skin(skin: str):
+    """
+
+    :param skin:
+    :return:
+    """
+    with open(PathHelper.get_qss_path(f"{skin}.qss"), "r", encoding="utf-8") as f:
+        qss = f.read()
+        qApp.setStyleSheet(qss)
+    default_json2python4file["preferences"]["personalise"]["skin"] = skin
+    python2json2file(default_json2python4file)
+
+
+def get_skin():
+    """
+
+    :return:
+    """
+    return default_json2python4file["preferences"]["personalise"]["skin"]
+
+
+def set_font():
+    """
+
+    :return:
+    """
+    font = qApp.font()
+    font, changed = QFontDialog().getFont(font, None, caption="字体设置")
+    if changed:
+        qApp.setFont(font)
+        qApp.processEvents()
+        default_json2python4file["preferences"]["personalise"]["font-family"] = font.family()
+        default_json2python4file["preferences"]["personalise"]["font-style"] = font.font.styleName()
+        default_json2python4file["preferences"]["personalise"]["font-size"] = font.pointSize()
+        python2json2file(default_json2python4file)
+
+
+def get_font():
+    """
+
+    :return:
+    """
+    font_family = default_json2python4file["preferences"]["personalise"]["font-family"]
+    font_style = default_json2python4file["preferences"]["personalise"]["font-style"]
+    font_size = default_json2python4file["preferences"]["personalise"]["font-size"]
+    return {"font_family": font_family, "font_style": font_style, "font_size": font_size}
+
+
+def set_language(language: str):
+    """
+
+    :param language:
+    :return:
+    """
+    default_json2python4file["preferences"]["personalise"]["language"] = language
+    python2json2file(default_json2python4file)
+
+
+def get_language():
+    """
+
+    :return:
+    """
+    return default_json2python4file["preferences"]["personalise"]["language"]
+
+
+def set_tool_bar_visible(visible: int):
+    """
+
+    :param visible:
+    :return:
+    """
+    default_json2python4file["preferences"]["personalise"]["tool_bar_visible"] = visible
+    python2json2file(default_json2python4file)
+
+
+def get_tool_bar_visible():
+    """
+
+    :return:
+    """
+
+    return default_json2python4file["preferences"]["personalise"]["tool_bar_visible"]
+
+
+def set_app_info(data: dict):
+    """
+
+    :param data:
+    :return:
+    """
+
+    default_json2python4file["app_info"] = data
+    python2json2file(default_json2python4file)
+
+
+def get_app_info():
+    """
+
+    :return:
+    """
+
+    return default_json2python4file["app_info"]
 
 
 class PromptBox(QDialog):

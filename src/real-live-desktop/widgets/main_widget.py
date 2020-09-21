@@ -17,8 +17,7 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QMenuBar, QMenu, QAction,
 from PyQt5.QtGui import QKeySequence, QIcon, QDesktopServices, QFont
 from PyQt5.QtCore import Qt, QSize, QUrl
 
-from utils.common import get_window_center_point, ControlBtn, PromptBox
-from utils.crud_cfg import *
+from utils.common import *
 from utils.path_helper import PathHelper
 from widgets.radio_station_widget import RadioStationWidget
 from widgets.search_widget import SearchWidget
@@ -56,35 +55,6 @@ class MainWindow(QMainWindow):
         self.quit_action = QAction("退出(Q)", self.media_menu)
         self.quit_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_Q))
         self.quit_action.triggered.connect(lambda: sys.exit())
-
-        # self.enhance_menu = QMenu("增强(&E)", self.menu_bar)
-        # self.skin_menu = QMenu("换肤", self.enhance_menu)
-        # self.dark_skin_action = QAction("暗黑模式", self.skin_menu)
-        # self.dark_skin_action.setCheckable(True)
-        # self.dark_skin_action.triggered.connect(self.answer_dark_skin_action_triggered)
-        # self.white_skin_action = QAction("纯白模式", self.skin_menu)
-        # self.white_skin_action.setCheckable(True)
-        # self.white_skin_action.triggered.connect(self.answer_white_skin_action_triggered)
-        # self.blue_skin_action = QAction("浅蓝模式", self.skin_menu)
-        # self.blue_skin_action.setCheckable(True)
-        # self.blue_skin_action.triggered.connect(self.answer_blue_skin_action_triggered)
-        # self.skin_action_group = QActionGroup(self)
-        # self.skin_action_group.addAction(self.dark_skin_action)
-        # self.skin_action_group.addAction(self.white_skin_action)
-        # self.skin_action_group.addAction(self.blue_skin_action)
-        # self.language_menu = QMenu("语言", self.enhance_menu)
-        # self.zh_CN_action = QAction("简体中文", self.language_menu)
-        # self.zh_CN_action.setCheckable(True)
-        # self.zh_CN_action.triggered.connect(self.answer_zh_CN_action_triggered)
-        # self.en_action = QAction("English", self.language_menu)
-        # self.en_action.setCheckable(True)
-        # self.en_action.triggered.connect(self.answer_en_action_triggered)
-        # self.language_action_group = QActionGroup(self)
-        # self.language_action_group.addAction(self.zh_CN_action)
-        # self.language_action_group.addAction(self.en_action)
-        # self.font_action = QAction("字体(F)", self.enhance_menu)
-        # self.font_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_S))
-        # self.font_action.triggered.connect(self.answer_font_action_triggered)
 
         self.tool_menu = QMenu("增强(&E)", self.menu_bar)
         self.screenshot_action = QAction("截图(J)", self.tool_menu)
@@ -216,7 +186,7 @@ class MainWindow(QMainWindow):
         self.live_widget = LiveWidget()
 
         self._init_ui()
-        # self._init_cfg()
+        self._init_cfg()
 
     def _init_ui(self):
         """
@@ -231,16 +201,6 @@ class MainWindow(QMainWindow):
         self.media_menu.addSeparator()
         self.media_menu.addAction(self.close_action)
         self.media_menu.addAction(self.quit_action)
-
-        # self.enhance_menu.addMenu(self.skin_menu)
-        # self.skin_menu.addAction(self.dark_skin_action)
-        # self.skin_menu.addAction(self.white_skin_action)
-        # self.skin_menu.addAction(self.blue_skin_action)
-        # self.enhance_menu.addMenu(self.language_menu)
-        # self.language_menu.addAction(self.zh_CN_action)
-        # self.language_menu.addAction(self.en_action)
-        # self.enhance_menu.addAction(self.font_action)
-        # self.enhance_menu.addSeparator()
 
         self.tool_menu.addAction(self.screenshot_action)
         self.tool_menu.addAction(self.gif_action)
@@ -298,49 +258,30 @@ class MainWindow(QMainWindow):
 
         :return:
         """
-        # # 工具栏可见性
-        # visible = retrieve_content("preferences", "tool_bar_visible")
-        # if visible == "True":
-        #     self.hide_action.setChecked(False)
-        #     self.hide_action.triggered.emit(False)
-        # else:
-        #     self.hide_action.setChecked(True)
-        #     self.hide_action.triggered.emit(True)
 
-        # # 工具栏位置
-        # position = retrieve_content("preferences", "tool_bar_position")
+        # 工具栏可见性
+        visible = get_tool_bar_visible()
+        if visible:
+            self.hide_action.setChecked(False)
+            self.hide_action.triggered.emit(False)
+        else:
+            self.hide_action.setChecked(True)
+            self.hide_action.triggered.emit(True)
 
         # 皮肤设置
-        skin = retrieve_content("preferences", "skin")
-        if skin == "dark":
-            self.dark_skin_action.setChecked(True)
-            self.dark_skin_action.triggered.emit()
-        elif skin == "white":
-            self.white_skin_action.setChecked(True)
-            self.white_skin_action.triggered.emit()
-        else:
-            self.blue_skin_action.setChecked(True)
-            self.blue_skin_action.triggered.emit()
+        skin = get_skin()
+        set_skin(skin)
 
         # 语言设置
-        language = retrieve_content("preferences", "language")
-        if language == "zh_CN":
-            self.zh_CN_action.setChecked(True)
-            self.zh_CN_action.triggered.emit()
-        elif language == "en":
-            self.en_action.setChecked(True)
-            self.en_action.triggered.emit()
-        else:
-            pass
+        language = get_language()
+        set_language(language)
 
         # 字体设置
-        font_family = retrieve_content("preferences", "font-family")
-        font_style = retrieve_content("preferences", "font-style")
-        font_size = retrieve_content("preferences", "font-size")
+        font_dict = get_font()
         font = QFont()
-        font.setFamily(font_family)
-        font.setStyleName(font_style)
-        font.setPointSize(int(font_size))
+        font.setFamily(font_dict["font_family"])
+        font.setStyleName(font_dict["font_style"])
+        font.setPointSize(font_dict["font_size"])
         qApp.setFont(font)
         qApp.processEvents()
 
@@ -352,8 +293,8 @@ class MainWindow(QMainWindow):
         desktop_widget = QDesktopWidget()
         screen_rect = desktop_widget.screenGeometry()
         self.setGeometry(screen_rect)
-        title = retrieve_content("software_info", "software_name") + " " + retrieve_content("software_info",
-                                                                                            "software_version")
+        _app_info = get_app_info()
+        title = _app_info["name"] + " " + _app_info["version"]
         self.setWindowTitle(title)
         self.setWindowIcon(QIcon(PathHelper.get_img_path("logo@48x48.png")))
         self.showMaximized()
@@ -430,7 +371,8 @@ class MainWindow(QMainWindow):
         :return:
         """
         desktop_services = QDesktopServices()
-        desktop_services.openUrl(QUrl("https://github.com/parzulpan/real-live/blob/master/resources/Help.md"))
+        _app_info = get_app_info()
+        desktop_services.openUrl(QUrl(_app_info["help_url"]))
 
     @staticmethod
     def answer_change_log_action_triggered():
@@ -439,7 +381,8 @@ class MainWindow(QMainWindow):
         :return:
         """
         desktop_services = QDesktopServices()
-        desktop_services.openUrl(QUrl("https://github.com/parzulpan/real-live/blob/master/resources/ChangeLog.md"))
+        _app_info = get_app_info()
+        desktop_services.openUrl(QUrl(_app_info["change_log_url"]))
 
     @staticmethod
     def answer_check_version_action_triggered():
@@ -447,9 +390,10 @@ class MainWindow(QMainWindow):
 
         :return:
         """
-        # TODO: 获取GitHub API 进行检查并弹窗
+        # TODO: 获取 GitHub API 进行检查并弹窗
         desktop_services = QDesktopServices()
-        desktop_services.openUrl(QUrl("https://github.com/parzulpan/real-live/releases"))
+        _app_info = get_app_info()
+        desktop_services.openUrl(QUrl(_app_info["update"]))
 
     @staticmethod
     def answer_about_action_triggered():
@@ -496,30 +440,10 @@ class MainWindow(QMainWindow):
         """
         if checked:
             self.tool_bar.hide()
-            update_contents("preferences", "tool_bar_visible", "False")
-            # self.live_widget.vlc_widget.control_widget.hide()
+            set_tool_bar_visible(0)
         else:
             self.tool_bar.show()
-            update_contents("preferences", "tool_bar_visible", "True")
-            # self.live_widget.vlc_widget.control_widget.show()
-
-    def answer_tool_bar_top_level_changed(self, area):
-        """
-
-        :return:
-        """
-        print("top_level_changed")
-        print(area)
-        if self.tool_bar.allowedAreas() == Qt.LeftToolBarArea:
-            print("LeftToolBarArea")
-        elif self.tool_bar.allowedAreas() == Qt.RightToolBarArea:
-            print("RightToolBarArea")
-        elif self.tool_bar.allowedAreas() == Qt.BottomToolBarArea:
-            print("BottomToolBarArea")
-        elif self.tool_bar.allowedAreas() == Qt.TopToolBarArea:
-            print("TopToolBarArea")
-        else:
-            print("else")
+            set_tool_bar_visible(1)
 
     @staticmethod
     def answer_screenshot_action_triggered():
@@ -541,75 +465,6 @@ class MainWindow(QMainWindow):
 
         :return:
         """
-        pass
-
-    @staticmethod
-    def answer_dark_skin_action_triggered(checked):
-        """
-
-        :param checked:
-        :return:
-        """
-        with open(PathHelper.get_qss_path("dark.qss"), "r", encoding="utf-8") as f:
-            qss = f.read()
-            qApp.setStyleSheet(qss)
-        update_contents("preferences", "skin", "dark")
-
-    @staticmethod
-    def answer_white_skin_action_triggered(checked):
-        """
-
-        :param checked:
-        :return:
-        """
-        with open(PathHelper.get_qss_path("white.qss"), "r", encoding="utf-8") as f:
-            qss = f.read()
-            qApp.setStyleSheet(qss)
-        update_contents("preferences", "skin", "white")
-
-    @staticmethod
-    def answer_blue_skin_action_triggered(checked):
-        """
-
-        :param checked:
-        :return:
-        """
-        with open(PathHelper.get_qss_path("blue.qss"), "r", encoding="utf-8") as f:
-            qss = f.read()
-            qApp.setStyleSheet(qss)
-        update_contents("preferences", "skin", "blue")
-
-    def answer_font_action_triggered(self, checked):
-        """
-
-        :param checked:
-        :return:
-        """
-        font = qApp.font()
-        font, changed = QFontDialog().getFont(font, self, caption="字体设置")
-        if changed:
-            qApp.setFont(font)
-            qApp.processEvents()
-            update_contents("preferences", "font-family", font.family())
-            update_contents("preferences", "font-style", font.styleName())
-            update_contents("preferences", "font-size", str(font.pointSize()))
-
-    def answer_zh_CN_action_triggered(self, checked):
-        """
-
-        :param checked:
-        :return:
-        """
-        update_contents("preferences", "language", "zh_CN")
-        pass
-
-    def answer_en_action_triggered(self, checked):
-        """
-
-        :param checked:
-        :return:
-        """
-        update_contents("preferences", "language", "en")
         pass
 
     def closeEvent(self, event) -> None:
