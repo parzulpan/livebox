@@ -22,7 +22,7 @@ class IQiYi:
             callback = 'jsonp_' + str(int((time.time() * 1000))) + '_0000'
             params = {
                 'lp': qipuId,
-                'src': '01010031010000000000',
+                'real-live-desktop': '01010031010000000000',
                 'rateVers': 'H5_QIYI',
                 'qd_v': 1,
                 'callback': callback

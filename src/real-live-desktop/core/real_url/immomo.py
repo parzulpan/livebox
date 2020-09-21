@@ -9,7 +9,7 @@ class ImMoMo:
         url = 'https://web.immomo.com/webmomo/api/scene/profile/roominfos'
         data = {
             'stid': self.rid,
-            'src': 'url'
+            'real-live-desktop': 'url'
         }
 
         with requests.Session() as s:
