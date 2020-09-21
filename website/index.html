@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>RealLive</title>
+  <link rel="icon" href="_media/logo.png" type="image/x-icon">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Description">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css">
+  <!-- <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/themes/vue.css"> -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.css">
+</head>
+
+<body>
+  <div id="app">数据加载中...</div>
+  <div data-app id="main">数据加载中...</div>
+  <script>
+    window.$docsify = {
+      repo: 'https://github.com/parzulpan/real-live',
+      el: '#app',
+      loadNavbar: true,
+      coverpage: true,
+      onlyCover: false,
+      logo: '/_media/logo.png',
+      name: 'RealLive',
+      loadSidebar: true,
+      subMaxLevel: 7,
+      relativePath: true,
+      autoHeader: true,
+      mergeNavbar: true,
+      formatUpdated: '{MM}/{DD} {HH}:{mm}',
+      count: {
+        countable: true,
+        fontsize: '0.9em',
+        color: 'rgb(90,90,90)',
+        language: 'chinese'
+      },
+      themeable: {
+        readyTransition: true, // default
+        responsiveTables: true  // default
+      },
+      tabs: {
+        persist: true,      // default
+        sync: true,      // default
+        theme: 'material', // default
+        tabComments: true,      // default
+        tabHeadings: true       // default
+      },
+      pagination: {
+        previousText: '上一章节',
+        nextText: '下一章节',
+        crossChapter: true,
+        crossChapterText: true,
+      },
+    }
+  </script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify-copy-code"></script>
+  <script src="//unpkg.com/docsify-count/dist/countable.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-c.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-cpp.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-python.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-javascript.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-sql.js"></script>
+  <script src="cdn.jsdelivr.net/npm/docsify-themeable@0"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/gitalk.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js"></script>
+  <script>
+    const gitalk = new Gitalk({
+      clientID: 'b35c311f994b4421cee3',
+      clientSecret: '7eac0dc6d979c47abe2b93425464d317ec99b082',
+      repo: 'real-live',
+      owner: 'parzulpan',
+      admin: ['parzulpan'],
+      // facebook-like distraction free mode
+      distractionFreeMode: false
+    })
+  </script>
+  <script>
+    if (typeof navigator.serviceWorker !== 'undefined') {
+      navigator.serviceWorker.register('sw.js')
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify-tabs@1"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify-pagination/dist/docsify-pagination.min.js"></script>
+
+</body>
+
+</html>
