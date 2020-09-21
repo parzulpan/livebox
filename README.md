@@ -92,10 +92,10 @@
 
 **使用说明：**
 
-* [桌面端](./assets/desktop/使用说明书.md)
-* [移动端](./assets/mobile/使用说明书.md)
-* [Web 端](./assets/web/使用说明书.md)
-* [后端](./assets/admin/使用说明书.md)
+* [桌面端](https://real-live.parzulpan.cn/#/desktop/%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E4%B9%A6)
+* [移动端](https://real-live.parzulpan.cn/#/mobile/%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E4%B9%A6)
+* [Web 端](https://real-live.parzulpan.cn/#/web/%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E4%B9%A6)
+* [后端](https://real-live.parzulpan.cn/#/admin/%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E4%B9%A6)
 
 ## 反馈
 

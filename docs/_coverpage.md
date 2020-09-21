@@ -1,6 +1,6 @@
 ![logo](/_media/logo.png)
 
-# real-live v1.3.0
+# real-live
 
 > 一个网络直播聚合平台，支持视频直播、高清电视和广播电台等观看或收听。
 
