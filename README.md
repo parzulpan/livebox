@@ -67,18 +67,18 @@
 
 ### 视频直播
 
-![视频直播](./docs/img/直播搜索.png)
-![视频直播-欣赏](./docs/img/直播搜索-欣赏.png)
+![视频直播](./assets/img/直播搜索.png)
+![视频直播-欣赏](./assets/img/直播搜索-欣赏.png)
 
 ### 高清电视
 
-![高清电视](./docs/img/高清电视.png)
-![高清电视-欣赏](./docs/img/高清电视-欣赏.png)
+![高清电视](./assets/img/高清电视.png)
+![高清电视-欣赏](./assets/img/高清电视-欣赏.png)
 
 ### 广播电台
 
-![广播电台](./docs/img/广播电台.png)
-![广播电台-欣赏](./docs/img/广播电台-欣赏.png)
+![广播电台](./assets/img/广播电台.png)
+![广播电台-欣赏](./assets/img/广播电台-欣赏.png)
 
 ## 使用
 
@@ -92,15 +92,15 @@
 
 **使用说明：**
 
-* [桌面端](./docs/desktop/使用说明书.md)
-* [移动端](./docs/mobile/使用说明书.md)
-* [Web 端](./docs/web/使用说明书.md)
-* [后端](./docs/admin/使用说明书.md)
+* [桌面端](./assets/desktop/使用说明书.md)
+* [移动端](./assets/mobile/使用说明书.md)
+* [Web 端](./assets/web/使用说明书.md)
+* [后端](./assets/admin/使用说明书.md)
 
 ## 反馈
 
 持续更新中，有任何疑问和建议 <br/>
-推荐加入 QQ 群 [RealLive项目讨论群：893364757](./docs/img/QQ群.jpg)，或者提 [issue](https://github.com/parzulpan/real-live/issues) 
+推荐加入 QQ 群 [RealLive项目讨论群：893364757](./assets/img/QQ群.jpg)，或者提 [issue](https://github.com/parzulpan/real-live/issues) 
 
 ## 致谢
 
@@ -108,7 +108,6 @@
 
 * [wbt5/real-url](https://github.com/wbt5/real-url)
 * [billy21/Tvlist-awesome-m3u-m3u8](https://github.com/billy21/Tvlist-awesome-m3u-m3u8)
-* [iconfont](https://www.iconfont.cn)
 
 **贡献名单：**
 
