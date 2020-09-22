@@ -30,13 +30,6 @@ class LiveWidget(QWidget):
 
         # self.vlc_widget = VlcPlayerWidget("--audio-visual=visual", "--effect-list=spectrometer", "--effect-fft-window=flattop")
         self.vlc_widget = VlcPlayerWidget()
-        self.vlc_widget.add_callback(vlc.EventType.MediaPlayerNothingSpecial, self.callback_vlc_nothing_special)
-        self.vlc_widget.add_callback(vlc.EventType.MediaPlayerOpening, self.callback_vlc_opening)
-        self.vlc_widget.add_callback(vlc.EventType.MediaPlayerBuffering, self.callback_vlc_buffering)
-        self.vlc_widget.add_callback(vlc.EventType.MediaPlayerPlaying, self.callback_vlc_playing)
-        self.vlc_widget.add_callback(vlc.EventType.MediaPlayerPlaying, self.callback_vlc_playing)
-        self.vlc_widget.add_callback(vlc.EventType.MediaPlayerPlaying, self.callback_vlc_playing)
-        self.vlc_widget.add_callback(vlc.EventType.MediaPlayerPlaying, self.callback_vlc_playing)
 
         self.player_widget = QWidget()
         self.player_layout = QVBoxLayout()
@@ -62,7 +55,7 @@ class LiveWidget(QWidget):
         main_layout.addLayout(self.player_layout)
         self.setLayout(main_layout)
 
-        self.setStyleSheet(f"background-image:url({PathHelper.get_img_path('live_null.png')}); ")
+        # self.setStyleSheet(f"background-image:url({PathHelper.get_img_path('live_null.png')}); ")
 
     def clear_layout(self):
         """

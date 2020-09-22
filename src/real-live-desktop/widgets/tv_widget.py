@@ -17,6 +17,7 @@ from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt, pyqtSignal
 
 from utils.common import PromptBox, get_window_center_point
+from utils.enums import PlayerEnum
 from utils.get_real_url import get_real_url_from_tv_name_content
 
 
@@ -24,7 +25,7 @@ class TvWidget(QDialog):
     """
 
     """
-    watch_live_signal = pyqtSignal(str)
+    watch_tv_signal = pyqtSignal(str, str)
     """在线观看"""
 
     def __init__(self):
@@ -216,7 +217,7 @@ class TvWidget(QDialog):
         :return:
         """
         self.close()
-        self.watch_live_signal.emit(self.live_result_line_edit.text())
+        self.watch_tv_signal.emit(self.live_result_line_edit.text(), PlayerEnum.MrlTypeTV.value[1])
 
     def answer_clean_btn_clicked(self):
         """

@@ -19,6 +19,7 @@ from PyQt5.QtCore import Qt, pyqtSignal
 from utils.get_real_url import get_real_url_from_platform_content
 from utils.common import PromptBox, get_window_center_point
 from utils.path_helper import PathHelper
+from utils.enums import PlayerEnum
 # from utils.completer import set_completer
 # from db.recent_search import add_update_search, remove_search, get_recent_search_list
 # from db.db_helper import get_redis_pipeline, get_redis_client
@@ -28,7 +29,7 @@ class SearchWidget(QDialog):
     """
 
     """
-    watch_live_signal = pyqtSignal(str)
+    watch_live_signal = pyqtSignal(str, str)
     """在线观看"""
 
     def __init__(self):
@@ -185,7 +186,7 @@ class SearchWidget(QDialog):
         :return:
         """
         self.close()
-        self.watch_live_signal.emit(self.live_result_line_edit.text())
+        self.watch_live_signal.emit(self.live_result_line_edit.text(), PlayerEnum.MrlTypeLive.value[1])
 
     def answer_clean_btn_clicked(self):
         """

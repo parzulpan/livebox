@@ -15,7 +15,6 @@ from abc import ABC
 from widgets.about_widget import AboutWidget
 from widgets.buffer_widget import BufferWidget
 from widgets.gif_widget import GifWidget
-from widgets.live_widget import LiveWidget
 from widgets.main_widget import MainWindow
 from widgets.preferences_widget import PreferencesWidget
 from widgets.radio_station_widget import RadioStationWidget

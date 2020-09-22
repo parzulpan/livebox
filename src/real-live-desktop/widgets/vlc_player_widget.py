@@ -12,11 +12,14 @@
 import sys
 import os
 
-from PyQt5.QtGui import QPalette, QColor
+from PyQt5.QtGui import QPalette, QColor, QKeyEvent
 from PyQt5.QtWidgets import QWidget, QApplication, QVBoxLayout, QFrame, QMainWindow, QMenu
 
+from utils.enums import PlayerEnum
+from utils.states import PlayerState
 from utils.path_helper import PathHelper
 from utils.common import *
+
 
 # 设置VLC库路径，需在import vlc之前
 if get_system_platform() == "Windows":
@@ -39,25 +42,10 @@ class VlcPlayerWidget(QMainWindow):
     def __init__(self, *args):
         super(VlcPlayerWidget, self).__init__()
 
+        self.media_player_frame = QFrame()
         self.media_player = None
         self.instance = None
-        if args:
-            self.instance = vlc.Instance(*args)
-            self.media_player = self.instance.media_player_new()
-        else:
-            self.media_player = vlc.MediaPlayer()
-        if get_system_platform() == "Windows":
-            self.media_player_frame = QFrame()
-            self.media_player.set_hwnd(self.media_player_frame.winId())
-        elif get_system_platform() == "Linux":
-            self.media_player_frame = QFrame()
-            self.media_player.set_xwindow(self.media_player_frame.winId())
-        elif get_system_platform() == "Darwin":
-            self.media_player_frame = QFrame()
-            self.media_player.set_nsobject(self.media_player_frame.winId())
-        else:
-            self.media_player_frame = QFrame()
-            self.media_player.set_hwnd(self.media_player_frame.winId())
+        self.set_media_player(args)
         self.widget = QWidget(self)
         self.setCentralWidget(self.widget)
         self.palette = self.media_player_frame.palette()
@@ -69,10 +57,8 @@ class VlcPlayerWidget(QMainWindow):
         self.main_layout.setContentsMargins(0, 0, 0, 0)
         self.main_layout.setSpacing(0)
 
-        self.current_volume = None
-        self.current_slider_value = None
-        self.volume_slider_value_label = QLabel("")
         self.current_url = None
+        self.current_url_type = None
 
         self._init_ui()
 
@@ -93,125 +79,238 @@ class VlcPlayerWidget(QMainWindow):
         :return:
         """
         menu = QMenu()
-        opt1 = menu.addAction("menu1")
-        opt2 = menu.addAction("menu2")
-        action = menu.exec_(self.widget.mapToGlobal(pos))
-        if action == opt1:
-            # do something
-            return
-        elif action == opt2:
-            # do something
-            return
-        else:
-            return
 
-    def release_player(self):
+        if PlayerState.Load == PlayerEnum.LoadPlaying:
+            play_pause_opt = menu.addAction("暂停")
+        elif PlayerState.Load == PlayerEnum.LoadPaused:
+            play_pause_opt = menu.addAction("播放")
+        else:
+            play_pause_opt = menu.addAction("暂停")
+
+        refresh_opt = menu.addAction("刷新")
+
+        stop_opt = menu.addAction("停止")
+
+        menu.addSeparator()
+
+        if PlayerState.Size == PlayerEnum.SizeMax:
+            fullscreen_opt = menu.addAction("复原")
+        else:
+            fullscreen_opt = menu.addAction("全屏")
+
+        menu.addSeparator()
+
+        mute_opt = menu.addAction("静音")
+
+        action = menu.exec_(self.widget.mapToGlobal(pos))
+        if action == play_pause_opt:
+            if PlayerState.Load == PlayerEnum.LoadPlaying:
+                self.vlc_pause()
+            else:
+                self.vlc_resume()
+        elif action == refresh_opt:
+            self.vlc_play(self.current_url, self.current_url_type)
+        elif action == stop_opt:
+            self.vlc_stop()
+        elif action == fullscreen_opt:
+            if PlayerState.Size == PlayerEnum.SizeMax:
+                self.vlc_set_size(False)
+            else:
+                self.vlc_set_size(True)
+        elif action == mute_opt:
+            self.vlc_set_volume(-self.vlc_get_volume())
+
+    def keyPressEvent(self, event: QKeyEvent) -> None:
+        """ 重写键盘按下事件
+
+        :param event:
+        :return:
+        """
+        print("keyPressEvent", event)
+        if event.key() == Qt.Key_Escape:
+            self.vlc_set_size(False)
+        elif event.key() == Qt.Key_Left:
+            if PlayerState.MrlType == PlayerEnum.MrlTypeLocal:
+                self.vlc_set_time(PlayerState.EachDecreaseTime)
+        elif event.key() == Qt.Key_Right:
+            if PlayerState.MrlType == PlayerEnum.MrlTypeLocal:
+                self.vlc_set_time(PlayerState.EachIncreaseTime)
+        elif event.key() == Qt.Key_Up:
+            self.vlc_set_volume(PlayerState.EachIncreaseVolume)
+        elif event.key() == Qt.Key_Down:
+            self.vlc_set_volume(PlayerState.EachDecreaseVolume)
+        elif event.key() == Qt.Key_Space:
+            self.vlc_set_size(True)
+        else:
+            pass
+
+    def set_media_player(self, *args):
+        """ 获得并设置媒体播放器
+
+        :param args:
+        :return:
+        """
+        if args:
+            self.instance = vlc.Instance(*args)
+            self.media_player = self.instance.media_player_new()
+        else:
+            self.media_player = vlc.MediaPlayer()
+
+        if get_system_platform() == "Windows":
+            self.media_player_frame = QFrame()
+            self.media_player.set_hwnd(self.media_player_frame.winId())
+        elif get_system_platform() == "Linux":
+            self.media_player_frame = QFrame()
+            self.media_player.set_xwindow(self.media_player_frame.winId())
+        elif get_system_platform() == "Darwin":
+            self.media_player_frame = QFrame()
+            self.media_player.set_nsobject(self.media_player_frame.winId())
+        else:
+            self.media_player.set_hwnd(self.media_player_frame.winId())
+
+    def vlc_release(self):
         """ 释放资源
 
         :return:
         """
         return self.media_player.release()
 
-    def play_url(self, url=None):
-        """
+    def vlc_play(self, url: str, url_type: PlayerEnum):
+        """ 播放
 
         :param url:
+        :param url_type:
         :return:
         """
         try:
-            # url = "http://tx2play1.douyucdn.cn/live/288016rlols5.flv?uuid="
             if url:
+                # self.instance = vlc.Instance("--audio-visual=visual", "--effect-list=spectrometer",
+                #                              "--effect-fft-window=flattop")
+                # self.media_player = self.instance.media_player_new()
+
                 self.current_url = url
+                self.current_url_type = url_type
                 self.media_player.set_mrl(url)
                 self.media_player_frame.show()
-                return self.media_player.play()
+                self.media_player.play()
+                PlayerState.MrlType = url_type
+                PlayerState.Load = PlayerEnum.LoadPlaying
             else:
                 pass
         except Exception as e:
-            print('[play_url exception] {0}'.format(e))
+            print(f'[real-live-desktop]  play_url exception {e}')
             return False
 
-    def pause(self):
+    def vlc_pause(self):
         """ 暂停
 
         :return:
         """
         self.media_player.pause()
+        PlayerState.Load = PlayerEnum.LoadPaused
 
-    def resume(self):
+    def vlc_resume(self):
         """ 恢复
 
         :return:
         """
         self.media_player.set_pause(0)
+        PlayerState.Load = PlayerEnum.LoadPlaying
 
-    def stop(self):
+    def vlc_stop(self):
         """ 停止
 
         :return:
         """
+        # TODO
         self.media_player_frame.hide()
         self.media_player.stop()
-        # self.release_player()
+        self.release()
+        PlayerState.Load = PlayerEnum.LoadStopped
 
-    def is_playing(self):
-        """ 是否正在播放
-
-        :return:
-        """
-        return self.media_player.is_playing()
-
-    def get_time(self):
+    def vlc_get_time(self):
         """ 已播放时间，返回毫秒值
 
         :return:
         """
         return self.media_player.get_time()
 
-    def set_time(self, ms):
-        """ 拖动指定的毫秒值处播放。成功返回0，失败返回-1 (需要注意，只有当前多媒体格式或流媒体协议支持才会生效)
-
-        :param ms:
-        :return:
-        """
-        return self.media_player.set_time(ms)
-
-    def get_length(self):
+    def vlc_get_length_or_all_time(self):
         """ 音视频总长度，返回毫秒值
 
         :return:
         """
         return self.media_player.get_length()
 
-    def get_volume(self):
+    def vlc_set_time(self, ms):
+        """ 拖动指定的毫秒值处播放。成功返回0，失败返回-1 (需要注意，只有当前多媒体格式或流媒体协议支持才会生效)
+
+        :param ms:
+        :return:
+        """
+        _time = self.vlc_get_time() + ms
+        _all_time = self.vlc_get_length_or_all_time()
+        if _time <= 0:
+            return self.media_player.set_time(0)
+        elif _time >= _all_time:
+            return self.media_player.set_time(_all_time)
+        else:
+            return self.media_player.set_time(_time)
+
+    def vlc_get_volume(self):
         """ 获取当前音量（0~100）
 
         :return:
         """
         return self.media_player.audio_get_volume()
 
-    def set_volume(self, volume):
-        """
+    def vlc_set_volume(self, volume):
+        """ 设置当前音量
 
         :param volume:
         :return:
         """
-        return self.media_player.audio_set_volume(volume)
+        _volume = self.vlc_get_volume() + volume
+        if _volume <= 0:
+            PlayerState.Volume = PlayerEnum.VolumeMuted
+            return self.media_player.audio_set_volume(0)
+        elif _volume >= 100:
+            PlayerState.Volume = PlayerEnum.VolumeUnmuted
+            self.media_player.audio_set_volume(100)
+        else:
+            PlayerState.Volume = PlayerEnum.VolumeUnmuted
+            self.media_player.audio_set_volume(_volume)
 
-    def get_state(self):
-        """ 返回当前状态：正在播放、暂停中、其他
+    def vlc_set_size(self, b_fullscreen: bool):
+        """ 设置窗口大小
 
         :return:
         """
-        state = self.media_player.get_state()
-        if state == vlc.State(3):
-            return 1
-        elif state == vlc.State(4):
-            return 0
+        if b_fullscreen:
+            self.showFullScreen()
+            self.media_player.set_fullscreen(True)
+            PlayerState.Size = PlayerEnum.SizeMax
         else:
-            return -1
+            self.showNormal()
+            self.media_player.set_fullscreen(False)
+            PlayerState.Size = PlayerEnum.SizeInitial
 
-    def set_position(self, float_val):
+    def vlc_get_state(self):
+        """ 返回当前状态
+
+        :return:
+        """
+        # 0: 'NothingSpecial', 处于空闲状态，等待发出命令
+        # 1: 'Opening', 正在打开媒体资源定位器（MRL）
+        # 2: 'Buffering', 正在缓冲
+        # 3: 'Playing', 正在播放媒体
+        # 4: 'Paused', 处于暂停状态
+        # 5: 'Stopped', 处于停止状态，此时关闭播放器
+        # 6: 'Ended', 已到达当前播放列表的末尾
+        # 7: 'Error', 遇到错误，无法继续
+        return self.media_player.get_state()
+
+    def vlc_set_position(self, float_val):
         """ 拖动当前进度，传入0.0~1.0之间的浮点数(需要注意，只有当前多媒体格式或流媒体协议支持才会生效)
 
         :param float_val:
@@ -219,14 +318,14 @@ class VlcPlayerWidget(QMainWindow):
         """
         return self.media_player.set_position(float_val)
 
-    def get_rate(self):
+    def vlc_get_rate(self):
         """ 获取当前文件播放速率
 
         :return:
         """
         return self.media_player.get_rate()
 
-    def set_rate(self, rate):
+    def vlc_set_rate(self, rate):
         """ 设置播放速率（如：1.2，表示加速1.2倍播放）
 
         :param rate:
@@ -234,7 +333,7 @@ class VlcPlayerWidget(QMainWindow):
         """
         return self.media_player.set_rate(rate)
 
-    def set_ratio(self, ratio):
+    def vlc_set_ratio(self, ratio):
         """ 设置宽高比率（如"16:9","4:3"）
 
         :param ratio:
@@ -244,40 +343,16 @@ class VlcPlayerWidget(QMainWindow):
         self.media_player.video_set_scale(0)
         self.media_player.video_set_aspect_ratio(ratio)
 
-    def add_callback(self, event_type, callback):
+    def vlc_add_callback(self, event_type, callback):
         """ 注册监听器
 
         :param event_type: VLC的监听器类型
         :param callback:
         :return:
         """
-        # VLC的监听器类型
-        # MediaPlayerNothingSpecial：vlc处于空闲状态，只是等待发出命令
-        # MediaPlayerOpening：vlc正在打开媒体资源定位器（MRL）
-        # MediaPlayerBuffering(intcache)：vlc正在缓冲
-        # MediaPlayerPlaying：vlc正在播放媒体
-        # MediaPlayerPaused：vlc处于暂停状态
-        # MediaPlayerStopped：vlc处于停止状态
-        # MediaPlayerForward：vlc通过媒体快进（这永远不会被调用）
-        # MediaPlayerBackward：vlc正在快退（这永远不会被调用）
-        # MediaPlayerEncounteredError：vlc遇到错误，无法继续
-        # MediaPlayerEndReached：vlc已到达当前播放列表的末尾
-        # MediaPlayerTimeChanged：时间发生改变
-        # MediaPlayerPositionChanged：进度发生改变
-        # MediaPlayerSeekableChanged：流媒体是否可搜索的状态发生改变（true表示可搜索，false表示不可搜索）
-        # MediaPlayerPausableChanged：媒体是否可暂停状态发生改变（true表示可暂停，false表示不可暂停）
-        # MediaPlayerMediaChanged: 媒体发生改变
-        # MediaPlayerTitleChanged: 标题发生改变（DVD / Blu - ray）
-        # MediaPlayerChapterChanged: 章节发生改变（DVD / Blu - ray）
-        # MediaPlayerLengthChanged: (在vlc版本 < 2.2.0仅适用于Mozilla）长度已更改
-        # MediaPlayerVout:视频输出的数量发生改变
-        # MediaPlayerMuted:静音
-        # MediaPlayerUnmuted:取消静音
-        # MediaPlayerAudioVolume:音量发生改变
-
         self.media_player.event_manager().event_attach(event_type, callback)
 
-    def remove_callback(self, event_type, callback):
+    def vlc_remove_callback(self, event_type, callback):
         """ 移除监听器
 
         :param event_type:
@@ -286,7 +361,7 @@ class VlcPlayerWidget(QMainWindow):
         """
         self.media_player.event_manager().event_detach(event_type, callback)
 
-    def set_marquee(self):
+    def vlc_set_marquee(self):
         """ 设置字幕
 
         :return:
@@ -308,7 +383,7 @@ class VlcPlayerWidget(QMainWindow):
         self.media_player.video_set_marquee_int(vlc.VideoMarqueeOption.Timeout, 0)
         self.media_player.video_set_marquee_int(vlc.VideoMarqueeOption.Refresh, 10000)
 
-    def update_content(self, content="%Y-%m-%d %H:%M:%S"):
+    def vlc_update_marquee(self, content="%Y-%m-%d %H:%M:%S"):
         """ 设置字幕内容
 
         :param content: 默认为时间格式，会在屏幕下方显示当前时间，且每一秒刷新一次。
@@ -316,96 +391,12 @@ class VlcPlayerWidget(QMainWindow):
         """
         self.media_player.video_set_marquee_string(vlc.VideoMarqueeOption.Text, content)
 
-    def answer_play_pause_btn_clicked(self):
-        """
-
-        :return:
-        """
-        if self.play_pause_btn.isChecked():
-            self.pause()
-        else:
-            self.resume()
-
-    def answer_refresh_btn_clicked(self):
-        """
-
-        :return:
-        """
-        self.play_url(self.current_url)
-
-    def answer_rewind_btn_clicked(self):
-        """
-
-        :return:
-        """
-        pass
-
-    def answer_stop_btn_clicked(self):
-        """
-
-        :return:
-        """
-        self.stop()
-
-    def answer_fast_forward_btn_clicked(self):
-        """
-
-        :return:
-        """
-        pass
-
-    def answer_fullscreen_narrow_btn_clicked(self):
-        """
-
-        :return:
-        """
-        pass
-
-    def answer_collect_btn_clicked(self):
-        """
-
-        :return:
-        """
-        pass
-
-    def answer_menu_btn_clicked(self):
-        """
-
-        :return:
-        """
-        pass
-
-    def answer_volume_btn_clicked(self):
-        """
-
-        :return:
-        """
-        if self.volume_btn.isChecked():
-            self.current_volume = self.get_volume()
-            self.current_slider_value = self.volume_slider.value()
-            self.set_volume(0)
-            self.volume_slider.setValue(0)
-        else:
-            self.set_volume(self.current_volume)
-            self.volume_slider.setValue(self.current_slider_value)
-
-    def answer_volume_slider_value_changed(self):
-        """
-
-        :return:
-        """
-        volume_value = self.volume_slider.value()
-        if 0 == volume_value:
-            self.volume_btn.setChecked(True)
-        else:
-            self.volume_btn.setChecked(False)
-        self.volume_slider_value_label.setText("{0}%".format(volume_value))
-        self.set_volume(volume_value)
-
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    vlc_widget = VlcPlayerWidget()
+    # vlc_widget = VlcPlayerWidget()
+    vlc_widget = VlcPlayerWidget("--audio-visual=visual", "--effect-list=spectrometer", "--effect-fft-window=flattop")
     vlc_widget.show()
-    vlc_widget.play_url()
+    # vlc_widget.vlc_play("http://tx2play1.douyucdn.cn/live/288016rlols5.flv?uuid=", PlayerEnum.MrlTypeLive)
+    vlc_widget.vlc_play("http://live.xmcdn.com/live/45/64.m3u8", PlayerEnum.MrlTypeRS)
     sys.exit(app.exec_())

@@ -13,18 +13,20 @@ import sys
 import os
 
 from PyQt5.QtWidgets import QMainWindow, QApplication, QMenuBar, QMenu, QAction, QDesktopWidget, qApp, \
-    QToolBar, QActionGroup, QFontDialog, QSlider, QLabel, QFileDialog
+    QToolBar, QActionGroup, QFontDialog, QSlider, QLabel, QFileDialog, QWidget
 from PyQt5.QtGui import QKeySequence, QIcon, QDesktopServices, QFont
 from PyQt5.QtCore import Qt, QSize, QUrl
 
 from utils.common import *
 from utils.path_helper import PathHelper
+from utils.enums import PlayerEnum
+from utils.states import PlayerState
 from widgets.radio_station_widget import RadioStationWidget
 from widgets.search_widget import SearchWidget
 from widgets.tv_widget import TvWidget
-from widgets.live_widget import LiveWidget
 from widgets.about_widget import AboutWidget
 from widgets.preferences_widget import PreferencesWidget
+from widgets.vlc_player_widget import VlcPlayerWidget
 
 
 class MainWindow(QMainWindow):
@@ -99,21 +101,21 @@ class MainWindow(QMainWindow):
         self.live_tool_action.setIcon(QIcon(PathHelper.get_img_path("search@128x128.png")))
         self.search_widget = SearchWidget()
         self.live_tool_action.triggered.connect(self.show_search_widget)
-        self.search_widget.watch_live_signal.connect(self.answer_watch_live_signal)
+        self.search_widget.watch_live_signal.connect(self.answer_play_action_triggered)
 
         self.tv_live_tool_action = QAction("", self.tool_bar)
         self.tv_live_tool_action.setToolTip("高清电视")
         self.tv_live_tool_action.setIcon(QIcon(PathHelper.get_img_path("tv@128x128.png")))
         self.tv_widget = TvWidget()
         self.tv_live_tool_action.triggered.connect(self.show_tv_widget)
-        self.tv_widget.watch_live_signal.connect(self.answer_watch_live_signal)
+        self.tv_widget.watch_tv_signal.connect(self.answer_play_action_triggered)
 
         self.radio_station_tool_action = QAction("", self.tool_bar)
         self.radio_station_tool_action.setToolTip("广播电台")
         self.radio_station_tool_action.setIcon(QIcon(PathHelper.get_img_path("radio_station@128x128.png")))
         self.radio_station_widget = RadioStationWidget()
         self.radio_station_tool_action.triggered.connect(self.show_radio_station_widget)
-        self.radio_station_widget.listen_radio_station_signal.connect(self.answer_listen_radio_station_signal)
+        self.radio_station_widget.listen_radio_station_signal.connect(self.answer_play_action_triggered)
 
         self.hot_live_tool_action = QAction("", self.tool_bar)
         self.hot_live_tool_action.setToolTip("热门直播")
@@ -139,51 +141,9 @@ class MainWindow(QMainWindow):
         self.note_tool_action.setIcon(QIcon(PathHelper.get_img_path("note@128x128.png")))
         # self.note_tool_action.triggered.connect(self.show_search_widget)
 
-        # self.play_pause_btn = ControlBtn("pause@128x128.png", "play@128x128.png")
-        # self.play_pause_btn.setToolTip("播放/暂停")
-        # self.play_pause_btn.setShortcut(Qt.Key_Space)
-        # self.play_pause_btn.clicked.connect(self.answer_play_pause_btn_clicked)
-        #
-        # self.refresh_btn = ControlBtn("refresh@128x128.png", "refresh@128x128.png")
-        # self.refresh_btn.setToolTip("刷新")
-        # self.refresh_btn.clicked.connect(self.answer_refresh_btn_clicked)
-        #
-        # self.rewind_btn = ControlBtn("rewind@128x128.png", "rewind@128x128.png")
-        # self.rewind_btn.setToolTip("后退10秒")
-        # self.rewind_btn.clicked.connect(self.answer_rewind_btn_clicked)
-        #
-        # self.stop_btn = ControlBtn("stop@128x128.png", "stop@128x128.png")
-        # self.stop_btn.setToolTip("停止")
-        # self.stop_btn.clicked.connect(self.answer_stop_btn_clicked)
-        #
-        # self.fast_forward_btn = ControlBtn("fast_forward@128x128.png", "fast_forward@128x128.png")
-        # self.fast_forward_btn.setToolTip("前进10秒")
-        # self.fast_forward_btn.clicked.connect(self.answer_fast_forward_btn_clicked)
-        #
-        # self.fullscreen_narrow_btn = ControlBtn("fullscreen@128x128.png", "narrow@128x128.png")
-        # self.fullscreen_narrow_btn.setToolTip("最大化/最小化")
-        # self.fullscreen_narrow_btn.setShortcut(Qt.Key_Escape)
-        # self.fullscreen_narrow_btn.clicked.connect(self.answer_fullscreen_narrow_btn_clicked)
-        #
-        # self.volume_btn = ControlBtn("volume@128x128.png", "mute@128x128.png")
-        # self.volume_btn.setToolTip("音量")
-        # self.volume_btn.clicked.connect(self.answer_volume_btn_clicked)
-        #
-        # self.volume_slider = QSlider(Qt.Vertical)
-        # self.volume_slider.setFixedHeight(35)
-        # self.volume_slider.setMinimum(0)
-        # self.volume_slider.setMaximum(100)
-        # self.volume_slider.setSingleStep(1)
-        # self.volume_slider.setTickInterval(1)
-        # self.volume_slider.setTickPosition(QSlider.TicksAbove)
-        # self.volume_slider.valueChanged.connect(self.answer_volume_slider_value_changed)
-        #
-        # self.current_volume = None
-        # self.current_slider_value = None
-        # self.volume_slider_value_label = QLabel("")
-        # self.current_url = None
-
-        self.live_widget = LiveWidget()
+        self.central_widget = QWidget()
+        self.vlc_widget = None
+        self.setStyleSheet(f"background-image:url({PathHelper.get_img_path('live_null.png')}); ")
 
         self._init_ui()
         self.init_cfg()
@@ -240,7 +200,7 @@ class MainWindow(QMainWindow):
         self.tool_bar.addAction(self.preferences_tool_action)
 
         # 显示区域
-        self.setCentralWidget(self.live_widget)
+        self.setCentralWidget(self.central_widget)
 
         self.set_window_info()
 
@@ -322,7 +282,7 @@ class MainWindow(QMainWindow):
                           "ogg", "oma", "opus", "qcp", "ra", "rmi", "s3m", "sid", "spx", "thd", "tta", "voc", "vqf",
                           "w64", "wav", "wma", "wv", "xa", "xm"]
             if _type in _type_list:
-                self.answer_watch_live_signal(file_name)
+                self.answer_play_action_triggered(file_name, PlayerEnum.MrlTypeLocal.value[1])
             else:
                 _box = PromptBox(2, "音视频文件错误!", 1)
                 width, height = get_window_center_point(_box)
@@ -409,31 +369,31 @@ class MainWindow(QMainWindow):
         about_widget.move(width, height)
         about_widget.exec_()
 
-    def answer_watch_live_signal(self, url):
+    def answer_play_action_triggered(self, url: str, url_type: PlayerEnum):
         """
 
         :param url:
+        :param url_type:
         :return:
         """
-        self.live_widget.vlc_widget.play_url(url)
-        self.live_widget.set_player_widget(True)
-
-    def answer_listen_radio_station_signal(self, url):
-        """
-
-        :param url:
-        :return:
-        """
-        self.live_widget.vlc_widget.play_url(url)
-        self.live_widget.set_player_widget(True)
+        del self.vlc_widget
+        if url_type == PlayerEnum.MrlTypeRS.value[1]:
+            self.vlc_widget = VlcPlayerWidget("--audio-visual=visual", "--effect-list=spectrometer",
+                                              "--effect-fft-window=flattop")
+        else:
+            self.vlc_widget = VlcPlayerWidget()
+        self.vlc_widget.vlc_play(url, url_type)
+        self.setCentralWidget(self.vlc_widget)
 
     def answer_close_action_triggered(self):
         """
 
         :return:
         """
-        self.live_widget.set_player_widget(False)
-        self.live_widget.vlc_widget.stop()
+        self.central_widget = QWidget()
+        self.vlc_widget.vlc_stop()
+        del self.vlc_widget
+        self.setCentralWidget(self.central_widget)
 
     @staticmethod
     def answer_screenshot_action_triggered():
@@ -464,78 +424,6 @@ class MainWindow(QMainWindow):
         :return:
         """
         pass
-
-    def answer_play_pause_btn_clicked(self):
-        """
-
-        :return:
-        """
-        if self.play_pause_btn.isChecked():
-            self.pause()
-        else:
-            self.resume()
-
-    def answer_refresh_btn_clicked(self):
-        """
-
-        :return:
-        """
-        self.play_url(self.current_url)
-
-    def answer_rewind_btn_clicked(self):
-        """
-
-        :return:
-        """
-        pass
-
-    def answer_stop_btn_clicked(self):
-        """
-
-        :return:
-        """
-        self.stop()
-
-    def answer_fast_forward_btn_clicked(self):
-        """
-
-        :return:
-        """
-        pass
-
-    def answer_fullscreen_narrow_btn_clicked(self):
-        """
-
-        :return:
-        """
-        pass
-
-    def answer_volume_btn_clicked(self):
-        """
-
-        :return:
-        """
-        if self.volume_btn.isChecked():
-            self.current_volume = self.get_volume()
-            self.current_slider_value = self.volume_slider.value()
-            self.set_volume(0)
-            self.volume_slider.setValue(0)
-        else:
-            self.set_volume(self.current_volume)
-            self.volume_slider.setValue(self.current_slider_value)
-
-    def answer_volume_slider_value_changed(self):
-        """
-
-        :return:
-        """
-        # volume_value = self.volume_slider.value()
-        # if 0 == volume_value:
-        #     self.volume_btn.setChecked(True)
-        # else:
-        #     self.volume_btn.setChecked(False)
-        # self.volume_slider_value_label.setText("{0}%".format(volume_value))
-        # self.set_volume(volume_value)
 
 
 if __name__ == '__main__':
