@@ -36,27 +36,27 @@ class MainWindow(QMainWindow):
 
         self.menu_bar = QMenuBar()
 
-        self.media_menu = QMenu("媒体(&M)", self.menu_bar)
+        self.media_menu = QMenu("媒体", self.menu_bar)
         self.local_action = QAction("本地文件(L)", self.media_menu)
-        self.local_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_M))
+        self.local_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_L))
         self.local_action.triggered.connect(self.show_local_widget)
         self.live_search_action = QAction("直播搜索(F)", self.media_menu)
         self.live_search_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_F))
         self.live_search_action.triggered.connect(self.show_search_widget)
-        self.tv_live_search_action = QAction("高清电视(F)", self.media_menu)
-        self.tv_live_search_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_F))
+        self.tv_live_search_action = QAction("高清电视(T)", self.media_menu)
+        self.tv_live_search_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_T))
         self.tv_live_search_action.triggered.connect(self.show_tv_widget)
-        self.radio_station_search_action = QAction("广播电台(F)", self.media_menu)
-        self.radio_station_search_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_F))
+        self.radio_station_search_action = QAction("广播电台(R)", self.media_menu)
+        self.radio_station_search_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_R))
         self.radio_station_search_action.triggered.connect(self.show_radio_station_widget)
         self.close_action = QAction("关闭(C)", self.media_menu)
-        self.close_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_C))
+        self.close_action.setShortcut(QKeySequence(Qt.CTRL + Qt.SHIFT + Qt.Key_C))
         self.close_action.triggered.connect(self.answer_close_action_triggered)
         self.quit_action = QAction("退出(Q)", self.media_menu)
-        self.quit_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_Q))
+        self.quit_action.setShortcut(QKeySequence(Qt.CTRL + Qt.SHIFT + Qt.Key_Q))
         self.quit_action.triggered.connect(lambda: sys.exit())
 
-        self.tool_menu = QMenu("增强(&E)", self.menu_bar)
+        self.tool_menu = QMenu("增强", self.menu_bar)
         self.screenshot_action = QAction("截图(J)", self.tool_menu)
         self.screenshot_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_J))
         self.screenshot_action.triggered.connect(self.answer_screenshot_action_triggered)
@@ -66,26 +66,27 @@ class MainWindow(QMainWindow):
         self.screen_record_action = QAction("录屏(L)", self.tool_menu)
         self.screen_record_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_L))
         self.screen_record_action.triggered.connect(self.answer_screen_record_action_triggered)
-        self.preferences_action = QAction("偏好设置(L)", self.tool_menu)
-        self.preferences_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_L))
+        self.preferences_action = QAction("偏好设置(P)", self.tool_menu)
+        self.preferences_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_P))
         self.preferences_action.triggered.connect(self.answer_screen_record_action_triggered)
-        self.hide_action = QAction("隐藏工具栏(V)", self.tool_menu)
-        self.hide_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_V))
-        self.hide_action.setCheckable(True)
-        self.hide_action.triggered.connect(self.answer_hide_action_triggered)
 
-        self.help_menu = QMenu("帮助(&H)", self.menu_bar)
+        self.my_menu = QMenu("我的", self.menu_bar)
+        self.connect_github_action = QAction("连接到GitHub", self.my_menu)
+        self.backup_data_action = QAction("备份数据", self.my_menu)
+        self.restore_from_backup_action = QAction("从备份中恢复", self.my_menu)
+
+        self.help_menu = QMenu("帮助", self.menu_bar)
         self.help_action = QAction("帮助文档(H)", self.help_menu)
-        self.help_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_H))
+        self.help_action.setShortcut(QKeySequence(Qt.CTRL + Qt.ALT + Qt.Key_H))
         self.help_action.triggered.connect(self.answer_help_action_triggered)
         self.change_log_action = QAction("更新日志(U)", self.help_menu)
-        self.change_log_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_U))
+        self.change_log_action.setShortcut(QKeySequence(Qt.CTRL + Qt.ALT + Qt.Key_U))
         self.change_log_action.triggered.connect(self.answer_change_log_action_triggered)
         self.check_version_action = QAction("检查版本(C)", self.help_menu)
-        self.check_version_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_C))
+        self.check_version_action.setShortcut(QKeySequence(Qt.CTRL + Qt.ALT + Qt.Key_C))
         self.check_version_action.triggered.connect(self.answer_check_version_action_triggered)
         self.about_action = QAction("关于软件(A)", self.help_menu)
-        self.about_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_A))
+        self.about_action.setShortcut(QKeySequence(Qt.CTRL + Qt.ALT + Qt.Key_A))
         self.about_action.triggered.connect(self.answer_about_action_triggered)
 
         self.tool_bar = QToolBar()
@@ -93,7 +94,6 @@ class MainWindow(QMainWindow):
         self.tool_bar.setMovable(True)
         self.tool_bar.setIconSize(QSize(35, 35))
         # self.tool_bar.setStyleSheet("QToolBar{border: 1px solid #313335; spacing:5px; }")
-        self.addToolBar(Qt.TopToolBarArea, self.tool_bar)
         self.live_tool_action = QAction("", self.tool_bar)
         self.live_tool_action.setToolTip("直播搜索")
         self.live_tool_action.setIcon(QIcon(PathHelper.get_img_path("search@128x128.png")))
@@ -139,54 +139,54 @@ class MainWindow(QMainWindow):
         self.note_tool_action.setIcon(QIcon(PathHelper.get_img_path("note@128x128.png")))
         # self.note_tool_action.triggered.connect(self.show_search_widget)
 
-        self.play_pause_btn = ControlBtn("pause@128x128.png", "play@128x128.png")
-        self.play_pause_btn.setToolTip("播放/暂停")
-        self.play_pause_btn.setShortcut(Qt.Key_Space)
-        self.play_pause_btn.clicked.connect(self.answer_play_pause_btn_clicked)
-
-        self.refresh_btn = ControlBtn("refresh@128x128.png", "refresh@128x128.png")
-        self.refresh_btn.setToolTip("刷新")
-        self.refresh_btn.clicked.connect(self.answer_refresh_btn_clicked)
-
-        self.rewind_btn = ControlBtn("rewind@128x128.png", "rewind@128x128.png")
-        self.rewind_btn.setToolTip("后退10秒")
-        self.rewind_btn.clicked.connect(self.answer_rewind_btn_clicked)
-
-        self.stop_btn = ControlBtn("stop@128x128.png", "stop@128x128.png")
-        self.stop_btn.setToolTip("停止")
-        self.stop_btn.clicked.connect(self.answer_stop_btn_clicked)
-
-        self.fast_forward_btn = ControlBtn("fast_forward@128x128.png", "fast_forward@128x128.png")
-        self.fast_forward_btn.setToolTip("前进10秒")
-        self.fast_forward_btn.clicked.connect(self.answer_fast_forward_btn_clicked)
-
-        self.fullscreen_narrow_btn = ControlBtn("fullscreen@128x128.png", "narrow@128x128.png")
-        self.fullscreen_narrow_btn.setToolTip("最大化/最小化")
-        self.fullscreen_narrow_btn.setShortcut(Qt.Key_Escape)
-        self.fullscreen_narrow_btn.clicked.connect(self.answer_fullscreen_narrow_btn_clicked)
-
-        self.volume_btn = ControlBtn("volume@128x128.png", "mute@128x128.png")
-        self.volume_btn.setToolTip("音量")
-        self.volume_btn.clicked.connect(self.answer_volume_btn_clicked)
-
-        self.volume_slider = QSlider(Qt.Vertical)
-        self.volume_slider.setFixedHeight(35)
-        self.volume_slider.setMinimum(0)
-        self.volume_slider.setMaximum(100)
-        self.volume_slider.setSingleStep(1)
-        self.volume_slider.setTickInterval(1)
-        self.volume_slider.setTickPosition(QSlider.TicksAbove)
-        self.volume_slider.valueChanged.connect(self.answer_volume_slider_value_changed)
-
-        self.current_volume = None
-        self.current_slider_value = None
-        self.volume_slider_value_label = QLabel("")
-        self.current_url = None
+        # self.play_pause_btn = ControlBtn("pause@128x128.png", "play@128x128.png")
+        # self.play_pause_btn.setToolTip("播放/暂停")
+        # self.play_pause_btn.setShortcut(Qt.Key_Space)
+        # self.play_pause_btn.clicked.connect(self.answer_play_pause_btn_clicked)
+        #
+        # self.refresh_btn = ControlBtn("refresh@128x128.png", "refresh@128x128.png")
+        # self.refresh_btn.setToolTip("刷新")
+        # self.refresh_btn.clicked.connect(self.answer_refresh_btn_clicked)
+        #
+        # self.rewind_btn = ControlBtn("rewind@128x128.png", "rewind@128x128.png")
+        # self.rewind_btn.setToolTip("后退10秒")
+        # self.rewind_btn.clicked.connect(self.answer_rewind_btn_clicked)
+        #
+        # self.stop_btn = ControlBtn("stop@128x128.png", "stop@128x128.png")
+        # self.stop_btn.setToolTip("停止")
+        # self.stop_btn.clicked.connect(self.answer_stop_btn_clicked)
+        #
+        # self.fast_forward_btn = ControlBtn("fast_forward@128x128.png", "fast_forward@128x128.png")
+        # self.fast_forward_btn.setToolTip("前进10秒")
+        # self.fast_forward_btn.clicked.connect(self.answer_fast_forward_btn_clicked)
+        #
+        # self.fullscreen_narrow_btn = ControlBtn("fullscreen@128x128.png", "narrow@128x128.png")
+        # self.fullscreen_narrow_btn.setToolTip("最大化/最小化")
+        # self.fullscreen_narrow_btn.setShortcut(Qt.Key_Escape)
+        # self.fullscreen_narrow_btn.clicked.connect(self.answer_fullscreen_narrow_btn_clicked)
+        #
+        # self.volume_btn = ControlBtn("volume@128x128.png", "mute@128x128.png")
+        # self.volume_btn.setToolTip("音量")
+        # self.volume_btn.clicked.connect(self.answer_volume_btn_clicked)
+        #
+        # self.volume_slider = QSlider(Qt.Vertical)
+        # self.volume_slider.setFixedHeight(35)
+        # self.volume_slider.setMinimum(0)
+        # self.volume_slider.setMaximum(100)
+        # self.volume_slider.setSingleStep(1)
+        # self.volume_slider.setTickInterval(1)
+        # self.volume_slider.setTickPosition(QSlider.TicksAbove)
+        # self.volume_slider.valueChanged.connect(self.answer_volume_slider_value_changed)
+        #
+        # self.current_volume = None
+        # self.current_slider_value = None
+        # self.volume_slider_value_label = QLabel("")
+        # self.current_url = None
 
         self.live_widget = LiveWidget()
 
         self._init_ui()
-        self._init_cfg()
+        self.init_cfg()
 
     def _init_ui(self):
         """
@@ -207,8 +207,11 @@ class MainWindow(QMainWindow):
         self.tool_menu.addAction(self.screen_record_action)
         self.tool_menu.addSeparator()
         self.tool_menu.addAction(self.preferences_action)
-        self.tool_menu.addSeparator()
-        self.tool_menu.addAction(self.hide_action)
+
+        self.my_menu.addAction(self.connect_github_action)
+        self.my_menu.addSeparator()
+        self.my_menu.addAction(self.backup_data_action)
+        self.my_menu.addAction(self.restore_from_backup_action)
 
         self.help_menu.addAction(self.help_action)
         self.help_menu.addAction(self.change_log_action)
@@ -218,6 +221,7 @@ class MainWindow(QMainWindow):
 
         self.menu_bar.addMenu(self.media_menu)
         self.menu_bar.addMenu(self.tool_menu)
+        self.menu_bar.addMenu(self.my_menu)
         self.menu_bar.addMenu(self.help_menu)
 
         self.setMenuBar(self.menu_bar)
@@ -234,39 +238,38 @@ class MainWindow(QMainWindow):
         self.tool_bar.addAction(self.note_tool_action)
         self.tool_bar.addSeparator()
         self.tool_bar.addAction(self.preferences_tool_action)
-        # 工具栏播放控制
-        self.tool_bar.addSeparator()
-        self.tool_bar.addSeparator()
-        self.tool_bar.addWidget(self.play_pause_btn)
-        self.tool_bar.addWidget(self.refresh_btn)
-        self.tool_bar.addWidget(self.rewind_btn)
-        self.tool_bar.addWidget(self.stop_btn)
-        self.tool_bar.addWidget(self.fast_forward_btn)
-        self.tool_bar.addWidget(self.fullscreen_narrow_btn)
-        self.tool_bar.addSeparator()
-        self.tool_bar.addWidget(self.volume_btn)
-        self.tool_bar.addWidget(self.volume_slider_value_label)
-        self.tool_bar.addWidget(self.volume_slider)
 
         # 显示区域
         self.setCentralWidget(self.live_widget)
 
         self.set_window_info()
 
-    def _init_cfg(self):
+    def init_cfg(self):
         """
 
         :return:
         """
 
-        # 工具栏可见性
+        # 工具栏设置
         visible = get_tool_bar_visible()
         if visible:
-            self.hide_action.setChecked(False)
-            self.hide_action.triggered.emit(False)
+            self.tool_bar.show()
         else:
-            self.hide_action.setChecked(True)
-            self.hide_action.triggered.emit(True)
+            self.tool_bar.hide()
+        pos = get_tool_bar_pos()
+        if pos == "top":
+            self.addToolBar(Qt.TopToolBarArea, self.tool_bar)
+        elif pos == "right":
+            self.addToolBar(Qt.RightToolBarArea, self.tool_bar)
+        elif pos == "bottom":
+            self.addToolBar(Qt.BottomToolBarArea, self.tool_bar)
+        elif pos == "left":
+            self.addToolBar(Qt.LeftToolBarArea, self.tool_bar)
+        else:
+            self.addToolBar(Qt.TopToolBarArea, self.tool_bar)
+
+        # print("self.tool_bar.allowedAreas()", self.tool_bar.allowedAreas())
+        # print("self.toolBarArea(self.tool_bar)", self.toolBarArea(self.tool_bar))
 
         # 皮肤设置
         skin = get_skin()
@@ -431,19 +434,6 @@ class MainWindow(QMainWindow):
         """
         self.live_widget.set_player_widget(False)
         self.live_widget.vlc_widget.stop()
-
-    def answer_hide_action_triggered(self, checked):
-        """
-
-        :param checked:
-        :return:
-        """
-        if checked:
-            self.tool_bar.hide()
-            set_tool_bar_visible(0)
-        else:
-            self.tool_bar.show()
-            set_tool_bar_visible(1)
 
     @staticmethod
     def answer_screenshot_action_triggered():

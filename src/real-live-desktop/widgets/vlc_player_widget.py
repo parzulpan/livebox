@@ -11,21 +11,22 @@
 
 import sys
 import os
-import platform
 
 from PyQt5.QtGui import QPalette, QColor
-from PyQt5.QtWidgets import QWidget, QApplication, QVBoxLayout, QFrame, QMainWindow, \
-    QLabel
+from PyQt5.QtWidgets import QWidget, QApplication, QVBoxLayout, QFrame, QMainWindow, QMenu
 
 from utils.path_helper import PathHelper
+from utils.common import *
 
 # 设置VLC库路径，需在import vlc之前
-if platform.system() == "Windows":
+if get_system_platform() == "Windows":
     os.environ['PYTHON_VLC_MODULE_PATH'] = PathHelper.get_python_vlc_module_path("Windows")
-elif platform.system() == "Linux":
+elif get_system_platform() == "Linux":
     os.environ['PYTHON_VLC_MODULE_PATH'] = PathHelper.get_python_vlc_module_path("Linux")
-elif platform.system() == "Darwin":
+elif get_system_platform() == "Darwin":
     os.environ['PYTHON_VLC_MODULE_PATH'] = PathHelper.get_python_vlc_module_path("Darwin")
+else:
+    os.environ['PYTHON_VLC_MODULE_PATH'] = PathHelper.get_python_vlc_module_path("Windows")
 
 import vlc
 
@@ -45,16 +46,18 @@ class VlcPlayerWidget(QMainWindow):
             self.media_player = self.instance.media_player_new()
         else:
             self.media_player = vlc.MediaPlayer()
-
-        if platform.system() == "Windows":
+        if get_system_platform() == "Windows":
             self.media_player_frame = QFrame()
             self.media_player.set_hwnd(self.media_player_frame.winId())
-        elif platform.system() == "Linux":
+        elif get_system_platform() == "Linux":
             self.media_player_frame = QFrame()
             self.media_player.set_xwindow(self.media_player_frame.winId())
-        elif platform.system() == "Darwin":
+        elif get_system_platform() == "Darwin":
             self.media_player_frame = QFrame()
             self.media_player.set_nsobject(self.media_player_frame.winId())
+        else:
+            self.media_player_frame = QFrame()
+            self.media_player.set_hwnd(self.media_player_frame.winId())
         self.widget = QWidget(self)
         self.setCentralWidget(self.widget)
         self.palette = self.media_player_frame.palette()
@@ -80,6 +83,27 @@ class VlcPlayerWidget(QMainWindow):
         """
         self.main_layout.addWidget(self.media_player_frame)
         self.widget.setLayout(self.main_layout)
+        self.widget.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.widget.customContextMenuRequested.connect(self.custom_right_menu)
+
+    def custom_right_menu(self, pos):
+        """
+
+        :param pos:
+        :return:
+        """
+        menu = QMenu()
+        opt1 = menu.addAction("menu1")
+        opt2 = menu.addAction("menu2")
+        action = menu.exec_(self.widget.mapToGlobal(pos))
+        if action == opt1:
+            # do something
+            return
+        elif action == opt2:
+            # do something
+            return
+        else:
+            return
 
     def release_player(self):
         """ 释放资源

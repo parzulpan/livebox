@@ -51,11 +51,6 @@ tv_widget = TvWidget()
 vlc_player_widget = VlcPlayerWidget()
 
 
-_widgets["about_widget": about_widget, "buffer_widget": buffer_widget]
-
-
-mediator = Mediator(_widgets)
-
 
 
 

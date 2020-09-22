@@ -4,7 +4,7 @@
 
 @Email     : parzulpan@gmail.com
 
-@Summary   : 客户端的枚举管理
+@Summary   : 枚举值管理
 
 @Attention :
 """

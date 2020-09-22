@@ -8,10 +8,12 @@
 
 @Attention :
 """
+import platform
 
-from PyQt5.QtWidgets import QDesktopWidget, QDialog, QLabel, QPushButton, QHBoxLayout, QVBoxLayout, qApp, QFontDialog
+from PyQt5.QtWidgets import QDesktopWidget, QDialog, QLabel, QPushButton, QHBoxLayout, QVBoxLayout, qApp, QFontDialog,\
+    QApplication
 from PyQt5.QtGui import QPixmap, QIcon
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QTranslator
 
 from utils.path_helper import PathHelper
 from utils.crud_json import *
@@ -26,6 +28,14 @@ def get_window_center_point(widget):
     desktop_widget = QDesktopWidget()
     screen_rect = desktop_widget.screenGeometry()
     return (screen_rect.width()-widget.width()) / 2, (screen_rect.height()-widget.height()) / 2
+
+
+def get_system_platform():
+    """
+
+    :return:
+    """
+    return platform.system()
 
 
 def set_skin(skin: str):
@@ -49,18 +59,21 @@ def get_skin():
     return default_json2python4file["preferences"]["personalise"]["skin"]
 
 
-def set_font():
+def set_font(parent=None, dynamic=True):
     """
 
+    :param parent:
+    :param dynamic:
     :return:
     """
     font = qApp.font()
-    font, changed = QFontDialog().getFont(font, None, caption="字体设置")
+    font, changed = QFontDialog().getFont(font, parent, caption="字体设置")
     if changed:
-        qApp.setFont(font)
-        qApp.processEvents()
+        if dynamic:
+            qApp.setFont(font)
+            qApp.processEvents()
         default_json2python4file["preferences"]["personalise"]["font-family"] = font.family()
-        default_json2python4file["preferences"]["personalise"]["font-style"] = font.font.styleName()
+        default_json2python4file["preferences"]["personalise"]["font-style"] = font.styleName()
         default_json2python4file["preferences"]["personalise"]["font-size"] = font.pointSize()
         python2json2file(default_json2python4file)
 
@@ -82,6 +95,9 @@ def set_language(language: str):
     :param language:
     :return:
     """
+    # trans = QTranslator()
+    # trans.load()
+    # qApp.installTranslator(trans)
     default_json2python4file["preferences"]["personalise"]["language"] = language
     python2json2file(default_json2python4file)
 
@@ -111,6 +127,25 @@ def get_tool_bar_visible():
     """
 
     return default_json2python4file["preferences"]["personalise"]["tool_bar_visible"]
+
+
+def set_tool_bar_pos(pos: str):
+    """
+
+    :param pos:
+    :return:
+    """
+    default_json2python4file["preferences"]["personalise"]["tool_bar_pos"] = pos
+    python2json2file(default_json2python4file)
+
+
+def get_tool_bar_pos():
+    """
+
+    :return:
+    """
+
+    return default_json2python4file["preferences"]["personalise"]["tool_bar_pos"]
 
 
 def set_app_info(data: dict):
@@ -219,7 +254,7 @@ class PromptBox(QDialog):
 
 
 class ControlBtn(QPushButton):
-    """
+    """ 播放控制按钮
 
     """
     def __init__(self, img, clicked_img):

@@ -48,7 +48,7 @@ class PathHelper:
     @staticmethod
     def get_json_path(file_name="config.json"):
         _path = os.path.abspath(
-            PathHelper.get_root_path() + os.path.sep + "resources" + os.path.sep + file_name)
+            PathHelper.get_root_path() + os.path.sep + "resources" + os.path.sep + "json" + os.path.sep + file_name)
         return _path
 
 

@@ -37,6 +37,9 @@ class PreferencesWidget(QDialog):
         self.h_line_3 = QFrame()
         self.h_line_3.setFrameShape(QFrame.HLine)
         self.h_line_3.setFrameShadow(QFrame.Sunken)
+        self.h_line_4 = QFrame()
+        self.h_line_4.setFrameShape(QFrame.HLine)
+        self.h_line_4.setFrameShadow(QFrame.Sunken)
 
         self.language_label = QLabel("界面语言")
         self.language_btn_group = QButtonGroup()
@@ -57,14 +60,25 @@ class PreferencesWidget(QDialog):
         self.font_label = QLabel("界面字体")
         self.font_btn = QPushButton("点击设置")
         self.font_btn.clicked.connect(self.answer_font_btn_clicked)
-        self.tool_bar_visibility_label = QLabel("工具栏默认隐藏")
-        self.tool_bar_visibility_group = QButtonGroup()
-        self.tool_bar_hide = QRadioButton("是")
-        self.tool_bar_show = QRadioButton("否")
-        self.tool_bar_visibility_group.addButton(self.tool_bar_hide)
-        self.tool_bar_visibility_group.addButton(self.tool_bar_show)
+        self.tool_bar_label = QLabel("工具栏")
+        self.tool_bar_group = QButtonGroup()
+        self.tool_bar_hide = QRadioButton("默认隐藏")
+        self.tool_bar_show = QRadioButton("默认显示")
+        self.tool_bar_group.addButton(self.tool_bar_hide)
+        self.tool_bar_group.addButton(self.tool_bar_show)
+        self.tool_bar_pos_group = QButtonGroup()
+        self.tool_bar_pos_left = QRadioButton("显示在左边")
+        self.tool_bar_pos_right = QRadioButton("显示在右边")
+        self.tool_bar_pos_top = QRadioButton("显示在上边")
+        self.tool_bar_pos_bottom = QRadioButton("显示在下边")
+        self.tool_bar_pos_group.addButton(self.tool_bar_pos_left)
+        self.tool_bar_pos_group.addButton(self.tool_bar_pos_right)
+        self.tool_bar_pos_group.addButton(self.tool_bar_pos_top)
+        self.tool_bar_pos_group.addButton(self.tool_bar_pos_bottom)
         self.personalise_stack_ui()
+        self.update_personalise_stack_ui()
         self.player_stack_ui()
+        self.update_player_stack_ui()
 
         self._stack = QStackedWidget()
         self._stack.addWidget(self.personalise_stack)
@@ -72,15 +86,26 @@ class PreferencesWidget(QDialog):
         self._btn_left_list = QListWidget()
         _personalise_item = QListWidgetItem('个性化')
         _personalise_item.setTextAlignment(Qt.AlignCenter)
-        _personalise_item.setSizeHint(QSize(80, 40))
+        _personalise_item.setSizeHint(QSize(100, 50))
         self._btn_left_list.insertItem(0, _personalise_item)
         _player_item = QListWidgetItem('播放器')
         _player_item.setTextAlignment(Qt.AlignCenter)
-        _player_item.setSizeHint(QSize(80, 40))
+        _player_item.setSizeHint(QSize(100, 50))
         self._btn_left_list.insertItem(1, _player_item)
         self._btn_left_list.setCurrentRow(0)
-        self._btn_left_list.setFixedWidth(82)
+        self._btn_left_list.setMinimumWidth(102)
+        self._btn_left_list.setMaximumWidth(120)
         self._btn_left_list.currentRowChanged.connect(self.widget_display)
+
+        self.preferences_cancel_btn = QPushButton("取消")
+        self.preferences_ok_btn = QPushButton("应用")
+
+        cancel_ok_btn_layout = QHBoxLayout()
+        cancel_ok_btn_layout.setContentsMargins(0, 5, 5, 5)
+        cancel_ok_btn_layout.setSpacing(5)
+        cancel_ok_btn_layout.addStretch()
+        cancel_ok_btn_layout.addWidget(self.preferences_cancel_btn)
+        cancel_ok_btn_layout.addWidget(self.preferences_ok_btn)
 
         self._main_layout = QVBoxLayout()
         self._main_layout.setContentsMargins(0, 0, 0, 0)
@@ -91,6 +116,8 @@ class PreferencesWidget(QDialog):
         self._h_layout.addWidget(self._btn_left_list)
         self._h_layout.addWidget(self._stack)
         self._main_layout.addLayout(self._h_layout)
+        self._main_layout.addWidget(self.h_line_4)
+        self._main_layout.addLayout(cancel_ok_btn_layout)
         self.setLayout(self._main_layout)
 
         self.setWindowTitle("偏好设置")
@@ -128,6 +155,14 @@ class PreferencesWidget(QDialog):
         tool_bar_visibility_btn_layout.addWidget(self.tool_bar_hide)
         tool_bar_visibility_btn_layout.addWidget(self.tool_bar_show)
 
+        tool_bar_pos_btn_layout = QHBoxLayout()
+        tool_bar_pos_btn_layout.setContentsMargins(0, 5, 5, 5)
+        tool_bar_pos_btn_layout.setSpacing(5)
+        tool_bar_pos_btn_layout.addWidget(self.tool_bar_pos_left)
+        tool_bar_pos_btn_layout.addWidget(self.tool_bar_pos_right)
+        tool_bar_pos_btn_layout.addWidget(self.tool_bar_pos_top)
+        tool_bar_pos_btn_layout.addWidget(self.tool_bar_pos_bottom)
+
         main_layout = QVBoxLayout()
         main_layout.setContentsMargins(5, 5, 5, 5)
         main_layout.setSpacing(5)
@@ -140,8 +175,9 @@ class PreferencesWidget(QDialog):
         main_layout.addWidget(self.font_label)
         main_layout.addLayout(font_btn_layout)
         main_layout.addWidget(self.h_line_3)
-        main_layout.addWidget(self.tool_bar_visibility_label)
+        main_layout.addWidget(self.tool_bar_label)
         main_layout.addLayout(tool_bar_visibility_btn_layout)
+        main_layout.addLayout(tool_bar_pos_btn_layout)
         self.personalise_stack.setLayout(main_layout)
 
     def update_personalise_stack_ui(self):
@@ -149,7 +185,7 @@ class PreferencesWidget(QDialog):
 
         :return:
         """
-        pass
+        skin = get_skin()
 
     def player_stack_ui(self):
         """
@@ -179,7 +215,7 @@ class PreferencesWidget(QDialog):
         :param checked:
         :return:
         """
-        set_font()
+        set_font(self, False)
 
 
 if __name__ == '__main__':
