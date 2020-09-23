@@ -18,6 +18,7 @@ from PyQt5.QtGui import QKeySequence, QIcon, QDesktopServices, QFont
 from PyQt5.QtCore import Qt, QSize, QUrl
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 
+from utils import states
 from utils.common import *
 from utils.path_helper import PathHelper
 from utils.enums import PlayerEnum
@@ -377,18 +378,20 @@ class MainWindow(QMainWindow):
         #                                       "--effect-fft-window=flattop")
         # else:
         #     self.vlc_widget = VlcPlayerWidget()
+        # loading_widget = LoadingWidget()
+        # width, height = get_window_center_point(loading_widget)
+        # loading_widget.move(width, height)
+        # loading_widget.show()
         self.vlc_widget.vlc_play(url, url_type)
-        # self.setCentralWidget(self.vlc_widget)
+        # while PlayerState.Load == PlayerEnum.LoadPlaying:
+        #     loading_widget.close()
 
     def answer_close_action_triggered(self):
         """
 
         :return:
         """
-        # self.central_widget = QWidget()
         self.vlc_widget.vlc_stop()
-        # del self.vlc_widget
-        # self.setCentralWidget(self.central_widget)
 
     @staticmethod
     def answer_screenshot_action_triggered():

@@ -13,11 +13,12 @@ import platform
 from PyQt5.QtWidgets import QDesktopWidget, QDialog, QLabel, QPushButton, QHBoxLayout, QVBoxLayout, qApp, QFontDialog, \
     QApplication, QRadioButton
 from PyQt5.QtGui import QPixmap, QIcon
-from PyQt5.QtCore import Qt, QTranslator
+from PyQt5.QtCore import Qt, QTranslator, QProcess
 
 from utils.path_helper import PathHelper
 from utils.crud_json import *
 from utils.enums import *
+from widgets.loading_widget import LoadingWidget
 
 
 def get_window_center_point(widget):
@@ -30,6 +31,31 @@ def get_window_center_point(widget):
     desktop_widget = QDesktopWidget()
     screen_rect = desktop_widget.screenGeometry()
     return (screen_rect.width()-widget.width()) / 2, (screen_rect.height()-widget.height()) / 2
+
+
+def loading():
+    """
+
+    :return:
+    """
+    loading_widget = LoadingWidget()
+    width, height = get_window_center_point(loading_widget)
+    loading_widget.move(width, height)
+    loading_widget.exec_()
+
+
+def restart_real_live():
+    """ 进程控制实现自动重启
+    Notes:
+    常用的有两种方式实现重启：
+    1. 进程控制，退出当前进程，再通过 QProcess 启动一个新的进程
+    2. 事件循环，退出应用程序，然后通过 Application 事件循环控制程序启动
+
+    :return:
+    """
+    qApp.quit()
+    p = QProcess
+    p.startDetached(qApp.applicationFilePath())
 
 
 def get_system_platform():
@@ -49,17 +75,19 @@ def get_system_platform():
         return CommonEnum.LinuxPlatform
 
 
-def set_skin(skin: CommonEnum):
+def set_skin(skin: CommonEnum, dynamic=True):
     """
 
     :param skin:
+    :param dynamic:
     :return:
     """
 
     _skin = skin.value[1]
-    with open(PathHelper.get_qss_path(f"{_skin}.qss"), "r", encoding="utf-8") as f:
-        qss = f.read()
-        qApp.setStyleSheet(qss)
+    if dynamic:
+        with open(PathHelper.get_qss_path(f"{_skin}.qss"), "r", encoding="utf-8") as f:
+            qss = f.read()
+            qApp.setStyleSheet(qss)
     default_json2python4file["preferences"]["personalise"]["skin"] = _skin
     python2json2file(default_json2python4file)
 
@@ -113,18 +141,21 @@ def get_font():
     return {"font_family": font_family, "font_style": font_style, "font_size": font_size}
 
 
-def set_language(language: CommonEnum):
+def set_language(language: CommonEnum, dynamic=True):
     """
 
     :param language:
+    :param dynamic:
     :return:
     """
 
     _language = language.value[1]
-    # TODO: 国际化支持
-    # trans = QTranslator()
-    # trans.load()
-    # qApp.installTranslator(trans)
+    if dynamic:
+        # TODO: 国际化支持
+        # trans = QTranslator()
+        # trans.load()
+        # qApp.installTranslator(trans)
+        pass
     default_json2python4file["preferences"]["personalise"]["language"] = _language
     python2json2file(default_json2python4file)
 
@@ -174,7 +205,7 @@ def set_tool_bar_pos(tool_bar_pos: CommonEnum):
     """
 
     _tool_bar_pos = tool_bar_pos.value[1]
-    default_json2python4file["preferences"]["personalise"]["tool_bar_pos"] = int("0xf", _tool_bar_pos)
+    default_json2python4file["preferences"]["personalise"]["tool_bar_pos"] = _tool_bar_pos
     python2json2file(default_json2python4file)
 
 
@@ -254,14 +285,15 @@ class PromptBox(QDialog):
         elif box_type == 3:
             self._icon_label.setPixmap(QPixmap(PathHelper.get_img_path("box_error@32x32.png")))
         else:
-            pass
+            self._icon_label.setPixmap(QPixmap(PathHelper.get_img_path("box_success@32x32.png")))
 
         if btn_cnt == 1:
             self._btn_layout.addWidget(self._btn_one)
         elif btn_cnt == 2:
             self._btn_layout.addWidget(self._btn_two)
+            self._btn_layout.addWidget(self._btn_one)
         else:
-            pass
+            self._btn_layout.addWidget(self._btn_one)
 
         self._label_layout = QHBoxLayout()
         self._label_layout.setContentsMargins(5, 5, 5, 5)

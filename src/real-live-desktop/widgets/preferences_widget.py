@@ -10,7 +10,7 @@
 """
 import sys
 
-from PyQt5.QtWidgets import QWidget, QStackedWidget, QListWidget, QListWidgetItem, QLabel, QRadioButton, QPushButton,\
+from PyQt5.QtWidgets import QWidget, QStackedWidget, QListWidget, QListWidgetItem, QLabel, QRadioButton, QPushButton, \
     QHBoxLayout, QVBoxLayout, QFrame, QDialog, QApplication, qApp, QFontDialog, QButtonGroup
 from PyQt5.QtGui import QIcon, QFont
 from PyQt5.QtCore import Qt, QSize
@@ -76,9 +76,7 @@ class PreferencesWidget(QDialog):
         self.tool_bar_pos_group.addButton(self.tool_bar_pos_top)
         self.tool_bar_pos_group.addButton(self.tool_bar_pos_bottom)
         self.personalise_stack_ui()
-        self.update_personalise_stack_ui()
         self.player_stack_ui()
-        self.update_player_stack_ui()
 
         self._stack = QStackedWidget()
         self._stack.addWidget(self.personalise_stack)
@@ -126,8 +124,7 @@ class PreferencesWidget(QDialog):
         self.setWindowIcon(QIcon(PathHelper.get_img_path("preferences@64x64.png")))
         self.setWindowFlags(Qt.WindowCloseButtonHint)
 
-        self.update_personalise_stack_ui()
-        self.update_player_stack_ui()
+        self.update_all_stack_ui()
 
     def personalise_stack_ui(self):
         """
@@ -184,7 +181,14 @@ class PreferencesWidget(QDialog):
         main_layout.addLayout(tool_bar_pos_btn_layout)
         self.personalise_stack.setLayout(main_layout)
 
-    def update_personalise_stack_ui(self):
+    def player_stack_ui(self):
+        """
+
+        :return:
+        """
+        pass
+
+    def update_all_stack_ui(self):
         """
 
         :return:
@@ -227,20 +231,6 @@ class PreferencesWidget(QDialog):
         else:
             self.tool_bar_pos_top.setChecked(True)
 
-    def player_stack_ui(self):
-        """
-
-        :return:
-        """
-        pass
-
-    def update_player_stack_ui(self):
-        """
-
-        :return:
-        """
-        pass
-
     def widget_display(self, i):
         """ 控制显示的页面
 
@@ -262,11 +252,63 @@ class PreferencesWidget(QDialog):
 
         :return:
         """
-        # TODO: 自动重启软件
-        _box = PromptBox(0, "设置成功！重启软件后生效！", 1)
+        _box = PromptBox(1, "设置成功，重启软件后生效！\n确定立即重启吗？", 2)
         width, height = get_window_center_point(_box)
         _box.move(width, height)
-        _box.exec_()
+        _flag = _box.exec_()
+        _app_info = get_app_info()
+        _app_type = _app_info["app_type"]
+        # 确认重启且处于 release 状态，则自动重启
+        if _flag:
+
+            _language_checkedButton = self.language_btn_group.checkedButton()
+            if _language_checkedButton == self.simplified_chinese_btn:
+                set_language(CommonEnum.LanguageZN, False)
+            elif _language_checkedButton == self.traditional_chinese_btn:
+                set_language(CommonEnum.LanguageTN, False)
+            elif _language_checkedButton == self.english_btn:
+                set_language(CommonEnum.LanguageEN, False)
+            else:
+                set_language(CommonEnum.LanguageZN, False)
+
+            _skin_checkedButton = self.skin_btn_group.checkedButton()
+            print(_skin_checkedButton)
+            if _skin_checkedButton == self.dark_skin_btn:
+                set_skin(CommonEnum.SKinDark, False)
+            elif _skin_checkedButton == self.white_skin_btn:
+                set_skin(CommonEnum.SkinWhite, False)
+            elif _skin_checkedButton == self.blue_skin_btn:
+                set_skin(CommonEnum.SkinBlue, False)
+            else:
+                set_skin(CommonEnum.SKinDark, False)
+
+            _tool_bar_checkedButton = self.tool_bar_group.checkedButton()
+            if _tool_bar_checkedButton == self.tool_bar_hide:
+                set_tool_bar_visible(0)
+            elif _tool_bar_checkedButton == self.tool_bar_show:
+                set_tool_bar_visible(1)
+            else:
+                set_tool_bar_visible(1)
+
+            _ool_bar_pos_checkedButton = self.tool_bar_pos_group.checkedButton()
+            if _ool_bar_pos_checkedButton == self.tool_bar_pos_left:
+                set_tool_bar_pos(CommonEnum.ToolBarPosLeft)
+            elif _ool_bar_pos_checkedButton == self.tool_bar_pos_right:
+                set_tool_bar_pos(CommonEnum.ToolBarPosRight)
+            elif _ool_bar_pos_checkedButton == self.tool_bar_pos_top:
+                set_tool_bar_pos(CommonEnum.ToolBarPosTop)
+            elif _ool_bar_pos_checkedButton == self.tool_bar_pos_bottom:
+                set_tool_bar_pos(CommonEnum.ToolBarPosBottom)
+            else:
+                set_tool_bar_pos(CommonEnum.ToolBarPosTop)
+
+            if _app_type == CommonEnum.AppType.value[1]:
+                restart_real_live()
+            else:
+                _box = PromptBox(0, "debug 状态请手动重启！", 1)
+                width, height = get_window_center_point(_box)
+                _box.move(width, height)
+                _box.exec_()
         self.close()
 
     def on_preferences_cancel_btn_clicked(self):

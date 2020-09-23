@@ -2,3 +2,7 @@
 *.pyc
 __pycache__
 .idea
+vlc
+build
+dist
+release

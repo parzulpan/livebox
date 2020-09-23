@@ -4,7 +4,7 @@
 
 @Email     : parzulpan@gmail.com
 
-@Summary   : 软件启动，使用单例模式
+@Summary   : 软件启动入口，使用单例模式
 
 @Attention :
 """
@@ -23,7 +23,7 @@ def run():
     app = QApplication(sys.argv)
     main_window = MainWindow()
     main_window.show()
-    run_state_mgr()
+    run_state_mgr(main_window)
     sys.exit(app.exec_())
 
 

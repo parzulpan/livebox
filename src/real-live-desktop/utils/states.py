@@ -8,9 +8,9 @@
 
 @Attention :
 """
+from PyQt5.QtCore import QState, QStateMachine, QSize, QObject
 
-from PyQt5.QtCore import QState, QStateMachine
-
+from widgets.preferences_widget import PreferencesWidget
 from utils.enums import PlayerEnum
 
 
@@ -39,9 +39,20 @@ class PlayerState(object):
     EachDecreaseVolume = -5
 
 
-def run_state_mgr():
+def run_state_mgr(window):
     """ 使用并行状态，并对状态进行分组
 
+    :param window:
     :return:
     """
+    # machine = QStateMachine()
+    # state1 = QState()
+    # state2 = QState()
+    # state1.assignProperty()
+    # state2.assignProperty()
+    # state1.addTransition(window.live_tool_action.triggered, state2)
+    # machine.addState(state1)
+    # machine.addState(state2)
+    # machine.setInitialState(state1)
+    # machine.start()
     pass

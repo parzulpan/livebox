@@ -21,8 +21,8 @@ from utils.common import PromptBox, get_window_center_point
 from utils.path_helper import PathHelper
 from utils.enums import PlayerEnum
 # from utils.completer import set_completer
-# from db.recent_search import add_update_search, remove_search, get_recent_search_list
-# from db.db_helper import get_redis_pipeline, get_redis_client
+# from backend.recent_search import add_update_search, remove_search, get_recent_search_list
+# from backend.db_helper import get_redis_pipeline, get_redis_client
 
 
 class SearchWidget(QDialog):

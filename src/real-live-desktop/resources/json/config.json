@@ -7,7 +7,7 @@
             "font-style": "Regular",
             "font-size": 12,
             "tool_bar_visible": 1,
-            "tool_bar_pos": 32
+            "tool_bar_pos": 4
         },
         "player": {}
     },
@@ -20,6 +20,7 @@
         "src_url": "https://github.com/parzulpan/real-live",
         "help_url": "https://real-live.parzulpan.cn/#/desktop/%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E4%B9%A6",
         "change_log_url": "https://real-live.parzulpan.cn/#/desktop/%E6%9B%B4%E6%96%B0%E8%AE%B0%E5%BD%95%E5%8D%95",
-        "update": "https://github.com/parzulpan/real-live/releases"
+        "update": "https://github.com/parzulpan/real-live/releases",
+        "app_type": "debug"
     }
 }

@@ -118,3 +118,4 @@ class CommonEnum(Enum):
     ToolBarPosRight = 1010, Qt.RightToolBarArea
     ToolBarPosTop = 1011, Qt.TopToolBarArea
     ToolBarPosBottom = 1012, Qt.BottomToolBarArea
+    AppType = 1013, "release"

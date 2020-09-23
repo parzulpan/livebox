@@ -4,8 +4,10 @@ block_cipher = None
 
 
 a = Analysis(['real_live.py'],
-             pathex=['/home/parzulpan/Pro/real-live/src'],
+             # 设置源码路径，需要根据自己的环境来更改
+             pathex=['/home/parzulpan/Pro/real-live/src/real-live-desktop'],
              binaries=[],
+             # 添加额外的文件
              datas=[('resources', 'resources')],
              hiddenimports=[],
              hookspath=[],
@@ -21,12 +23,13 @@ exe = EXE(pyz,
           a.scripts,
           [],
           exclude_binaries=True,
-          name='real_live_v1.3.0',
+          name='real_live',
           debug=False,
           bootloader_ignore_signals=False,
           strip=False,
           upx=True,
-          console=False , icon='/home/parzulpan/Pro/real-live/src/resources/img/logo@48x48.ico')
+          # 设置应用图标路径，需要根据自己的环境来更改
+          console=False , icon='/home/parzulpan/Pro/real-live/src/real-live-desktop/resources/img/logo@48x48.ico')
 coll = COLLECT(exe,
                a.binaries,
                a.zipfiles,

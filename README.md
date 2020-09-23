@@ -1,13 +1,13 @@
 # real-live
 
-## 简介
+## 项目简介
 
 一个网络直播聚合平台，支持视频直播、高清电视和广播电台等观看或收听。
 
-## 支持
+## 支持情况
 
 <details>
-<summary>点我查看支持的视频直播平台</summary>
+<summary>目前支持的视频直播平台：</summary>
 
 |  | | | | | | |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -21,7 +21,7 @@
 </details>
 
 <details>
-<summary>点我查看支持的高清电视频道</summary>
+<summary>目前支持的高清电视频道：</summary>
 
 |  | | | | | |
 | --- | --- | --- | --- | --- | --- |
@@ -39,7 +39,7 @@
 </details>
 
 <details>
-<summary>点我查看支持的广播电台频道</summary>
+<summary>目前支持的广播电台频道：</summary>
 
 |  | | | | | |
 | --- | --- | --- | --- | --- | --- |
@@ -59,64 +59,74 @@
 
 </details>
 
-## 架构
+## 架构设计
 
 整体架构待更新...
 
-## 图片
+## 项目截图
 
-### 视频直播
+### 桌面端
 
 ![视频直播](./assets/img/直播搜索.png)
 ![视频直播-欣赏](./assets/img/直播搜索-欣赏.png)
 
-### 高清电视
-
 ![高清电视](./assets/img/高清电视.png)
 ![高清电视-欣赏](./assets/img/高清电视-欣赏.png)
-
-### 广播电台
 
 ![广播电台](./assets/img/广播电台.png)
 ![广播电台-欣赏](./assets/img/广播电台-欣赏.png)
 
-## 使用
+### 其他端
 
-[详细可查看项目网站](https://real-live.parzulpan.cn)
+待更新...
 
-**分支说明：**
+## 快速开始
+
+### 分支说明
 
 * **master** 为保留分支
 * **stable** 为 Release 发布分支
 * **dev** 为一直开发的分支，欢迎大家 Fork 该分支
 
-**使用说明：**
+### 桌面端调试运行
 
-* [桌面端](https://real-live.parzulpan.cn/#/desktop/%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E4%B9%A6)
-* [移动端](https://real-live.parzulpan.cn/#/mobile/%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E4%B9%A6)
-* [Web 端](https://real-live.parzulpan.cn/#/web/%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E4%B9%A6)
-* [后端](https://real-live.parzulpan.cn/#/admin/%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E4%B9%A6)
+1. 配置好 Python 开发环境，推荐 Python3.6+。
 
-## 反馈
+1. Fork 后 Clone 该项目，进入 src/real-live-desktop 桌面端项目文件夹，配置 [DebugRun.sh](./src/real-live-desktop/DebugRun.sh)后，然后运行 `DebugRun.sh`。
 
-持续更新中，有任何疑问和建议 <br/>
-推荐加入 QQ 群 [RealLive项目讨论群：893364757](./assets/img/QQ群.jpg)，或者提 [issue](https://github.com/parzulpan/real-live/issues) 
+    ```shell
+    ./DebugRun.sh
+    ```
 
-## 致谢
+### 桌面端打包发布
 
-**参考项目：**
+1. 确保项目能运行成功后，配置 [ReleaseBuildild.sh](./src/real-live-desktop/ReleaseBuild.sh)后，然后运行 `ReleaseBuild.sh`。
+
+    ```shell
+    ./DebugRun.sh
+    ```
+
+[详细可查看项目网站](https://real-live.parzulpan.cn)
+
+## 贡献致谢
+
+### 项目反馈
+
+持续更新中，有任何疑问和建议，欢迎加入 QQ 群 [RealLive项目讨论群：893364757](./assets/img/QQ群.jpg) 讨论，或者提 [issue](https://github.com/parzulpan/real-live/issues) 。
+
+### 参考项目
 
 * [wbt5/real-url](https://github.com/wbt5/real-url)
 * [billy21/Tvlist-awesome-m3u-m3u8](https://github.com/billy21/Tvlist-awesome-m3u-m3u8)
 
-**贡献名单：**
+### 贡献名单
 
 | | | | |
 | :--- | :--- | :--- | :--- |
 | [parzulpan](https://github.com/parzulpan) | . | . | . |
 | . | . | . | . |
 
-## 许可
+## 项目许可
 
 [GPL-3.0](./LICENSE)
 
@@ -127,6 +137,6 @@
 3. 注明原项目出处
 4. 继承相同协议
 
-## 免责
+## 免责声明
 
 该项目仅能用于计算机技术的学习交流和在法律允许范围内的使用，任何个人或集体不得使用该项目进行任何违反相关法律法规的活动。 任何尝试下载或下载该项目任意分支或发行版即代表您同意本项目作者及贡献者不承担任何由于您违反以上准则所带来的任何法律责任。

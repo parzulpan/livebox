@@ -12,7 +12,8 @@
 import sys
 import os
 
-from PyQt5.QtGui import QPalette, QColor, QKeyEvent
+from PyQt5.QtCore import QEvent
+from PyQt5.QtGui import QPalette, QColor, QKeyEvent, QMouseEvent
 from PyQt5.QtWidgets import QWidget, QApplication, QVBoxLayout, QFrame, QMainWindow, QMenu
 
 from utils.enums import *
@@ -146,29 +147,66 @@ class VlcPlayerWidget(QMainWindow):
         elif action == mute_opt:
             self.vlc_set_volume(-self.vlc_get_volume())
 
+    def enterEvent(self, event: QEvent) -> None:
+        """
+
+        :param event:
+        :return:
+        """
+        if not (PlayerState.Load == PlayerEnum.LoadStopped or PlayerState.Load == PlayerEnum.LoadNothingSpecial):
+            print("enterEvent")
+            self.grabKeyboard()
+
+    def leaveEvent(self, event: QEvent) -> None:
+        """
+
+        :param event:
+        :return:
+        """
+        if not (PlayerState.Load == PlayerEnum.LoadStopped or PlayerState.Load == PlayerEnum.LoadNothingSpecial):
+            print("leaveEvent")
+            self.releaseKeyboard()
+
+    def mouseDoubleClickEvent(self, event: QMouseEvent) -> None:
+        """
+
+        :param event:
+        :return:
+        """
+        if not (PlayerState.Load == PlayerEnum.LoadStopped or PlayerState.Load == PlayerEnum.LoadNothingSpecial):
+            print("mouseDoubleClickEvent")
+            if PlayerState.Size == PlayerEnum.SizeMax:
+                self.vlc_set_size(False)
+            else:
+                self.vlc_set_size(True)
+
     def keyPressEvent(self, event: QKeyEvent) -> None:
         """ 重写键盘按下事件
 
         :param event:
         :return:
         """
-        print("keyPressEvent", event)
-        if event.key() == Qt.Key_Escape:
-            self.vlc_set_size(False)
-        elif event.key() == Qt.Key_Left:
-            if PlayerState.MrlType == PlayerEnum.MrlTypeLocal:
-                self.vlc_set_time(PlayerState.EachDecreaseTime)
-        elif event.key() == Qt.Key_Right:
-            if PlayerState.MrlType == PlayerEnum.MrlTypeLocal:
-                self.vlc_set_time(PlayerState.EachIncreaseTime)
-        elif event.key() == Qt.Key_Up:
-            self.vlc_set_volume(PlayerState.EachIncreaseVolume)
-        elif event.key() == Qt.Key_Down:
-            self.vlc_set_volume(PlayerState.EachDecreaseVolume)
-        elif event.key() == Qt.Key_Space:
-            self.vlc_set_size(True)
-        else:
-            pass
+        if not (PlayerState.Load == PlayerEnum.LoadStopped or PlayerState.Load == PlayerEnum.LoadNothingSpecial):
+            print("keyPressEvent", event)
+            if event.key() == Qt.Key_Escape:
+                self.vlc_set_size(False)
+            elif event.key() == Qt.Key_Left:
+                if PlayerState.MrlType == PlayerEnum.MrlTypeLocal:
+                    self.vlc_set_time(PlayerState.EachDecreaseTime)
+            elif event.key() == Qt.Key_Right:
+                if PlayerState.MrlType == PlayerEnum.MrlTypeLocal:
+                    self.vlc_set_time(PlayerState.EachIncreaseTime)
+            elif event.key() == Qt.Key_Up:
+                self.vlc_set_volume(PlayerState.EachIncreaseVolume)
+            elif event.key() == Qt.Key_Down:
+                self.vlc_set_volume(PlayerState.EachDecreaseVolume)
+            elif event.key() == Qt.Key_Space:
+                if PlayerState.Load == PlayerEnum.LoadPlaying:
+                    self.vlc_pause()
+                else:
+                    self.vlc_resume()
+            else:
+                pass
 
     def vlc_release(self):
         """ 释放资源
@@ -224,10 +262,8 @@ class VlcPlayerWidget(QMainWindow):
 
         :return:
         """
-        # TODO
         self.media_player_frame.hide()
         self.media_player.stop()
-        # self.vlc_release()
         PlayerState.Load = PlayerEnum.LoadStopped
 
     def vlc_get_time(self):
