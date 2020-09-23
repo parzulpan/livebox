@@ -37,3 +37,11 @@ class PlayerState(object):
     # 每次增加/减少的音量
     EachIncreaseVolume = 5
     EachDecreaseVolume = -5
+
+
+def run_state_mgr():
+    """ 使用并行状态，并对状态进行分组
+
+    :return:
+    """
+    pass

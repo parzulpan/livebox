@@ -16,6 +16,7 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QMenuBar, QMenu, QAction,
     QToolBar, QActionGroup, QFontDialog, QSlider, QLabel, QFileDialog, QWidget
 from PyQt5.QtGui import QKeySequence, QIcon, QDesktopServices, QFont
 from PyQt5.QtCore import Qt, QSize, QUrl
+from PyQt5.QtWebEngineWidgets import QWebEngineView
 
 from utils.common import *
 from utils.path_helper import PathHelper
@@ -70,7 +71,7 @@ class MainWindow(QMainWindow):
         self.screen_record_action.triggered.connect(self.answer_screen_record_action_triggered)
         self.preferences_action = QAction("偏好设置(P)", self.tool_menu)
         self.preferences_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_P))
-        self.preferences_action.triggered.connect(self.answer_screen_record_action_triggered)
+        self.preferences_action.triggered.connect(self.show_preferences_widget)
 
         self.my_menu = QMenu("我的", self.menu_bar)
         self.connect_github_action = QAction("连接到GitHub", self.my_menu)
@@ -141,9 +142,7 @@ class MainWindow(QMainWindow):
         self.note_tool_action.setIcon(QIcon(PathHelper.get_img_path("note@128x128.png")))
         # self.note_tool_action.triggered.connect(self.show_search_widget)
 
-        self.central_widget = QWidget()
-        self.vlc_widget = None
-        self.setStyleSheet(f"background-image:url({PathHelper.get_img_path('live_null.png')}); ")
+        self.vlc_widget = VlcPlayerWidget()
 
         self._init_ui()
         self.init_cfg()
@@ -200,7 +199,7 @@ class MainWindow(QMainWindow):
         self.tool_bar.addAction(self.preferences_tool_action)
 
         # 显示区域
-        self.setCentralWidget(self.central_widget)
+        self.setCentralWidget(self.vlc_widget)
 
         self.set_window_info()
 
@@ -217,19 +216,16 @@ class MainWindow(QMainWindow):
         else:
             self.tool_bar.hide()
         pos = get_tool_bar_pos()
-        if pos == "top":
+        if pos == CommonEnum.ToolBarPosTop:
             self.addToolBar(Qt.TopToolBarArea, self.tool_bar)
-        elif pos == "right":
+        elif pos == CommonEnum.ToolBarPosRight:
             self.addToolBar(Qt.RightToolBarArea, self.tool_bar)
-        elif pos == "bottom":
+        elif pos == CommonEnum.ToolBarPosBottom:
             self.addToolBar(Qt.BottomToolBarArea, self.tool_bar)
-        elif pos == "left":
+        elif pos == CommonEnum.ToolBarPosLeft:
             self.addToolBar(Qt.LeftToolBarArea, self.tool_bar)
         else:
             self.addToolBar(Qt.TopToolBarArea, self.tool_bar)
-
-        # print("self.tool_bar.allowedAreas()", self.tool_bar.allowedAreas())
-        # print("self.toolBarArea(self.tool_bar)", self.toolBarArea(self.tool_bar))
 
         # 皮肤设置
         skin = get_skin()
@@ -376,24 +372,23 @@ class MainWindow(QMainWindow):
         :param url_type:
         :return:
         """
-        del self.vlc_widget
-        if url_type == PlayerEnum.MrlTypeRS.value[1]:
-            self.vlc_widget = VlcPlayerWidget("--audio-visual=visual", "--effect-list=spectrometer",
-                                              "--effect-fft-window=flattop")
-        else:
-            self.vlc_widget = VlcPlayerWidget()
+        # if url_type == PlayerEnum.MrlTypeRS.value[1]:
+        #     self.vlc_widget = VlcPlayerWidget("--audio-visual=visual", "--effect-list=spectrometer",
+        #                                       "--effect-fft-window=flattop")
+        # else:
+        #     self.vlc_widget = VlcPlayerWidget()
         self.vlc_widget.vlc_play(url, url_type)
-        self.setCentralWidget(self.vlc_widget)
+        # self.setCentralWidget(self.vlc_widget)
 
     def answer_close_action_triggered(self):
         """
 
         :return:
         """
-        self.central_widget = QWidget()
+        # self.central_widget = QWidget()
         self.vlc_widget.vlc_stop()
-        del self.vlc_widget
-        self.setCentralWidget(self.central_widget)
+        # del self.vlc_widget
+        # self.setCentralWidget(self.central_widget)
 
     @staticmethod
     def answer_screenshot_action_triggered():

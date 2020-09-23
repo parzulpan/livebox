@@ -43,17 +43,17 @@ class PreferencesWidget(QDialog):
 
         self.language_label = QLabel("界面语言")
         self.language_btn_group = QButtonGroup()
-        self.simplified_chinese_btn = QRadioButton("简体中文")
-        self.traditional_chinese_btn = QRadioButton("繁体中文")
-        self.english_btn = QRadioButton("English")
+        self.simplified_chinese_btn = PreferencesQRadioButton("简体中文")
+        self.traditional_chinese_btn = PreferencesQRadioButton("繁体中文")
+        self.english_btn = PreferencesQRadioButton("English")
         self.language_btn_group.addButton(self.simplified_chinese_btn)
         self.language_btn_group.addButton(self.traditional_chinese_btn)
         self.language_btn_group.addButton(self.english_btn)
         self.skin_label = QLabel("界面皮肤")
         self.skin_btn_group = QButtonGroup()
-        self.dark_skin_btn = QRadioButton("暗黑模式")
-        self.white_skin_btn = QRadioButton("纯白模式")
-        self.blue_skin_btn = QRadioButton("浅蓝模式")
+        self.dark_skin_btn = PreferencesQRadioButton("暗黑模式")
+        self.white_skin_btn = PreferencesQRadioButton("纯白模式")
+        self.blue_skin_btn = PreferencesQRadioButton("浅蓝模式")
         self.skin_btn_group.addButton(self.dark_skin_btn)
         self.skin_btn_group.addButton(self.white_skin_btn)
         self.skin_btn_group.addButton(self.blue_skin_btn)
@@ -62,15 +62,15 @@ class PreferencesWidget(QDialog):
         self.font_btn.clicked.connect(self.answer_font_btn_clicked)
         self.tool_bar_label = QLabel("工具栏")
         self.tool_bar_group = QButtonGroup()
-        self.tool_bar_hide = QRadioButton("默认隐藏")
-        self.tool_bar_show = QRadioButton("默认显示")
+        self.tool_bar_hide = PreferencesQRadioButton("默认隐藏")
+        self.tool_bar_show = PreferencesQRadioButton("默认显示")
         self.tool_bar_group.addButton(self.tool_bar_hide)
         self.tool_bar_group.addButton(self.tool_bar_show)
         self.tool_bar_pos_group = QButtonGroup()
-        self.tool_bar_pos_left = QRadioButton("显示在左边")
-        self.tool_bar_pos_right = QRadioButton("显示在右边")
-        self.tool_bar_pos_top = QRadioButton("显示在上边")
-        self.tool_bar_pos_bottom = QRadioButton("显示在下边")
+        self.tool_bar_pos_left = PreferencesQRadioButton("显示在左边")
+        self.tool_bar_pos_right = PreferencesQRadioButton("显示在右边")
+        self.tool_bar_pos_top = PreferencesQRadioButton("显示在上边")
+        self.tool_bar_pos_bottom = PreferencesQRadioButton("显示在下边")
         self.tool_bar_pos_group.addButton(self.tool_bar_pos_left)
         self.tool_bar_pos_group.addButton(self.tool_bar_pos_right)
         self.tool_bar_pos_group.addButton(self.tool_bar_pos_top)
@@ -99,6 +99,7 @@ class PreferencesWidget(QDialog):
 
         self.preferences_cancel_btn = QPushButton("取消")
         self.preferences_ok_btn = QPushButton("应用")
+        self.preferences_ok_btn.clicked.connect(self.on_preferences_ok_btn_clicked)
 
         cancel_ok_btn_layout = QHBoxLayout()
         cancel_ok_btn_layout.setContentsMargins(0, 5, 5, 5)
@@ -124,6 +125,9 @@ class PreferencesWidget(QDialog):
         self.setMinimumSize(500, 400)
         self.setWindowIcon(QIcon(PathHelper.get_img_path("preferences@64x64.png")))
         self.setWindowFlags(Qt.WindowCloseButtonHint)
+
+        self.update_personalise_stack_ui()
+        self.update_player_stack_ui()
 
     def personalise_stack_ui(self):
         """
@@ -185,7 +189,43 @@ class PreferencesWidget(QDialog):
 
         :return:
         """
-        skin = get_skin()
+        _language = get_language()
+        if _language == CommonEnum.LanguageZN:
+            self.simplified_chinese_btn.setChecked(True)
+        elif _language == CommonEnum.LanguageTN:
+            self.traditional_chinese_btn.setChecked(True)
+        elif _language == CommonEnum.LanguageEN:
+            self.english_btn.setChecked(True)
+        else:
+            self.simplified_chinese_btn.setChecked(True)
+
+        _skin = get_skin()
+        if _skin == CommonEnum.SKinDark:
+            self.dark_skin_btn.setChecked(True)
+        elif _skin == CommonEnum.SkinWhite:
+            self.white_skin_btn.setChecked(True)
+        elif _skin == CommonEnum.SkinBlue:
+            self.blue_skin_btn.setChecked(True)
+        else:
+            self.blue_skin_btn.setChecked(True)
+
+        _tool_bar_visible = get_tool_bar_visible()
+        if _tool_bar_visible:
+            self.tool_bar_show.setChecked(True)
+        else:
+            self.tool_bar_hide.setChecked(True)
+
+        _tool_bar_pos = get_tool_bar_pos()
+        if _tool_bar_pos == CommonEnum.ToolBarPosLeft:
+            self.tool_bar_pos_left.setChecked(True)
+        elif _tool_bar_pos == CommonEnum.ToolBarPosRight:
+            self.tool_bar_pos_right.setChecked(True)
+        elif _tool_bar_pos == CommonEnum.ToolBarPosTop:
+            self.tool_bar_pos_top.setChecked(True)
+        elif _tool_bar_pos == CommonEnum.ToolBarPosBottom:
+            self.tool_bar_pos_bottom.setChecked(True)
+        else:
+            self.tool_bar_pos_top.setChecked(True)
 
     def player_stack_ui(self):
         """
@@ -216,6 +256,25 @@ class PreferencesWidget(QDialog):
         :return:
         """
         set_font(self, False)
+
+    def on_preferences_ok_btn_clicked(self):
+        """ 点击应用按钮，更新设置（需要重启应用）
+
+        :return:
+        """
+        # TODO: 自动重启软件
+        _box = PromptBox(0, "设置成功！重启软件后生效！", 1)
+        width, height = get_window_center_point(_box)
+        _box.move(width, height)
+        _box.exec_()
+        self.close()
+
+    def on_preferences_cancel_btn_clicked(self):
+        """ 点击取消按钮
+
+        :return:
+        """
+        self.close()
 
 
 if __name__ == '__main__':

@@ -8,12 +8,13 @@
 
 @Attention :
 """
+from PyQt5.QtCore import Qt
 
 from enum import Enum
 
 
 class LiveEnum(Enum):
-    """
+    """ 视频直播枚举值
 
     """
     DouYu = 0
@@ -55,7 +56,7 @@ class LiveEnum(Enum):
 
 
 class PlayerEnum(Enum):
-    """
+    """ 播放器枚举值
 
     """
     # 播放器媒体资源定位器（MRL）类型
@@ -97,3 +98,23 @@ class PlayerEnum(Enum):
     # Unmuted：非静音
     VolumeMuted = 400
     VolumeUnmuted = 401
+
+
+class CommonEnum(Enum):
+    """ 通用枚举值
+
+    """
+
+    WindowsPlatform = 1000, "Windows"
+    LinuxPlatform = 1001, "Linux"
+    DarwinPlatform = 1002, "Darwin"
+    SkinBlue = 1003, "blue"
+    SKinDark = 1004, "dark"
+    SkinWhite = 1005, "white"
+    LanguageZN = 1006, "zh_CN"
+    LanguageTN = 1007, "tn_CN"
+    LanguageEN = 1008, "en_US"
+    ToolBarPosLeft = 1009, Qt.LeftToolBarArea
+    ToolBarPosRight = 1010, Qt.RightToolBarArea
+    ToolBarPosTop = 1011, Qt.TopToolBarArea
+    ToolBarPosBottom = 1012, Qt.BottomToolBarArea

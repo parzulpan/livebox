@@ -15,18 +15,18 @@ import os
 from PyQt5.QtGui import QPalette, QColor, QKeyEvent
 from PyQt5.QtWidgets import QWidget, QApplication, QVBoxLayout, QFrame, QMainWindow, QMenu
 
-from utils.enums import PlayerEnum
+from utils.enums import *
 from utils.states import PlayerState
 from utils.path_helper import PathHelper
 from utils.common import *
 
 
 # 设置VLC库路径，需在import vlc之前
-if get_system_platform() == "Windows":
+if get_system_platform() == CommonEnum.WindowsPlatform:
     os.environ['PYTHON_VLC_MODULE_PATH'] = PathHelper.get_python_vlc_module_path("Windows")
-elif get_system_platform() == "Linux":
+elif get_system_platform() == CommonEnum.LinuxPlatform:
     os.environ['PYTHON_VLC_MODULE_PATH'] = PathHelper.get_python_vlc_module_path("Linux")
-elif get_system_platform() == "Darwin":
+elif get_system_platform() == CommonEnum.DarwinPlatform:
     os.environ['PYTHON_VLC_MODULE_PATH'] = PathHelper.get_python_vlc_module_path("Darwin")
 else:
     os.environ['PYTHON_VLC_MODULE_PATH'] = PathHelper.get_python_vlc_module_path("Windows")
@@ -71,6 +71,32 @@ class VlcPlayerWidget(QMainWindow):
         self.widget.setLayout(self.main_layout)
         self.widget.setContextMenuPolicy(Qt.CustomContextMenu)
         self.widget.customContextMenuRequested.connect(self.custom_right_menu)
+        self.setStyleSheet(f"background-image:url({PathHelper.get_img_path('live_null.png')}); ")
+
+    def set_media_player(self, *args):
+        """ 获得并设置媒体播放器
+
+        :param args:
+        :return:
+        """
+        if args:
+            self.instance = vlc.Instance(*args)
+            self.media_player = self.instance.media_player_new()
+        else:
+            self.media_player = vlc.MediaPlayer()
+
+        if get_system_platform() == CommonEnum.WindowsPlatform:
+            self.media_player_frame = QFrame()
+            self.media_player.set_hwnd(self.media_player_frame.winId())
+        elif get_system_platform() == CommonEnum.LinuxPlatform:
+            self.media_player_frame = QFrame()
+            self.media_player.set_xwindow(self.media_player_frame.winId())
+        elif get_system_platform() == CommonEnum.DarwinPlatform:
+            from PyQt5.QtWidgets import QMacCocoaViewContainer
+            self.media_player_frame = QMacCocoaViewContainer(0)
+            self.media_player.set_nsobject(self.media_player_frame.winId())
+        else:
+            self.media_player.set_hwnd(self.media_player_frame.winId())
 
     def custom_right_menu(self, pos):
         """
@@ -144,30 +170,6 @@ class VlcPlayerWidget(QMainWindow):
         else:
             pass
 
-    def set_media_player(self, *args):
-        """ 获得并设置媒体播放器
-
-        :param args:
-        :return:
-        """
-        if args:
-            self.instance = vlc.Instance(*args)
-            self.media_player = self.instance.media_player_new()
-        else:
-            self.media_player = vlc.MediaPlayer()
-
-        if get_system_platform() == "Windows":
-            self.media_player_frame = QFrame()
-            self.media_player.set_hwnd(self.media_player_frame.winId())
-        elif get_system_platform() == "Linux":
-            self.media_player_frame = QFrame()
-            self.media_player.set_xwindow(self.media_player_frame.winId())
-        elif get_system_platform() == "Darwin":
-            self.media_player_frame = QFrame()
-            self.media_player.set_nsobject(self.media_player_frame.winId())
-        else:
-            self.media_player.set_hwnd(self.media_player_frame.winId())
-
     def vlc_release(self):
         """ 释放资源
 
@@ -225,7 +227,7 @@ class VlcPlayerWidget(QMainWindow):
         # TODO
         self.media_player_frame.hide()
         self.media_player.stop()
-        self.release()
+        # self.vlc_release()
         PlayerState.Load = PlayerEnum.LoadStopped
 
     def vlc_get_time(self):

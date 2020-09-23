@@ -15,6 +15,7 @@ from PyQt5.QtWidgets import QApplication
 
 from widgets.main_widget import MainWindow
 from utils.singleton import SingletonFunctionVersion
+from utils.states import run_state_mgr
 
 
 @SingletonFunctionVersion
@@ -22,6 +23,7 @@ def run():
     app = QApplication(sys.argv)
     main_window = MainWindow()
     main_window.show()
+    run_state_mgr()
     sys.exit(app.exec_())
 
 
