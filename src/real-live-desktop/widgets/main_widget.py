@@ -97,7 +97,7 @@ class MainWindow(QMainWindow):
         self.tool_bar.setFloatable(False)
         self.tool_bar.setMovable(False)
         self.tool_bar.setIconSize(QSize(40, 40))
-        self.tool_bar.visibilityChanged.connect(set_tool_bar_visible)
+        self.tool_bar.visibilityChanged.connect(self.tool_bar_visibilityChanged)
         # self.tool_bar.allowedAreasChanged.connect(set_tool_bar_pos)
         # self.tool_bar.setStyleSheet("QToolBar{border: 1px solid #313335; spacing:5px; }")
         self.live_tool_action = QAction("", self.tool_bar)
@@ -423,6 +423,18 @@ class MainWindow(QMainWindow):
         :return:
         """
         pass
+
+    @staticmethod
+    def tool_bar_visibilityChanged(visible):
+        """
+
+        :param visible:
+        :return:
+        """
+        if visible:
+            set_tool_bar_visible(1)
+        else:
+            set_tool_bar_visible(0)
 
 
 if __name__ == '__main__':

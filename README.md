@@ -100,10 +100,10 @@
 
 ### 桌面端打包发布
 
-1. 确保项目能运行成功后，配置 [ReleaseBuildild.sh](./src/real-live-desktop/ReleaseBuild.sh)后，然后运行 `ReleaseBuild.sh`。
+1. 确保项目能运行成功后，配置 [ReleaseBuild.sh](./src/real-live-desktop/ReleaseBuild.sh)后，然后运行 `ReleaseBuild.sh`。
 
     ```shell
-    ./DebugRun.sh
+    ./ReleaseBuild.sh
     ```
 
 [详细可查看项目网站](https://real-live.parzulpan.cn)
