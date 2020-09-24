@@ -2,7 +2,7 @@
 
 ## 项目简介
 
-一个网络直播聚合平台，支持视频直播、高清电视和广播电台等观看或收听。
+一个网络直播聚合平台，支持视频直播、高清电视和广播电台等观看或收听。包括 Linux、MacOS、Windows 等桌面端，Android、iOS 等移动端，Web 端，后端等。采用 Qt、Vue、Flutter 等主流前端技术栈，MySQL、Redis、Kafka/RabbitMQ、Elasticsearch 等主流后端技术栈。
 
 ## 支持情况
 
