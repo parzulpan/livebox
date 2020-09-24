@@ -12,7 +12,9 @@
 import sys
 
 from PyQt5.QtWidgets import QApplication
+from pyqt5_material import apply_stylesheet
 
+from utils.common import get_theme
 from widgets.main_widget import MainWindow
 from utils.singleton import SingletonFunctionVersion
 from utils.states import run_state_mgr
@@ -22,6 +24,10 @@ from utils.states import run_state_mgr
 def run():
     app = QApplication(sys.argv)
     main_window = MainWindow()
+    theme = get_theme()
+    print(theme)
+    if theme != "original":
+        apply_stylesheet(app, theme=f"{theme}.xml")
     main_window.show()
     run_state_mgr(main_window)
     sys.exit(app.exec_())

@@ -7,8 +7,8 @@ a = Analysis(['real_live.py'],
              # 设置源码路径，需要根据自己的环境来更改
              pathex=['/home/parzulpan/Pro/real-live/src/real-live-desktop'],
              binaries=[],
-             # 添加额外的文件
-             datas=[('resources', 'resources')],
+             # 添加额外的文件，以启用，目前改为脚本添加
+             datas=[],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],

@@ -40,7 +40,7 @@ class MainWindow(QMainWindow):
 
         self.menu_bar = QMenuBar()
 
-        self.media_menu = QMenu("媒体", self.menu_bar)
+        self.media_menu = QMenu("媒体(M)", self.menu_bar)
         self.local_action = QAction("本地文件(L)", self.media_menu)
         self.local_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_L))
         self.local_action.triggered.connect(self.show_local_widget)
@@ -60,26 +60,26 @@ class MainWindow(QMainWindow):
         self.quit_action.setShortcut(QKeySequence(Qt.CTRL + Qt.SHIFT + Qt.Key_Q))
         self.quit_action.triggered.connect(lambda: sys.exit())
 
-        self.tool_menu = QMenu("增强", self.menu_bar)
-        self.screenshot_action = QAction("截图(J)", self.tool_menu)
+        self.enhance_menu = QMenu("增强(E)", self.menu_bar)
+        self.screenshot_action = QAction("截图(J)", self.enhance_menu)
         self.screenshot_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_J))
         self.screenshot_action.triggered.connect(self.answer_screenshot_action_triggered)
-        self.gif_action = QAction("动图(G)", self.tool_menu)
+        self.gif_action = QAction("动图(G)", self.enhance_menu)
         self.gif_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_G))
         self.gif_action.triggered.connect(self.answer_gif_action_triggered)
-        self.screen_record_action = QAction("录屏(L)", self.tool_menu)
+        self.screen_record_action = QAction("录屏(L)", self.enhance_menu)
         self.screen_record_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_L))
         self.screen_record_action.triggered.connect(self.answer_screen_record_action_triggered)
-        self.preferences_action = QAction("偏好设置(P)", self.tool_menu)
+        self.preferences_action = QAction("偏好设置(P)", self.enhance_menu)
         self.preferences_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_P))
         self.preferences_action.triggered.connect(self.show_preferences_widget)
 
-        self.my_menu = QMenu("我的", self.menu_bar)
+        self.my_menu = QMenu("我的(P)", self.menu_bar)
         self.connect_github_action = QAction("连接到GitHub", self.my_menu)
         self.backup_data_action = QAction("备份数据", self.my_menu)
         self.restore_from_backup_action = QAction("从备份中恢复", self.my_menu)
 
-        self.help_menu = QMenu("帮助", self.menu_bar)
+        self.help_menu = QMenu("帮助(H)", self.menu_bar)
         self.help_action = QAction("帮助文档(H)", self.help_menu)
         self.help_action.setShortcut(QKeySequence(Qt.CTRL + Qt.ALT + Qt.Key_H))
         self.help_action.triggered.connect(self.answer_help_action_triggered)
@@ -162,11 +162,11 @@ class MainWindow(QMainWindow):
         self.media_menu.addAction(self.close_action)
         self.media_menu.addAction(self.quit_action)
 
-        self.tool_menu.addAction(self.screenshot_action)
-        self.tool_menu.addAction(self.gif_action)
-        self.tool_menu.addAction(self.screen_record_action)
-        self.tool_menu.addSeparator()
-        self.tool_menu.addAction(self.preferences_action)
+        self.enhance_menu.addAction(self.screenshot_action)
+        self.enhance_menu.addAction(self.gif_action)
+        self.enhance_menu.addAction(self.screen_record_action)
+        self.enhance_menu.addSeparator()
+        self.enhance_menu.addAction(self.preferences_action)
 
         self.my_menu.addAction(self.connect_github_action)
         self.my_menu.addSeparator()
@@ -180,7 +180,7 @@ class MainWindow(QMainWindow):
         self.help_menu.addAction(self.about_action)
 
         self.menu_bar.addMenu(self.media_menu)
-        self.menu_bar.addMenu(self.tool_menu)
+        self.menu_bar.addMenu(self.enhance_menu)
         self.menu_bar.addMenu(self.my_menu)
         self.menu_bar.addMenu(self.help_menu)
 

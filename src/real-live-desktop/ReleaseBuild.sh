@@ -15,4 +15,6 @@ mkdir ./release
 mv -u ./dist/real_live ./release
 chmod +x StartRealLive.sh
 cp StartRealLive.sh ./release/real_live
+cp -rf resources ./release/real_live
+mv -u ./release/real_live/resources/pyqt5_material ./release/real_live
 rm -rf ./build ./dist

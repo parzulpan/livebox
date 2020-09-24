@@ -20,6 +20,41 @@ from utils.crud_json import *
 from utils.enums import *
 from widgets.loading_widget import LoadingWidget
 
+transform_dict = {"original": "原始色", "light_yellow": "浅色黄", "light_teal": "浅色蓝绿", "light_amber": "浅色琥珀", "light_blue": "浅色蓝",
+                  "light_purple": "浅色紫", "light_cyan": "浅色青", "light_lightgreen": "浅色浅绿", "light_pink": "浅色粉",
+                  "light_red": "浅色红", "dark_yellow": "暗黑黄", "dark_teal": "暗黑蓝绿", "dark_amber": "暗黑琥珀",
+                  "dark_blue": "暗黑蓝", "dark_purple": "暗黑紫", "dark_cyan": "暗黑青", "dark_lightgreen": "暗黑浅绿",
+                  "dark_pink": "暗黑粉", "dark_red": "暗黑红"}
+
+
+def get_keys(d: dict, value: str):
+    """ 根据字典的 value 得到 key
+
+    :param d:
+    :param value:
+    :return:
+    """
+    keys = [k for k, v in d.items() if v == value]
+    if len(keys) == 0:
+        return "null"
+    elif len(keys) == 1:
+        return keys[0]
+    else:
+        return keys
+
+
+def get_value(d: dict, key: str):
+    """ 根据字典的 key 得到 value
+
+    :param d:
+    :param key:
+    :return:
+    """
+    if d[key]:
+        return d[key]
+    else:
+        return "null"
+
 
 def get_window_center_point(widget):
     """ 使窗口居中显示
@@ -30,7 +65,7 @@ def get_window_center_point(widget):
 
     desktop_widget = QDesktopWidget()
     screen_rect = desktop_widget.screenGeometry()
-    return (screen_rect.width()-widget.width()) / 2, (screen_rect.height()-widget.height()) / 2
+    return (screen_rect.width() - widget.width()) / 2, (screen_rect.height() - widget.height()) / 2
 
 
 def loading():
@@ -75,6 +110,31 @@ def get_system_platform():
         return CommonEnum.LinuxPlatform
 
 
+def set_theme(theme: str, dynamic=True):
+    """
+
+    :param theme:
+    :param dynamic:
+    :return:
+    """
+    _theme = get_keys(transform_dict, theme)
+    if dynamic:
+        # with open(PathHelper.get_qss_path(f"{_theme}.qss"), "r", encoding="utf-8") as f:
+        #     qss = f.read()
+        #     qApp.setStyleSheet(qss)
+        pass
+    default_json2python4file["preferences"]["personalise"]["theme"] = _theme
+    python2json2file(default_json2python4file)
+
+
+def get_theme():
+    """
+
+    :return:
+    """
+    return default_json2python4file["preferences"]["personalise"]["theme"]
+
+
 def set_skin(skin: CommonEnum, dynamic=True):
     """
 
@@ -85,9 +145,10 @@ def set_skin(skin: CommonEnum, dynamic=True):
 
     _skin = skin.value[1]
     if dynamic:
-        with open(PathHelper.get_qss_path(f"{_skin}.qss"), "r", encoding="utf-8") as f:
-            qss = f.read()
-            qApp.setStyleSheet(qss)
+        # with open(PathHelper.get_qss_path(f"{_skin}.qss"), "r", encoding="utf-8") as f:
+        #     qss = f.read()
+        #     qApp.setStyleSheet(qss)
+        pass
     default_json2python4file["preferences"]["personalise"]["skin"] = _skin
     python2json2file(default_json2python4file)
 
@@ -252,6 +313,7 @@ class PromptBox(QDialog):
     """ 通用提示弹窗
 
     """
+
     def __init__(self, box_type: int, content: str, btn_cnt: int = 1):
         """
 
@@ -338,6 +400,7 @@ class ControlBtn(QPushButton):
     """ 播放控制按钮
 
     """
+
     def __init__(self, img, clicked_img):
         super(ControlBtn, self).__init__()
         self.setAutoFillBackground(True)
@@ -359,6 +422,3 @@ class PreferencesQRadioButton(QRadioButton):
     def __int__(self):
         super(PreferencesQRadioButton, self).__int__()
         self.setCheckable(True)
-
-
-

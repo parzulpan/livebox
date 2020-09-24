@@ -11,7 +11,7 @@
 import sys
 
 from PyQt5.QtWidgets import QWidget, QStackedWidget, QListWidget, QListWidgetItem, QLabel, QRadioButton, QPushButton, \
-    QHBoxLayout, QVBoxLayout, QFrame, QDialog, QApplication, qApp, QFontDialog, QButtonGroup
+    QHBoxLayout, QVBoxLayout, QFrame, QDialog, QApplication, qApp, QFontDialog, QButtonGroup, QComboBox
 from PyQt5.QtGui import QIcon, QFont
 from PyQt5.QtCore import Qt, QSize
 
@@ -49,14 +49,23 @@ class PreferencesWidget(QDialog):
         self.language_btn_group.addButton(self.simplified_chinese_btn)
         self.language_btn_group.addButton(self.traditional_chinese_btn)
         self.language_btn_group.addButton(self.english_btn)
-        self.skin_label = QLabel("界面皮肤")
+        self.skin_label = QLabel("界面皮肤(！弃用 被界面主题代替)")
         self.skin_btn_group = QButtonGroup()
         self.dark_skin_btn = PreferencesQRadioButton("暗黑模式")
+        self.dark_skin_btn.setDisabled(True)
         self.white_skin_btn = PreferencesQRadioButton("纯白模式")
+        self.white_skin_btn.setDisabled(True)
         self.blue_skin_btn = PreferencesQRadioButton("浅蓝模式")
+        self.blue_skin_btn.setDisabled(True)
         self.skin_btn_group.addButton(self.dark_skin_btn)
         self.skin_btn_group.addButton(self.white_skin_btn)
         self.skin_btn_group.addButton(self.blue_skin_btn)
+        self.theme_label = QLabel("界面主题")
+        self.current_theme_label = QLabel(f"当前主题：{get_value(transform_dict, get_theme())}")
+        self.light_theme_label = QLabel("选择主题：")
+        self.theme_combobox = QComboBox()
+        self.theme_combobox.addItems(sorted(list(transform_dict.values())))
+        self.theme_combobox.setCurrentText(get_value(transform_dict, get_theme()))
         self.font_label = QLabel("界面字体")
         self.font_btn = QPushButton("点击设置")
         self.font_btn.clicked.connect(self.answer_font_btn_clicked)
@@ -145,6 +154,15 @@ class PreferencesWidget(QDialog):
         skin_btn_layout.addWidget(self.white_skin_btn)
         skin_btn_layout.addWidget(self.blue_skin_btn)
 
+        theme_btn_layout = QHBoxLayout()
+        theme_btn_layout.setContentsMargins(0, 5, 5, 5)
+        theme_btn_layout.setSpacing(5)
+        theme_btn_layout.addWidget(self.current_theme_label)
+        theme_btn_layout.addStretch()
+        theme_btn_layout.addWidget(self.light_theme_label)
+        theme_btn_layout.addWidget(self.theme_combobox)
+        theme_btn_layout.addStretch()
+
         font_btn_layout = QHBoxLayout()
         font_btn_layout.setContentsMargins(0, 5, 5, 5)
         font_btn_layout.setSpacing(5)
@@ -172,6 +190,8 @@ class PreferencesWidget(QDialog):
         main_layout.addWidget(self.h_line_1)
         main_layout.addWidget(self.skin_label)
         main_layout.addLayout(skin_btn_layout)
+        main_layout.addWidget(self.theme_label)
+        main_layout.addLayout(theme_btn_layout)
         main_layout.addWidget(self.h_line_2)
         main_layout.addWidget(self.font_label)
         main_layout.addLayout(font_btn_layout)
@@ -272,7 +292,6 @@ class PreferencesWidget(QDialog):
                 set_language(CommonEnum.LanguageZN, False)
 
             _skin_checkedButton = self.skin_btn_group.checkedButton()
-            print(_skin_checkedButton)
             if _skin_checkedButton == self.dark_skin_btn:
                 set_skin(CommonEnum.SKinDark, False)
             elif _skin_checkedButton == self.white_skin_btn:
@@ -281,6 +300,9 @@ class PreferencesWidget(QDialog):
                 set_skin(CommonEnum.SkinBlue, False)
             else:
                 set_skin(CommonEnum.SKinDark, False)
+
+            _theme_checkedText = self.theme_combobox.currentText()
+            set_theme(_theme_checkedText, False)
 
             _tool_bar_checkedButton = self.tool_bar_group.checkedButton()
             if _tool_bar_checkedButton == self.tool_bar_hide:
