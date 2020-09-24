@@ -60,24 +60,37 @@ class MainWindow(QMainWindow):
         self.quit_action.setShortcut(QKeySequence(Qt.CTRL + Qt.SHIFT + Qt.Key_Q))
         self.quit_action.triggered.connect(lambda: sys.exit())
 
-        self.enhance_menu = QMenu("增强(E)", self.menu_bar)
-        self.screenshot_action = QAction("截图(J)", self.enhance_menu)
-        self.screenshot_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_J))
+        self.tool_menu = QMenu("工具(T)", self.menu_bar)
+        self.screenshot_action = QAction("截图(J)", self.tool_menu)
+        self.screenshot_action.setShortcut(QKeySequence(Qt.SHIFT + Qt.Key_J))
         self.screenshot_action.triggered.connect(self.answer_screenshot_action_triggered)
-        self.gif_action = QAction("动图(G)", self.enhance_menu)
-        self.gif_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_G))
+        self.gif_action = QAction("动图(G)", self.tool_menu)
+        self.gif_action.setShortcut(QKeySequence(Qt.SHIFT + Qt.Key_G))
         self.gif_action.triggered.connect(self.answer_gif_action_triggered)
-        self.screen_record_action = QAction("录屏(L)", self.enhance_menu)
-        self.screen_record_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_L))
+        self.screen_record_action = QAction("录屏(L)", self.tool_menu)
+        self.screen_record_action.setShortcut(QKeySequence(Qt.SHIFT + Qt.Key_L))
         self.screen_record_action.triggered.connect(self.answer_screen_record_action_triggered)
+
+        self.enhance_menu = QMenu("增强(E)", self.menu_bar)
+        self.hot_live_action = QAction("热门直播(H)", self.enhance_menu)
+        self.hot_live_action.setShortcut(QKeySequence(Qt.ALT + Qt.Key_H))
+        self.attention_action = QAction("我的关注(A)", self.enhance_menu)
+        self.attention_action.setShortcut(QKeySequence(Qt.ALT + Qt.Key_A))
+        self.nlp_action = QAction("智能字幕(N)", self.enhance_menu)
+        self.nlp_action.setShortcut(QKeySequence(Qt.ALT + Qt.Key_N))
+        self.note_action = QAction("边看边记(W)", self.enhance_menu)
+        self.note_action.setShortcut(QKeySequence(Qt.ALT + Qt.Key_W))
         self.preferences_action = QAction("偏好设置(P)", self.enhance_menu)
-        self.preferences_action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_P))
+        self.preferences_action.setShortcut(QKeySequence(Qt.ALT + Qt.Key_P))
         self.preferences_action.triggered.connect(self.show_preferences_widget)
 
         self.my_menu = QMenu("我的(P)", self.menu_bar)
-        self.connect_github_action = QAction("连接到GitHub", self.my_menu)
-        self.backup_data_action = QAction("备份数据", self.my_menu)
-        self.restore_from_backup_action = QAction("从备份中恢复", self.my_menu)
+        self.connect_github_action = QAction("连接到GitHub(C)", self.my_menu)
+        self.connect_github_action.setShortcut(QKeySequence(Qt.ALT + Qt.SHIFT + Qt.Key_C))
+        self.backup_data_action = QAction("备份数据(B)", self.my_menu)
+        self.backup_data_action.setShortcut(QKeySequence(Qt.ALT + Qt.SHIFT + Qt.Key_B))
+        self.restore_from_backup_action = QAction("从备份中恢复(R)", self.my_menu)
+        self.restore_from_backup_action.setShortcut(QKeySequence(Qt.ALT + Qt.SHIFT + Qt.Key_R))
 
         self.help_menu = QMenu("帮助(H)", self.menu_bar)
         self.help_action = QAction("帮助文档(H)", self.help_menu)
@@ -97,7 +110,6 @@ class MainWindow(QMainWindow):
         self.tool_bar.setFloatable(False)
         self.tool_bar.setMovable(False)
         self.tool_bar.setIconSize(QSize(40, 40))
-        self.tool_bar.visibilityChanged.connect(self.tool_bar_visibilityChanged)
         # self.tool_bar.allowedAreasChanged.connect(set_tool_bar_pos)
         # self.tool_bar.setStyleSheet("QToolBar{border: 1px solid #313335; spacing:5px; }")
         self.live_tool_action = QAction("", self.tool_bar)
@@ -128,22 +140,19 @@ class MainWindow(QMainWindow):
         self.attention_tool_action = QAction("", self.tool_bar)
         self.attention_tool_action.setToolTip("我的关注")
         self.attention_tool_action.setIcon(QIcon(PathHelper.get_img_path("attention@128x128.png")))
-        # self.attention_tool_action.triggered.connect(self.show_search_widget)
+
+        self.nlp_tool_action = QAction("", self.tool_bar)
+        self.nlp_tool_action.setToolTip("智能字幕")
+        self.nlp_tool_action.setIcon(QIcon(PathHelper.get_img_path("nlp@128x128.png")))
+
+        self.note_tool_action = QAction("", self.tool_bar)
+        self.note_tool_action.setToolTip("边看边记")
+        self.note_tool_action.setIcon(QIcon(PathHelper.get_img_path("note@128x128.png")))
 
         self.preferences_tool_action = QAction("", self.tool_bar)
         self.preferences_tool_action.setToolTip("偏好设置")
         self.preferences_tool_action.setIcon(QIcon(PathHelper.get_img_path("preferences@128x128.png")))
         self.preferences_tool_action.triggered.connect(self.show_preferences_widget)
-
-        self.nlp_tool_action = QAction("", self.tool_bar)
-        self.nlp_tool_action.setToolTip("智能字幕")
-        self.nlp_tool_action.setIcon(QIcon(PathHelper.get_img_path("nlp@128x128.png")))
-        # self.nlp_tool_action.triggered.connect(self.show_search_widget)
-
-        self.note_tool_action = QAction("", self.tool_bar)
-        self.note_tool_action.setToolTip("边看边记")
-        self.note_tool_action.setIcon(QIcon(PathHelper.get_img_path("note@128x128.png")))
-        # self.note_tool_action.triggered.connect(self.show_search_widget)
 
         self.vlc_widget = VlcPlayerWidget()
         self.vlc_widget.showFullScreen_signal.connect(self.on_showFullScreen_signal)
@@ -166,9 +175,15 @@ class MainWindow(QMainWindow):
         self.media_menu.addAction(self.close_action)
         self.media_menu.addAction(self.quit_action)
 
-        self.enhance_menu.addAction(self.screenshot_action)
-        self.enhance_menu.addAction(self.gif_action)
-        self.enhance_menu.addAction(self.screen_record_action)
+        self.tool_menu.addAction(self.screenshot_action)
+        self.tool_menu.addAction(self.gif_action)
+        self.tool_menu.addAction(self.screen_record_action)
+
+        self.enhance_menu.addAction(self.hot_live_action)
+        self.enhance_menu.addAction(self.attention_action)
+        self.enhance_menu.addSeparator()
+        self.enhance_menu.addAction(self.nlp_action)
+        self.enhance_menu.addAction(self.note_action)
         self.enhance_menu.addSeparator()
         self.enhance_menu.addAction(self.preferences_action)
 
@@ -185,6 +200,7 @@ class MainWindow(QMainWindow):
 
         self.menu_bar.addMenu(self.media_menu)
         self.menu_bar.addMenu(self.enhance_menu)
+        self.menu_bar.addMenu(self.tool_menu)
         self.menu_bar.addMenu(self.my_menu)
         self.menu_bar.addMenu(self.help_menu)
 
@@ -205,6 +221,7 @@ class MainWindow(QMainWindow):
         # 显示区域
         self.setCentralWidget(self.vlc_widget)
 
+        self.setContextMenuPolicy(Qt.NoContextMenu)
         self.set_window_info()
 
     def init_cfg(self):
@@ -424,19 +441,7 @@ class MainWindow(QMainWindow):
         :param event:
         :return:
         """
-        pass
-
-    @staticmethod
-    def tool_bar_visibilityChanged(visible):
-        """
-
-        :param visible:
-        :return:
-        """
-        if visible:
-            set_tool_bar_visible(1)
-        else:
-            set_tool_bar_visible(0)
+        self.vlc_widget.vlc_release()
 
     def on_showFullScreen_signal(self):
         """ 媒体播放器全屏显示

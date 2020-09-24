@@ -43,11 +43,11 @@ def python2json2file(data, json_file=None):
     :return:
     """
     if json_file:
-        with open(json_file, "w+") as f:
-            json.dump(data, f, indent=4)
+        with open(json_file, "w", encoding='utf-8') as f:
+            json.dump(data, f, ensure_ascii=False, indent=4)
     else:
-        with open(default_json_file, "w+") as f:
-            json.dump(data, f, indent=4)
+        with open(default_json_file, "w", encoding='utf-8') as f:
+            json.dump(data, f, ensure_ascii=False, indent=4)
 
 
 def json2python4file(json_file=None):
@@ -57,10 +57,10 @@ def json2python4file(json_file=None):
     :return:
     """
     if json_file:
-        with open(json_file, "r+") as f:
+        with open(json_file, "r", encoding='utf-8') as f:
             return json.load(f)
     else:
-        with open(default_json_file, "r+") as f:
+        with open(default_json_file, "r",  encoding='utf-8') as f:
             return json.load(f)
 
 

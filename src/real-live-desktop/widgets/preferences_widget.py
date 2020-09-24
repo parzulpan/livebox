@@ -11,7 +11,7 @@
 import sys
 
 from PyQt5.QtWidgets import QWidget, QStackedWidget, QListWidget, QListWidgetItem, QLabel, QRadioButton, QPushButton, \
-    QHBoxLayout, QVBoxLayout, QFrame, QDialog, QApplication, qApp, QFontDialog, QButtonGroup, QComboBox
+    QHBoxLayout, QVBoxLayout, QFrame, QDialog, QApplication, qApp, QScrollArea, QButtonGroup, QComboBox
 from PyQt5.QtGui import QIcon, QFont
 from PyQt5.QtCore import Qt, QSize
 
@@ -24,9 +24,14 @@ class PreferencesWidget(QDialog):
         super(PreferencesWidget, self).__init__()
 
         # 个性化
-        self.personalise_stack = QWidget()
+        self.personalise_stack = QScrollArea()
+        self.personalise_stack.setWidgetResizable(True)
         # 播放器
-        self.player_stack = QWidget()
+        self.player_stack = QScrollArea()
+        self.player_stack.setWidgetResizable(True)
+        # 快捷键
+        self.hot_key_stack = QScrollArea()
+        self.hot_key_stack.setWidgetResizable(True)
 
         self.h_line_1 = QFrame()
         self.h_line_1.setFrameShape(QFrame.HLine)
@@ -86,10 +91,12 @@ class PreferencesWidget(QDialog):
         self.tool_bar_pos_group.addButton(self.tool_bar_pos_bottom)
         self.personalise_stack_ui()
         self.player_stack_ui()
+        self.hot_key_stack_ui()
 
         self._stack = QStackedWidget()
         self._stack.addWidget(self.personalise_stack)
         self._stack.addWidget(self.player_stack)
+        self._stack.addWidget(self.hot_key_stack)
         self._btn_left_list = QListWidget()
         _personalise_item = QListWidgetItem('个性化')
         _personalise_item.setTextAlignment(Qt.AlignCenter)
@@ -99,6 +106,10 @@ class PreferencesWidget(QDialog):
         _player_item.setTextAlignment(Qt.AlignCenter)
         _player_item.setSizeHint(QSize(100, 50))
         self._btn_left_list.insertItem(1, _player_item)
+        _hot_key_item = QListWidgetItem('快捷键')
+        _hot_key_item.setTextAlignment(Qt.AlignCenter)
+        _hot_key_item.setSizeHint(QSize(100, 50))
+        self._btn_left_list.insertItem(2, _hot_key_item)
         self._btn_left_list.setCurrentRow(0)
         self._btn_left_list.setMinimumWidth(102)
         self._btn_left_list.setMaximumWidth(120)
@@ -130,7 +141,7 @@ class PreferencesWidget(QDialog):
         self.setLayout(self._main_layout)
 
         self.setWindowTitle("偏好设置")
-        self.setMinimumSize(500, 400)
+        self.setMinimumSize(550, 600)
         self.setWindowIcon(QIcon(PathHelper.get_img_path("preferences@64x64.png")))
         self.setWindowFlags(Qt.WindowCloseButtonHint)
 
@@ -183,7 +194,8 @@ class PreferencesWidget(QDialog):
         tool_bar_pos_btn_layout.addWidget(self.tool_bar_pos_top)
         tool_bar_pos_btn_layout.addWidget(self.tool_bar_pos_bottom)
 
-        main_layout = QVBoxLayout()
+        widget = QWidget()
+        main_layout = QVBoxLayout(widget)
         main_layout.setContentsMargins(5, 5, 5, 5)
         main_layout.setSpacing(5)
         main_layout.addWidget(self.language_label)
@@ -200,9 +212,16 @@ class PreferencesWidget(QDialog):
         main_layout.addWidget(self.tool_bar_label)
         main_layout.addLayout(tool_bar_visibility_btn_layout)
         main_layout.addLayout(tool_bar_pos_btn_layout)
-        self.personalise_stack.setLayout(main_layout)
+        self.personalise_stack.setWidget(widget)
 
     def player_stack_ui(self):
+        """
+
+        :return:
+        """
+        pass
+
+    def hot_key_stack_ui(self):
         """
 
         :return:

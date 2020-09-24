@@ -32,18 +32,18 @@ class AboutWidget(QDialog):
         self.h_line = QFrame()
         self.h_line.setFrameShape(QFrame.HLine)
         self.h_line.setFrameShadow(QFrame.Sunken)
+        _intro = self._app_info["intro"]
+        self.intro_content_label = QLabel("项目简介：" + _intro)
 
-        self.intro_content_label = QLabel("简介：一个网络直播聚合平台，支持视频直播、高清电视和广播电台等观看或收听。")
+        self.author_content_label = QLabel("贡献名单：parzulpan ")
 
-        self.author_content_label = QLabel("作者：Parzulpan")
-
-        self.link_content_label = QLabel("链接：")
+        self.link_content_label = QLabel("参考链接：")
         self.open_website_btn = QPushButton('访问官网')
         self.open_website_btn.clicked.connect(self.answer_open_website_btn_clicked)
         self.open_src_btn = QPushButton('访问源码')
         self.open_src_btn.clicked.connect(self.answer_open_src_btn_clicked)
 
-        self.star_label = QLabel("如果觉得本项目不错，可以给个★鼓励哦(●ˇ∀ˇ●)")
+        self.star_label = QLabel("如果觉得本项目不错，可以给个 ★ 鼓励哦(●ˇ∀ˇ●)")
 
         self._init_ui()
 
