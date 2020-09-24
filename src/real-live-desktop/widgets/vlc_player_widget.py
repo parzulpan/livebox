@@ -105,47 +105,48 @@ class VlcPlayerWidget(QMainWindow):
         :param pos:
         :return:
         """
-        menu = QMenu()
+        if not (PlayerState.Load == PlayerEnum.LoadStopped or PlayerState.Load == PlayerEnum.LoadNothingSpecial):
+            menu = QMenu()
 
-        if PlayerState.Load == PlayerEnum.LoadPlaying:
-            play_pause_opt = menu.addAction("暂停")
-        elif PlayerState.Load == PlayerEnum.LoadPaused:
-            play_pause_opt = menu.addAction("播放")
-        else:
-            play_pause_opt = menu.addAction("暂停")
-
-        refresh_opt = menu.addAction("刷新")
-
-        stop_opt = menu.addAction("停止")
-
-        menu.addSeparator()
-
-        if PlayerState.Size == PlayerEnum.SizeMax:
-            fullscreen_opt = menu.addAction("复原")
-        else:
-            fullscreen_opt = menu.addAction("全屏")
-
-        menu.addSeparator()
-
-        mute_opt = menu.addAction("静音")
-
-        action = menu.exec_(self.widget.mapToGlobal(pos))
-        if action == play_pause_opt:
             if PlayerState.Load == PlayerEnum.LoadPlaying:
-                self.vlc_pause()
+                play_pause_opt = menu.addAction("暂停")
+            elif PlayerState.Load == PlayerEnum.LoadPaused:
+                play_pause_opt = menu.addAction("播放")
             else:
-                self.vlc_resume()
-        elif action == refresh_opt:
-            self.vlc_play(self.current_url, self.current_url_type)
-        elif action == stop_opt:
-            self.vlc_stop()
-        elif action == fullscreen_opt:
+                play_pause_opt = menu.addAction("暂停")
+
+            refresh_opt = menu.addAction("刷新")
+
+            stop_opt = menu.addAction("停止")
+
+            menu.addSeparator()
+
             if PlayerState.Size == PlayerEnum.SizeMax:
-                self.vlc_set_size(False)
+                fullscreen_opt = menu.addAction("复原")
             else:
-                self.vlc_set_size(True)
-        elif action == mute_opt:
-            self.vlc_set_volume(-self.vlc_get_volume())
+                fullscreen_opt = menu.addAction("全屏")
+
+            menu.addSeparator()
+
+            mute_opt = menu.addAction("静音")
+
+            action = menu.exec_(self.widget.mapToGlobal(pos))
+            if action == play_pause_opt:
+                if PlayerState.Load == PlayerEnum.LoadPlaying:
+                    self.vlc_pause()
+                else:
+                    self.vlc_resume()
+            elif action == refresh_opt:
+                self.vlc_play(self.current_url, self.current_url_type)
+            elif action == stop_opt:
+                self.vlc_stop()
+            elif action == fullscreen_opt:
+                if PlayerState.Size == PlayerEnum.SizeMax:
+                    self.vlc_set_size(False)
+                else:
+                    self.vlc_set_size(True)
+            elif action == mute_opt:
+                self.vlc_set_volume(-self.vlc_get_volume())
 
     def enterEvent(self, event: QEvent) -> None:
         """

@@ -264,7 +264,6 @@ def set_tool_bar_pos(tool_bar_pos: CommonEnum):
     :param tool_bar_pos:
     :return:
     """
-
     _tool_bar_pos = tool_bar_pos.value[1]
     default_json2python4file["preferences"]["personalise"]["tool_bar_pos"] = _tool_bar_pos
     python2json2file(default_json2python4file)

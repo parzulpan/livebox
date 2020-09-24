@@ -105,6 +105,7 @@ class PreferencesWidget(QDialog):
         self._btn_left_list.currentRowChanged.connect(self.widget_display)
 
         self.preferences_cancel_btn = QPushButton("取消")
+        self.preferences_cancel_btn.clicked.connect(self.on_preferences_cancel_btn_clicked)
         self.preferences_ok_btn = QPushButton("应用")
         self.preferences_ok_btn.clicked.connect(self.on_preferences_ok_btn_clicked)
 
