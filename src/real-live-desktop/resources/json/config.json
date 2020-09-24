@@ -2,6 +2,7 @@
     "preferences": {
         "personalise": {
             "skin": "blue",
+            "theme": "light_lightgreen",
             "language": "zh_CN",
             "font-family": "Noto Sans CJK SC",
             "font-style": "Regular",
