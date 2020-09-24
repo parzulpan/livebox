@@ -23,11 +23,10 @@ from utils.states import run_state_mgr
 @SingletonFunctionVersion
 def run():
     app = QApplication(sys.argv)
-    main_window = MainWindow()
     theme = get_theme()
-    print(theme)
     if theme != "original":
         apply_stylesheet(app, theme=f"{theme}.xml")
+    main_window = MainWindow()
     main_window.show()
     run_state_mgr(main_window)
     sys.exit(app.exec_())

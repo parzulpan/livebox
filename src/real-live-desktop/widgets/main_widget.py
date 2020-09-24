@@ -146,6 +146,8 @@ class MainWindow(QMainWindow):
         # self.note_tool_action.triggered.connect(self.show_search_widget)
 
         self.vlc_widget = VlcPlayerWidget()
+        self.vlc_widget.showFullScreen_signal.connect(self.on_showFullScreen_signal)
+        self.vlc_widget.showNormal_signal.connect(self.on_showNormal_signal)
 
         self._init_ui()
         self.init_cfg()
@@ -435,6 +437,25 @@ class MainWindow(QMainWindow):
             set_tool_bar_visible(1)
         else:
             set_tool_bar_visible(0)
+
+    def on_showFullScreen_signal(self):
+        """ 媒体播放器全屏显示
+
+        :return:
+        """
+        self.showFullScreen()
+        self.menu_bar.hide()
+        self.tool_bar.hide()
+
+    def on_showNormal_signal(self):
+        """ 媒体播放器恢复默认
+
+        :return:
+        """
+        self.menu_bar.show()
+        self.tool_bar.show()
+        self.showNormal()
+        self.showMaximized()
 
 
 if __name__ == '__main__':

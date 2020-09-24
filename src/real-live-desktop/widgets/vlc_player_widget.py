@@ -12,7 +12,7 @@
 import sys
 import os
 
-from PyQt5.QtCore import QEvent
+from PyQt5.QtCore import QEvent, pyqtSignal
 from PyQt5.QtGui import QPalette, QColor, QKeyEvent, QMouseEvent
 from PyQt5.QtWidgets import QWidget, QApplication, QVBoxLayout, QFrame, QMainWindow, QMenu
 
@@ -39,6 +39,8 @@ class VlcPlayerWidget(QMainWindow):
     """
 
     """
+    showFullScreen_signal = pyqtSignal()
+    showNormal_signal = pyqtSignal()
 
     def __init__(self, *args):
         super(VlcPlayerWidget, self).__init__()
@@ -62,6 +64,7 @@ class VlcPlayerWidget(QMainWindow):
         self.current_url_type = None
 
         self._init_ui()
+        self.init_cfg()
 
     def _init_ui(self):
         """
@@ -73,6 +76,13 @@ class VlcPlayerWidget(QMainWindow):
         self.widget.setContextMenuPolicy(Qt.CustomContextMenu)
         self.widget.customContextMenuRequested.connect(self.custom_right_menu)
         self.setStyleSheet(f"background-image:url({PathHelper.get_img_path('live_null.png')}); ")
+
+    def init_cfg(self):
+        """
+
+        :return:
+        """
+        self.vlc_set_volume(20)
 
     def set_media_player(self, *args):
         """ 获得并设置媒体播放器
@@ -155,7 +165,7 @@ class VlcPlayerWidget(QMainWindow):
         :return:
         """
         if not (PlayerState.Load == PlayerEnum.LoadStopped or PlayerState.Load == PlayerEnum.LoadNothingSpecial):
-            print("enterEvent")
+            # print("enterEvent")
             self.grabKeyboard()
 
     def leaveEvent(self, event: QEvent) -> None:
@@ -165,7 +175,7 @@ class VlcPlayerWidget(QMainWindow):
         :return:
         """
         if not (PlayerState.Load == PlayerEnum.LoadStopped or PlayerState.Load == PlayerEnum.LoadNothingSpecial):
-            print("leaveEvent")
+            # print("leaveEvent")
             self.releaseKeyboard()
 
     def mouseDoubleClickEvent(self, event: QMouseEvent) -> None:
@@ -175,7 +185,7 @@ class VlcPlayerWidget(QMainWindow):
         :return:
         """
         if not (PlayerState.Load == PlayerEnum.LoadStopped or PlayerState.Load == PlayerEnum.LoadNothingSpecial):
-            print("mouseDoubleClickEvent")
+            # print("mouseDoubleClickEvent")
             if PlayerState.Size == PlayerEnum.SizeMax:
                 self.vlc_set_size(False)
             else:
@@ -188,7 +198,7 @@ class VlcPlayerWidget(QMainWindow):
         :return:
         """
         if not (PlayerState.Load == PlayerEnum.LoadStopped or PlayerState.Load == PlayerEnum.LoadNothingSpecial):
-            print("keyPressEvent", event)
+            # print("keyPressEvent", event)
             if event.key() == Qt.Key_Escape:
                 self.vlc_set_size(False)
             elif event.key() == Qt.Key_Left:
@@ -326,11 +336,13 @@ class VlcPlayerWidget(QMainWindow):
         :return:
         """
         if b_fullscreen:
-            self.showFullScreen()
+            self.showFullScreen_signal.emit()
+            # self.showFullScreen()
             self.media_player.set_fullscreen(True)
             PlayerState.Size = PlayerEnum.SizeMax
         else:
-            self.showNormal()
+            self.showNormal_signal.emit()
+            # self.showNormal()
             self.media_player.set_fullscreen(False)
             PlayerState.Size = PlayerEnum.SizeInitial
 

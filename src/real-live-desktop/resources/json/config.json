@@ -2,12 +2,12 @@
     "preferences": {
         "personalise": {
             "skin": "blue",
-            "theme": "dark_pink",
+            "theme": "light_pink",
             "language": "zh_CN",
             "font-family": "Noto Sans CJK SC",
             "font-style": "Regular",
             "font-size": 12,
-            "tool_bar_visible": 1,
+            "tool_bar_visible": 0,
             "tool_bar_pos": 4
         },
         "player": {}
