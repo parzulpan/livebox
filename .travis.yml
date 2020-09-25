@@ -19,7 +19,6 @@ install:
     - cd ./src/real-live-desktop
     - chmod +x travis_install.sh
     - ./travis_install.sh
-
 script:
     - python real_live.py
 
