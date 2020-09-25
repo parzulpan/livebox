@@ -100,6 +100,7 @@ def get_system_platform():
     """
 
     _platform = platform.system()
+    print("system_platform: ", _platform)
     if CommonEnum.WindowsPlatform.value[1] == _platform:
         return CommonEnum.WindowsPlatform
     elif CommonEnum.LinuxPlatform.value[1] == _platform:
