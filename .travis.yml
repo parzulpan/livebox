@@ -1,1 +1,24 @@
-language: python
+language:
+    - python
+    - cpp
+python:
+    - "3.6"
+    - "3.7"
+compiler:
+    - gcc
+os:
+    - linux
+    - osx
+    - linux
+env:
+  - SH=bash
+branches:
+    only:
+        - dev
+install: 
+    - cd ./src/real-live-desktop
+    - ./travis_install.sh
+
+script:
+    - python real_live.py
+
