@@ -7,11 +7,13 @@ python:
 compiler:
     - gcc
 os:
+    - windows
     - linux
     - osx
-    - linux
 env:
-  - SH=bash
+    - SH=bash
+sudo: 
+    - required
 branches:
     only:
         - dev
