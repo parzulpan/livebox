@@ -17,6 +17,7 @@ branches:
         - dev
 install: 
     - cd ./src/real-live-desktop
+    - chmod +x travis_install.sh
     - ./travis_install.sh
 
 script:
