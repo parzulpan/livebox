@@ -1,0 +1,8 @@
+# Created by .ignore support plugin (hsz.mobi)
+*.pyc
+__pycache__
+.idea
+vlc
+build
+dist
+release
