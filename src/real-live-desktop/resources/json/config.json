@@ -1,0 +1,26 @@
+{
+    "preferences": {
+        "personalise": {
+            "skin": "blue",
+            "theme": "light_pink",
+            "language": "zh_CN",
+            "font-family": "Roboto Condensed",
+            "font-style": "Regular",
+            "font-size": 12,
+            "tool_bar_visible": 1,
+            "tool_bar_pos": 4
+        },
+        "player": {}
+    },
+    "app_info": {
+        "name": "网络媒体聚合平台",
+        "version": "V1.3.0",
+        "intro": "一个网络媒体聚合平台，支持视频直播、高清电视和广播电台等在线观看或收听。",
+        "website_url": "https://real-live.parzulpan.cn",
+        "src_url": "https://github.com/parzulpan/real-live",
+        "help_url": "https://real-live.parzulpan.cn/#/desktop/%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E4%B9%A6",
+        "change_log_url": "https://real-live.parzulpan.cn/#/desktop/%E6%9B%B4%E6%96%B0%E8%AE%B0%E5%BD%95%E5%8D%95",
+        "update": "https://github.com/parzulpan/real-live/releases",
+        "app_type": "debug"
+    }
+}
