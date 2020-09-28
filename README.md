@@ -1,5 +1,7 @@
 <h1 align="center">RealLive</h1>
 
+简体中文  |  [繁体中文](README-th_CN.md)  |  [English](README-en.md)
+
 > 一个跨平台的网络媒体聚合应用，支持直播视频，高清电视和广播电台的在线观看或收听。
 
 **桌面端：**

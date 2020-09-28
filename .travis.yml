@@ -7,7 +7,6 @@ python:
 compiler:
     - gcc
 os:
-    - windows
     - linux
     - osx
 env:
