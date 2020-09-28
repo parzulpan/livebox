@@ -15,7 +15,7 @@ sudo:
     - required
 branches:
     only:
-        - dev
+        - stable
 install: 
     - cd ./src/real-live-desktop
     - chmod +x travis_install.sh
