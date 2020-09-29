@@ -48,11 +48,18 @@
 
 1. 配置好 Python 开发环境，推荐 Python3.6+。
 
-2. Fork 后 Clone 该项目，进入 src/real-live-desktop 桌面端项目文件夹，配置 [DebugRun.sh](./src/real-live-desktop/DebugRun.sh)后，然后运行 `DebugRun.sh`。
+2. 首次使用时，Fork 后 Clone 该项目，进入 src/real-live-desktop 桌面端项目文件夹，配置 [DebugRun.sh](./src/real-live-desktop/DebugRun.sh)后，然后运行 `DebugRun.sh`。
 
     ```shell
+    git clone -b dev https://github.com/parzulpan/real-live.git
     ./DebugRun.sh
     ```
+
+3. 非首次使用时，即配置好环境后，直接运行 real-live.py 即可。
+
+   ```shell
+   python real-live.py
+   ```
 
 **桌面端打包发布：**
 
@@ -96,4 +103,4 @@
 
 ## 免责声明
 
-该项目仅能用于计算机技术的学习交流和在法律允许范围内的使用，任何个人或集体不得使用该项目进行任何违反相关法律法规的活动。 任何尝试下载或下载该项目任意分支或发行版即代表您同意本项目作者及贡献者不承担任何由于您违反以上准则所带来的任何法律责任。
+该项目仅能用于计算机技术的学习交流和在法律允许范围内的使用，任何个人或集体不得使用该项目进行任何违反相关法律法规的活动。任何尝试下载或下载该项目任意分支或发行版的，即代表您同意本项目作者及贡献者不承担任何由于您违反以上准则所带来的任何法律责任。

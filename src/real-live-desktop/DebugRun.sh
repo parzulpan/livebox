@@ -20,7 +20,7 @@ elif [ "$sysOS" == "Linux" ];then
 #	echo  "$(ls ../../plugins/vlc_3.0.9.2_linux_64)"
 elif [ "$sysOS" == "Windows" ];then
 	echo "I'm Windows"
-	cp -r ../../plugins/vlc_3.0.9.2_windows_64 resources/lvc
+	cp -r ../../plugins/vlc_3.0.9.2_windows_64 resources/vlc
 #	echo  "$(ls ../../plugins/vlc_3.0.9.2_windows_64)"
 else
 	echo "Error: Other OS $sysOS"
