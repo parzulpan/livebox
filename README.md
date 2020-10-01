@@ -46,7 +46,7 @@
 
 **桌面端调试运行：**
 
-1. 配置好 Python 开发环境，推荐 Python3.6+。
+1. 配置好 Python 开发环境，推荐 Python3.6、Python3.7，其他版本未测试。
 
 2. 首次使用时，Fork 后 Clone 该项目，进入 src/real-live-desktop 桌面端项目文件夹，配置 [DebugRun.sh](./src/real-live-desktop/DebugRun.sh)后，然后运行 `DebugRun.sh`。
 

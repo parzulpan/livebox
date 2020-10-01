@@ -11,6 +11,7 @@
 
 import sys
 
+from PyQt5.QtCore import QTranslator
 from PyQt5.QtWidgets import QApplication
 from pyqt5_material import apply_stylesheet
 
@@ -23,6 +24,9 @@ from utils.states import run_state_mgr
 @SingletonFunctionVersion
 def run():
     app = QApplication(sys.argv)
+    trans = QTranslator()
+    trans.load('eng-chs')
+    app.installTranslator(trans)
     theme = get_theme()
     if theme != "original":
         apply_stylesheet(app, theme=f"{theme}.xml")
