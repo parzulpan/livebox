@@ -219,6 +219,7 @@ class PreferencesWidget(QDialog):
 
         :return:
         """
+
         pass
 
     def hot_key_stack_ui(self):
@@ -226,6 +227,7 @@ class PreferencesWidget(QDialog):
 
         :return:
         """
+
         pass
 
     def update_all_stack_ui(self):
