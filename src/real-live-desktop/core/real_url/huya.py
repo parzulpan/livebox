@@ -34,7 +34,9 @@ class HuYa:
                     b_url = self.live(livelineurl.replace('_2000', ''))
                     real_url = {
                         '2000p': "https:" + s_url,
-                        'BD': "https:" + b_url
+                        'tx': "https:" + b_url,
+                        'bd': "https:" + b_url.replace('tx.hls.huya.com', 'bd.hls.huya.com'),
+                        'migu-bd': "https:" + b_url.replace('tx.hls.huya.com', 'migu-bd.hls.huya.com'),
                     }
             else:
                 raise Exception('未开播或直播间不存在')
