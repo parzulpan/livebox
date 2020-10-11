@@ -105,8 +105,9 @@ class VlcPlayerWidget(QMainWindow):
         elif get_system_platform() == CommonEnum.DarwinPlatform:
             from PyQt5.QtWidgets import QMacCocoaViewContainer
             self.media_player_frame = QMacCocoaViewContainer(0)
-            self.media_player.set_nsobject(self.media_player_frame.winId())
+            # self.media_player.set_nsobject(self.media_player_frame.winId())
         else:
+            self.media_player_frame = QFrame()
             self.media_player.set_hwnd(self.media_player_frame.winId())
 
     def custom_right_menu(self, pos):
@@ -448,6 +449,6 @@ if __name__ == '__main__':
     # vlc_widget = VlcPlayerWidget()
     vlc_widget = VlcPlayerWidget("--audio-visual=visual", "--effect-list=spectrometer", "--effect-fft-window=flattop")
     vlc_widget.show()
-    # vlc_widget.vlc_play("http://tx2play1.douyucdn.cn/live/288016rlols5.flv?uuid=", PlayerEnum.MrlTypeLive)
-    vlc_widget.vlc_play("http://live.xmcdn.com/live/45/64.m3u8", PlayerEnum.MrlTypeRS)
+    vlc_widget.vlc_play("http://tx2play1.douyucdn.cn/live/288016rlols5.flv?uuid=", PlayerEnum.MrlTypeLive)
+    # vlc_widget.vlc_play("http://live.xmcdn.com/live/45/64.m3u8", PlayerEnum.MrlTypeRS)
     sys.exit(app.exec_())
