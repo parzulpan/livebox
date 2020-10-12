@@ -29,6 +29,30 @@ class PathHelper:
         return _path
 
     @staticmethod
+    def get_python_vlc_lib_path(sys_type):
+        sys_type_dict = {"Windows": "vlc_3.0.9.2_windows_64", "Linux": "vlc_3.0.9.2_linux_64",
+                         "Darwin": "vlc_3.0.9.2_macos_64"}
+        _path = os.path.abspath(
+            PathHelper.get_root_path() + os.path.sep + "resources" + os.path.sep + "vlc" + os.path.sep + sys_type_dict[
+                sys_type])
+        if sys_type == "Darwin":
+            _path = _path + os.path.sep + "libvlccore.dylib"
+        print(_path)
+        return _path
+
+    @staticmethod
+    def get_python_vlc_plugin_path(sys_type):
+        sys_type_dict = {"Windows": "vlc_3.0.9.2_windows_64", "Linux": "vlc_3.0.9.2_linux_64",
+                         "Darwin": "vlc_3.0.9.2_macos_64"}
+        _path = os.path.abspath(
+            PathHelper.get_root_path() + os.path.sep + "resources" + os.path.sep + "vlc" + os.path.sep + sys_type_dict[
+                sys_type])
+        if sys_type == "Darwin":
+            _path = _path + os.path.sep + "plugins"
+        print(_path)
+        return _path
+
+    @staticmethod
     def get_img_path(img_name):
         _path = os.path.abspath(
             PathHelper.get_root_path() + os.path.sep + "resources" + os.path.sep + "img" + os.path.sep + img_name)

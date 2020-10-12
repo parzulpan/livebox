@@ -22,15 +22,15 @@ from utils.path_helper import PathHelper
 from utils.common import *
 
 
-# 设置VLC库路径，需在import vlc之前
-if get_system_platform() == CommonEnum.WindowsPlatform:
-    os.environ['PYTHON_VLC_MODULE_PATH'] = PathHelper.get_python_vlc_module_path("Windows")
-elif get_system_platform() == CommonEnum.LinuxPlatform:
-    os.environ['PYTHON_VLC_MODULE_PATH'] = PathHelper.get_python_vlc_module_path("Linux")
-elif get_system_platform() == CommonEnum.DarwinPlatform:
-    os.environ['PYTHON_VLC_MODULE_PATH'] = PathHelper.get_python_vlc_module_path("Darwin")
-else:
-    os.environ['PYTHON_VLC_MODULE_PATH'] = PathHelper.get_python_vlc_module_path("Windows")
+# # 设置VLC库路径，需在import vlc之前
+# if get_system_platform() == CommonEnum.WindowsPlatform:
+#     os.environ['PYTHON_VLC_MODULE_PATH'] = PathHelper.get_python_vlc_module_path("Windows")
+# elif get_system_platform() == CommonEnum.LinuxPlatform:
+#     os.environ['PYTHON_VLC_MODULE_PATH'] = PathHelper.get_python_vlc_module_path("Linux")
+# elif get_system_platform() == CommonEnum.DarwinPlatform:
+#     os.environ['PYTHON_VLC_MODULE_PATH'] = PathHelper.get_python_vlc_module_path("Darwin")
+# else:
+#     os.environ['PYTHON_VLC_MODULE_PATH'] = PathHelper.get_python_vlc_module_path("Windows")
 
 import vlc
 
@@ -75,7 +75,8 @@ class VlcPlayerWidget(QMainWindow):
         self.widget.setLayout(self.main_layout)
         self.widget.setContextMenuPolicy(Qt.CustomContextMenu)
         self.widget.customContextMenuRequested.connect(self.custom_right_menu)
-        self.setStyleSheet(f"background-image:url({PathHelper.get_img_path('live_null.png')}); ")
+        self.setCentralWidget(self.widget)
+        self.setStyleSheet(f"border-image:url({PathHelper.get_img_path('live_null.png')}); ")
 
     def init_cfg(self):
         """
@@ -98,17 +99,17 @@ class VlcPlayerWidget(QMainWindow):
 
         if get_system_platform() == CommonEnum.WindowsPlatform:
             self.media_player_frame = QFrame()
-            self.media_player.set_hwnd(self.media_player_frame.winId())
+            # self.media_player.set_hwnd(int(self.media_player_frame.winId()))
         elif get_system_platform() == CommonEnum.LinuxPlatform:
             self.media_player_frame = QFrame()
-            self.media_player.set_xwindow(self.media_player_frame.winId())
+            # self.media_player.set_xwindow(int(self.media_player_frame.winId()))
         elif get_system_platform() == CommonEnum.DarwinPlatform:
             from PyQt5.QtWidgets import QMacCocoaViewContainer
             self.media_player_frame = QMacCocoaViewContainer(0)
-            # self.media_player.set_nsobject(self.media_player_frame.winId())
+            # self.media_player.set_nsobject(int(self.media_player_frame.winId()))
         else:
             self.media_player_frame = QFrame()
-            self.media_player.set_hwnd(self.media_player_frame.winId())
+            # self.media_player.set_hwnd(int(self.media_player_frame.winId()))
 
     def custom_right_menu(self, pos):
         """
@@ -148,6 +149,7 @@ class VlcPlayerWidget(QMainWindow):
                 else:
                     self.vlc_resume()
             elif action == refresh_opt:
+                self.vlc_stop()
                 self.vlc_play(self.current_url, self.current_url_type)
             elif action == stop_opt:
                 self.vlc_stop()
@@ -185,12 +187,13 @@ class VlcPlayerWidget(QMainWindow):
         :param event:
         :return:
         """
-        if not (PlayerState.Load == PlayerEnum.LoadStopped or PlayerState.Load == PlayerEnum.LoadNothingSpecial):
-            # print("mouseDoubleClickEvent")
-            if PlayerState.Size == PlayerEnum.SizeMax:
-                self.vlc_set_size(False)
-            else:
-                self.vlc_set_size(True)
+        pass
+        # if not (PlayerState.Load == PlayerEnum.LoadStopped or PlayerState.Load == PlayerEnum.LoadNothingSpecial):
+        #     # print("mouseDoubleClickEvent")
+        #     if PlayerState.Size == PlayerEnum.SizeMax:
+        #         self.vlc_set_size(False)
+        #     else:
+        #         self.vlc_set_size(True)
 
     def keyPressEvent(self, event: QKeyEvent) -> None:
         """ 重写键盘按下事件
@@ -240,13 +243,26 @@ class VlcPlayerWidget(QMainWindow):
                 #                              "--effect-fft-window=flattop")
                 # self.media_player = self.instance.media_player_new()
 
+                if get_system_platform() == CommonEnum.WindowsPlatform:
+                    self.media_player.set_hwnd(int(self.media_player_frame.winId()))
+                elif get_system_platform() == CommonEnum.LinuxPlatform:
+                    self.media_player.set_xwindow(int(self.media_player_frame.winId()))
+                elif get_system_platform() == CommonEnum.DarwinPlatform:
+                    self.media_player.set_nsobject(int(self.media_player_frame.winId()))
+                else:
+                    self.media_player.set_hwnd(int(self.media_player_frame.winId()))
+
                 self.current_url = url
                 self.current_url_type = url_type
                 self.media_player.set_mrl(url)
-                self.media_player_frame.show()
                 self.media_player.play()
-                PlayerState.MrlType = url_type
-                PlayerState.Load = PlayerEnum.LoadPlaying
+                while True:
+                    if self.vlc_get_state() == vlc.State.Playing:
+                        self.media_player_frame.show()
+                        PlayerState.MrlType = url_type
+                        PlayerState.Load = PlayerEnum.LoadPlaying
+                        self.vlc_set_size(True)
+                        return True
             else:
                 pass
         except Exception as e:
@@ -277,6 +293,8 @@ class VlcPlayerWidget(QMainWindow):
         self.media_player_frame.hide()
         self.media_player.stop()
         PlayerState.Load = PlayerEnum.LoadStopped
+
+        self.vlc_set_size(False)
 
     def vlc_get_time(self):
         """ 已播放时间，返回毫秒值

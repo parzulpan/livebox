@@ -11,6 +11,7 @@
 
 import sys
 import os
+import time
 
 from PyQt5.QtWidgets import QMainWindow, QApplication, QMenuBar, QMenu, QAction, QDesktopWidget, qApp, \
     QToolBar, QActionGroup, QFontDialog, QSlider, QLabel, QFileDialog, QWidget
@@ -155,6 +156,7 @@ class MainWindow(QMainWindow):
         self.preferences_tool_action.triggered.connect(self.show_preferences_widget)
 
         self.vlc_widget = VlcPlayerWidget()
+        # self.vlc_widget.vlc_add_callback()
         self.vlc_widget.showFullScreen_signal.connect(self.on_showFullScreen_signal)
         self.vlc_widget.showNormal_signal.connect(self.on_showNormal_signal)
 
@@ -460,7 +462,7 @@ class MainWindow(QMainWindow):
         self.menu_bar.show()
         self.tool_bar.show()
         self.showNormal()
-        self.showMaximized()
+        # self.showMaximized()
 
 
 if __name__ == '__main__':

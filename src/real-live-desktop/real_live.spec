@@ -5,7 +5,7 @@ block_cipher = None
 
 a = Analysis(['real_live.py'],
              # 设置源码路径，需要根据自己的环境来更改
-             pathex=['/home/parzulpan/Pro/real-live/src/real-live-desktop'],
+             pathex=['/Users/parzulpan/Personal/GitHub/real-live/src/real-live-desktop'],
              binaries=[],
              # 添加额外的文件，以启用，目前改为脚本添加
              datas=[],
@@ -29,7 +29,7 @@ exe = EXE(pyz,
           strip=False,
           upx=True,
           # 设置应用图标路径，需要根据自己的环境来更改
-          console=False , icon='/home/parzulpan/Pro/real-live/src/real-live-desktop/resources/img/logo@48x48.ico')
+          console=False , icon='/Users/parzulpan/Personal/GitHub/real-live/src/real-live-desktop/resources/img/logo@48x48.icns')
 coll = COLLECT(exe,
                a.binaries,
                a.zipfiles,

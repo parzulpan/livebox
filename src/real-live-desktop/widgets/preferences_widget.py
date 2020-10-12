@@ -141,7 +141,7 @@ class PreferencesWidget(QDialog):
         self.setLayout(self._main_layout)
 
         self.setWindowTitle("偏好设置")
-        self.setMinimumSize(550, 600)
+        self.setMinimumSize(500, 450)
         self.setWindowIcon(QIcon(PathHelper.get_img_path("preferences@64x64.png")))
         self.setWindowFlags(Qt.WindowCloseButtonHint)
 
@@ -201,8 +201,8 @@ class PreferencesWidget(QDialog):
         main_layout.addWidget(self.language_label)
         main_layout.addLayout(language_btn_layout)
         main_layout.addWidget(self.h_line_1)
-        main_layout.addWidget(self.skin_label)
-        main_layout.addLayout(skin_btn_layout)
+        # main_layout.addWidget(self.skin_label)
+        # main_layout.addLayout(skin_btn_layout)
         main_layout.addWidget(self.theme_label)
         main_layout.addLayout(theme_btn_layout)
         main_layout.addWidget(self.h_line_2)
