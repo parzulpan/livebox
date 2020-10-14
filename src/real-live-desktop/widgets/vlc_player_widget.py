@@ -261,7 +261,7 @@ class VlcPlayerWidget(QMainWindow):
                         self.media_player_frame.show()
                         PlayerState.MrlType = url_type
                         PlayerState.Load = PlayerEnum.LoadPlaying
-                        self.vlc_set_size(True)
+                        # self.vlc_set_size(True)
                         return True
             else:
                 pass
@@ -465,7 +465,7 @@ class VlcPlayerWidget(QMainWindow):
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     # vlc_widget = VlcPlayerWidget()
-    vlc_widget = VlcPlayerWidget("--audio-visual=visual", "--effect-list=spectrometer", "--effect-fft-window=flattop")
+    vlc_widget = VlcPlayerWidget()
     vlc_widget.show()
     vlc_widget.vlc_play("http://tx2play1.douyucdn.cn/live/288016rlols5.flv?uuid=", PlayerEnum.MrlTypeLive)
     # vlc_widget.vlc_play("http://live.xmcdn.com/live/45/64.m3u8", PlayerEnum.MrlTypeRS)

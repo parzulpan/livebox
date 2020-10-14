@@ -3,7 +3,7 @@
 # 请修改为自己的环境
 # 請修改為自己的環境
 # Please modify it to your own environment
-pyinstaller_path="/Users/parzulpan/Personal/PythonVenv/3.6/bin/pyinstaller"
+pyinstaller_path="C:\parzulpan\App\Python3.6.8\Scripts\pyinstaller.exe"
 
 rm -rf build dist
 rm -rf release
@@ -26,7 +26,11 @@ elif [ "$sysOS" == "Windows" ];then
 	mv -f dist/RealLive release
 	echo "realease successful！"
 else
-	echo "realease error: Other OS $sysOS"
+  echo "System is Windows"
+	$pyinstaller_path real_live_windows.spec --clean -y
+#	mv -f dist/RealLive release
+	echo "realease successful！"
+#	echo "realease error: Other OS $sysOS"
 fi
 
-rm -rf build dist
+#rm -rf build dist

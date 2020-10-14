@@ -10,7 +10,7 @@
 project_interpreter="/Users/parzulpan/Personal/PythonVenv/3.6/bin/python3.6"
 pip_path="/Users/parzulpan/Personal/PythonVenv/3.6/bin/pip"
 
-$pip_path install -r requirements.txt
+$pip_path install -r requirements.txt https://pypi.tuna.tsinghua.edu.cn/simple/
 
 sysOS=$(uname -s)
 if [ "$sysOS" == "Darwin" ];then

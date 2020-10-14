@@ -10,8 +10,7 @@ Src_Path = '/Users/parzulpan/Personal/GitHub/real-live/src/real-live-desktop'
 Main = [Src_Path + '/real_live.py']
 Name = 'RealLive'
 App_Name = 'RealLive'
-Icon = 'logo@48x48.icon'
-
+Icon = 'logo@48x48.ico'
 
 a = Analysis(Main,
              pathex=[Src_Path],
