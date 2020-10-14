@@ -2,13 +2,21 @@
 
 block_cipher = None
 
+# 请修改为自己的环境
+# 請修改為自己的環境
+# Please modify it to your own environment
+Src_Path = '/Users/parzulpan/Personal/GitHub/real-live/src/real-live-desktop'
 
-a = Analysis(['real_live.py'],
-             # 设置源码路径，需要根据自己的环境来更改
-             pathex=['/Users/parzulpan/Personal/GitHub/real-live/src/real-live-desktop'],
+Main = [Src_Path + '/real_live.py']
+Name = 'RealLive'
+App_Name = 'RealLive'
+Icon = 'logo@48x48.icon'
+
+
+a = Analysis(Main,
+             pathex=[Src_Path],
              binaries=[],
-             # 添加额外的文件，以启用，目前改为脚本添加
-             datas=[],
+             datas=[(Src_Path + '/resources', 'resources'), (Src_Path + '/resources/pyqt5_material', 'pyqt5_material')],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],
@@ -23,13 +31,12 @@ exe = EXE(pyz,
           a.scripts,
           [],
           exclude_binaries=True,
-          name='real_live',
+          name=Name,
           debug=False,
           bootloader_ignore_signals=False,
           strip=False,
           upx=True,
-          # 设置应用图标路径，需要根据自己的环境来更改
-          console=False , icon='/Users/parzulpan/Personal/GitHub/real-live/src/real-live-desktop/resources/img/logo@48x48.icns')
+          console=False , icon=Icon)
 coll = COLLECT(exe,
                a.binaries,
                a.zipfiles,
@@ -37,4 +44,4 @@ coll = COLLECT(exe,
                strip=False,
                upx=True,
                upx_exclude=[],
-               name='real_live')
+               name=App_Name)

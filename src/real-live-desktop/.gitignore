@@ -3,6 +3,4 @@
 __pycache__
 .idea
 vlc
-build
-dist
-release
+_build/release

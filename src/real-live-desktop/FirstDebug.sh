@@ -1,14 +1,17 @@
 #!/usr/bin/env bash
 
-# # 设置解释器路径，需要根据自己的环境来更改
-project_interpreter="/home/parzulpan/App/venv_py373/bin/python3.7"
-pip_path="/home/parzulpan/App/venv_py373/bin/pip"
+# 首次调试开发脚本，进行项目配置
+# 首次調試開發腳本，進行項目配置
+# Debug the development script for the first time and configure the project
 
-# 配置项目开发环境
-# $pip_path list
+# 请修改为自己的环境
+# 請修改為自己的環境
+# Please modify it to your own environment
+project_interpreter="/Users/parzulpan/Personal/PythonVenv/3.6/bin/python3.6"
+pip_path="/Users/parzulpan/Personal/PythonVenv/3.6/bin/pip"
+
 $pip_path install -r requirements.txt
 
-# 复制/移动所需插件
 sysOS=$(uname -s)
 if [ "$sysOS" == "Darwin" ];then
 	echo "I'm MacOS"
@@ -26,5 +29,4 @@ else
 	echo "Error: Other OS $sysOS"
 fi
 
-# 运行桌面端应用主程序
 $project_interpreter real_live.py
