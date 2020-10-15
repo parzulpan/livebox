@@ -261,7 +261,7 @@ class VlcPlayerWidget(QMainWindow):
                         self.media_player_frame.show()
                         PlayerState.MrlType = url_type
                         PlayerState.Load = PlayerEnum.LoadPlaying
-                        # self.vlc_set_size(True)
+                        self.vlc_set_size(True)
                         return True
             else:
                 pass

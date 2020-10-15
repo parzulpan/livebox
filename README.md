@@ -19,8 +19,8 @@
 
 **它解决了什么？**
 
-* 怀念电视和电台吗？它就能满足你；
-* 多种资源设置携带？它让你随时随地看；
+* 怀念电视和电台吗？它就能满足你的要求；
+* 多种资源设备携带？它让你随时随地观看和收听；
 * 多个平台往返切换？它即能支持多个平台和频道。
 
 **它有什么特性？**
@@ -42,9 +42,7 @@
 
 **桌面端：**
 
-1. 根据自己的系统，下载对应的 release 文件；
-2. 若下载 No_Plugin 版本，则需要先安装 VLC 媒体播放器；
-3. 运行使用。
+...
 
 ### 调试开发
 
@@ -58,11 +56,11 @@
 
 1. 配置好 Python 开发环境，推荐 Python3.6、Python3.7，其他版本未测试。
 
-2. 首次使用时，Fork 后 Clone 该项目，进入 src/real-live-desktop 桌面端项目文件夹，配置 [DebugRun.sh](./src/real-live-desktop/DebugRun.sh)后，然后运行 `DebugRun.sh`。
+2. 首次使用时，Fork 后 Clone 该项目，进入 src/real-live-desktop 桌面端项目文件夹，配置 [FirstDebug.sh](./src/real-live-desktop/FirstDebug.sh)后，然后运行 `FirstDebug.sh`。
 
     ```shell
     git clone -b dev https://github.com/parzulpan/real-live.git
-    ./DebugRun.sh
+    ./FirstDebug.sh
     ```
 
 3. 非首次使用时，即配置好环境后，直接运行 real-live.py 即可。
@@ -73,7 +71,7 @@
 
 **桌面端打包发布：**
 
-1. 确保项目能运行成功后，配置 [ReleaseBuild.sh](./src/real-live-desktop/ReleaseBuild.sh)后，然后运行 `ReleaseBuild.sh`。
+1. 确保项目能运行成功后，进入 _build文件夹 配置 [ReleaseBuild.sh](./src/real-live-desktop/_build/ReleaseBuild.sh)后，然后运行 `ReleaseBuild.sh`。
 
     ```shell
     ./ReleaseBuild.sh

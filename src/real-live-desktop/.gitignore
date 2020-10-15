@@ -4,3 +4,4 @@ __pycache__
 .idea
 vlc
 _build/release
+.DS_Store
