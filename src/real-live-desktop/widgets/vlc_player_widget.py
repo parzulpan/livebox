@@ -257,7 +257,7 @@ class VlcPlayerWidget(QMainWindow):
                 self.media_player.set_mrl(url)
                 self.media_player.play()
                 while True:
-                    if self.vlc_get_state() == vlc.State.Playing:
+                    if self.vlc_get_state() == vlc.State(3):
                         self.media_player_frame.show()
                         PlayerState.MrlType = url_type
                         PlayerState.Load = PlayerEnum.LoadPlaying

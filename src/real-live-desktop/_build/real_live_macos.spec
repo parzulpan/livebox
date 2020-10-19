@@ -45,4 +45,8 @@ app = BUNDLE(exe,
              name=App_Name,
              icon=Icon,
              bundle_identifier=None,
+             info_plist={
+    'NSHighResolutionCapable': True,
+    'NSHumanReadableCopyright': u'Copyright © 2020, parzulpan, All Rights Reserved'
+}
  )
