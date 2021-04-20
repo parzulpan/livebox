@@ -15,9 +15,9 @@ pefile==2019.4.18
 PyExecJS==1.5.1
 PyInstaller==3.6
 pylint==2.6.0
-PyQt5==5.11.3
+PyQt5==5.15.4
 pyqt5-material==1.14.4
-PyQt5-sip==4.19.19
+PyQt5-sip==12.8.1
 PyQt5-stubs==5.14.2.2
 python-dotenv==0.14.0
 python-vlc==3.0.10114
