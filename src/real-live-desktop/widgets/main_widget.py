@@ -17,7 +17,6 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QMenuBar, QMenu, QAction,
     QToolBar, QActionGroup, QFontDialog, QSlider, QLabel, QFileDialog, QWidget
 from PyQt5.QtGui import QKeySequence, QIcon, QDesktopServices, QFont
 from PyQt5.QtCore import Qt, QSize, QUrl
-from PyQt5.QtWebEngineWidgets import QWebEngineView
 
 from utils import states
 from utils.common import *
