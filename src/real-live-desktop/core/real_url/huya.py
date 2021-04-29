@@ -23,20 +23,27 @@ class HuYa:
                               '(KHTML, like Gecko) Chrome/75.0.3770.100 Mobile Safari/537.36 '
             }
             response = requests.get(url=room_url, headers=header).text
+            #print(response)
+
             livelineurl = re.findall(r'liveLineUrl = "([\s\S]*?)";', response)[0]
+
+            print(livelineurl)
+            livelineurl = "https:" + base64.b64decode(livelineurl).decode('utf-8')
+            print(livelineurl)
+
             if livelineurl:
                 if 'replay' in livelineurl:
                     real_url = {
-                        'replay': "https:" + livelineurl,
+                        'replay': livelineurl,
                     }
                 else:
-                    s_url = self.live(livelineurl)
-                    b_url = self.live(livelineurl.replace('_2000', ''))
+                    s_url = HuYa.live(livelineurl)
+                    b_url = s_url.replace('_2000', '')
                     real_url = {
-                        '2000p': "https:" + s_url,
-                        'tx': "https:" + b_url,
-                        'bd': "https:" + b_url.replace('tx.hls.huya.com', 'bd.hls.huya.com'),
-                        'migu-bd': "https:" + b_url.replace('tx.hls.huya.com', 'migu-bd.hls.huya.com'),
+                        '2000p': s_url,
+                        'tx': b_url,
+                        'bd': b_url.replace('tx.hls.huya.com', 'bd.hls.huya.com'),
+                        'migu-bd': b_url.replace('tx.hls.huya.com', 'migu-bd.hls.huya.com'),
                     }
             else:
                 raise Exception('未开播或直播间不存在')
