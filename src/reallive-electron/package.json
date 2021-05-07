@@ -1,0 +1,22 @@
+{
+  "name": "reallive-electron",
+  "version": "1.0.0",
+  "author": "parzulpan",
+  "description": "reallive desktop app for electron",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://github.com/electron/electron-quick-start",
+  "keywords": [
+    "Electron",
+    "quick",
+    "start",
+    "tutorial",
+    "demo"
+  ],
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "^12.0.0"
+  }
+}
