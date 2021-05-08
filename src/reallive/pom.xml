@@ -1,26 +1,234 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-    <groupId>reallive.parzulpan.cn</groupId>
-    <artifactId>reallive</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>reallive</name>
-    <description>聚合服务</description>
-    <packaging>pom</packaging>
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>2.3.2.RELEASE</version>
+    <relativePath/> <!-- lookup parent from repository -->
+  </parent>
 
-    <properties>
-        <java.version>1.8</java.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-    </properties>
+  <groupId>cn.parzulpan.reallive</groupId>
+  <artifactId>reallive</artifactId>
+  <version>2.0.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
 
-    <modules>
-        <module>reallive-common</module>
-        <module>reallive-third-party</module>
-        <module>reallive-admin</module>
-    </modules>
+  <modules>
+    <module>reallive-admin</module>
+    <module>reallive-auth</module>
+    <module>reallive-common</module>
+    <module>reallive-gateway</module>
+    <module>reallive-mbg</module>
+    <module>reallive-monitor</module>
+    <module>reallive-search</module>
+    <module>reallive-test</module>
+    <module>reallive-third-party</module>
+  </modules>
+
+  <properties>
+    <java.version>1.8</java.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <docker.host>https://192.168.65.65:2375</docker.host>
+    <docker.maven.plugin.version>1.2.2</docker.maven.plugin.version>
+    <spring-cloud.version>Hoxton.SR8</spring-cloud.version>
+    <spring-cloud-alibaba.version>2.2.3.RELEASE</spring-cloud-alibaba.version>
+    <spring-boot-devtools.version>2.3.7.RELEASE</spring-boot-devtools.version>
+    <mybatis-plus-boot-starter.version>3.3.2</mybatis-plus-boot-starter.version>
+    <mybatis-plus-generator.version>3.3.2</mybatis-plus-generator.version>
+    <velocity-engine-core.version>2.3</velocity-engine-core.version>
+    <lombok.version>1.18.20</lombok.version>
+    <mysql-connector-java.version>8.0.22</mysql-connector-java.version>
+    <servlet-api.version>2.5</servlet-api.version>
+    <validation-api.version>2.0.1.Final</validation-api.version>
+    <fastjson.version>1.2.75</fastjson.version>
+    <spring-cloud-starter-alicloud-oss.version>2.2.0.RELEASE</spring-cloud-starter-alicloud-oss.version>
+    <dysmsapi20170525.version>2.0.1</dysmsapi20170525.version>
+    <aliyun-java-sdk-dysmsapi.version>1.1.0</aliyun-java-sdk-dysmsapi.version>
+    <admin-starter-server.version>2.2.3</admin-starter-server.version>
+    <knife4j.version>2.0.4</knife4j.version>
+    <reallive-common.version>2.0.0-SNAPSHOT</reallive-common.version>
+    <reallive-mbg.version>2.0.0-SNAPSHOT</reallive-mbg.version>
+  </properties>
+
+  <dependencies>
+    <!--nacos服务注册/发现-->
+    <dependency>
+      <groupId>com.alibaba.cloud</groupId>
+      <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+    </dependency>
+    <!--nacos配置中心-->
+    <dependency>
+      <groupId>com.alibaba.cloud</groupId>
+      <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+    </dependency>
+    <!--openfeign-->
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-openfeign</artifactId>
+    </dependency>
+  </dependencies>
+
+  <dependencyManagement>
+
+    <dependencies>
+      <!--Spring Cloud 相关依赖-->
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <version>${spring-cloud.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!--Spring Cloud Alibaba 相关依赖-->
+      <dependency>
+        <groupId>com.alibaba.cloud</groupId>
+        <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+        <version>${spring-cloud-alibaba.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!--MyBatis-->
+      <dependency>
+        <groupId>com.baomidou</groupId>
+        <artifactId>mybatis-plus-boot-starter</artifactId>
+        <version>${mybatis-plus-boot-starter.version}</version>
+      </dependency>
+      <!--MyBatis 生成器-->
+      <dependency>
+        <groupId>com.baomidou</groupId>
+        <artifactId>mybatis-plus-generator</artifactId>
+        <version>${mybatis-plus-generator.version}</version>
+      </dependency>
+      <!--MyBatis 生成器模板引擎-->
+      <dependency>
+        <groupId>org.apache.velocity</groupId>
+        <artifactId>velocity-engine-core</artifactId>
+        <version>${velocity-engine-core.version}</version>
+      </dependency>
+      <!--lombok-->
+      <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>${lombok.version}</version>
+      </dependency>
+      <!--Mysql数据库驱动-->
+      <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>${mysql-connector-java.version}</version>
+      </dependency>
+      <!--servlet-->
+      <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>servlet-api</artifactId>
+        <version>${servlet-api.version}</version>
+      </dependency>
+      <!--validation-->
+      <dependency>
+        <groupId>javax.validation</groupId>
+        <artifactId>validation-api</artifactId>
+        <version>${validation-api.version}</version>
+      </dependency>
+      <!--fastjson-->
+      <dependency>
+        <groupId>com.alibaba</groupId>
+        <artifactId>fastjson</artifactId>
+        <version>${fastjson.version}</version>
+      </dependency>
+      <!--aliyun oss-->
+      <dependency>
+        <groupId>com.alibaba.cloud</groupId>
+        <artifactId>spring-cloud-starter-alicloud-oss</artifactId>
+        <version>${spring-cloud-starter-alicloud-oss.version}</version>
+      </dependency>
+      <!--aliyun sms-->
+      <dependency>
+        <groupId>com.aliyun</groupId>
+        <artifactId>dysmsapi20170525</artifactId>
+        <version>${dysmsapi20170525.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.aliyun</groupId>
+        <artifactId>aliyun-java-sdk-dysmsapi</artifactId>
+        <version>${aliyun-java-sdk-dysmsapi.version}</version>
+      </dependency>
+      <!--集成SpringBoot Admin监控-->
+      <dependency>
+        <groupId>de.codecentric</groupId>
+        <artifactId>spring-boot-admin-starter-server</artifactId>
+        <version>${admin-starter-server.version}</version>
+      </dependency>
+      <!--Knife4j API文档生产工具-->
+      <dependency>
+        <groupId>com.github.xiaoymin</groupId>
+        <artifactId>knife4j-micro-spring-boot-starter</artifactId>
+        <version>${knife4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.github.xiaoymin</groupId>
+        <artifactId>knife4j-spring-boot-starter</artifactId>
+        <version>${knife4j.version}</version>
+      </dependency>
+      <!--common 模板-->
+      <dependency>
+        <groupId>cn.parzulpan.reallive</groupId>
+        <artifactId>reallive-common</artifactId>
+        <version>${reallive-common.version}</version>
+      </dependency>
+      <!--mbg 模板-->
+      <dependency>
+        <groupId>cn.parzulpan.reallive</groupId>
+        <artifactId>reallive-mbg</artifactId>
+        <version>${reallive-mbg.version}</version>
+      </dependency>
+
+    </dependencies>
+  </dependencyManagement>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+        </plugin>
+        <plugin>
+          <groupId>com.spotify</groupId>
+          <artifactId>docker-maven-plugin</artifactId>
+          <version>${docker.maven.plugin.version}</version>
+          <!--<executions>-->
+          <!--<execution>-->
+          <!--<id>build-image</id>-->
+          <!--<phase>package</phase>-->
+          <!--<goals>-->
+          <!--<goal>build</goal>-->
+          <!--</goals>-->
+          <!--</execution>-->
+          <!--</executions>-->
+          <configuration>
+            <imageName>mall/${project.artifactId}:${project.version}</imageName>
+            <dockerHost>${docker.host}</dockerHost>
+            <baseImage>java:8</baseImage>
+            <entryPoint>["java", "-jar", "-Dspring.profiles.active=prod","/${project.build.finalName}.jar"]</entryPoint>
+            <resources>
+              <resource>
+                <targetPath>/</targetPath>
+                <directory>${project.build.directory}</directory>
+                <include>${project.build.finalName}.jar</include>
+              </resource>
+            </resources>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
+
+
 
 </project>
