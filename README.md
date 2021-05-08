@@ -1,30 +1,31 @@
+<img src="assets/img/logo@128x128.png"></img>
+
 <h1 align="center">RealLive</h1>
 
-简体中文  |  [繁体中文](README-th_CN.md)  |  [English](README-en.md)
+<center>简体中文  |  <a href="README-th_CN.md">繁体中文</a>  |  <a href="README-en.md">English</a></center>
 
-> 一个跨平台的网络媒体聚合应用，支持直播视频，高清电视和广播电台的在线观看或收听。
+> 一个跨平台的网络媒体聚合应用，支持直播视频、高清电视和广播电台的在线观看或收听。
+
+
 
 ## 快速开始
 
-### 后台部分
+| 项目                              | 文档                                     | 演示                                        |
+| --------------------------------- | ---------------------------------------- | ------------------------------------------- |
+| 后台部分                          | [文档](src/reallive/README.md)           | 无                                          |
+| 后台系统前端部分                  | [文档](src/reallive-admin-web/README.md) | [演示](https://admin.reallive.parzulpan.cn) |
+| 客户端部分 桌面端 - Qt 实现       | [文档](src/reallive-qt/README.md)        | 无                                          |
+| 客户端部分 桌面端 - Electron 实现 | [文档](src/reallive-electron/README.md)  | 无                                          |
+| 客户端部分 Web 端                 | 待实现...                                | 待实现...                                   |
+| 客户端部分 App 端                 | 待实现...                                | 待实现...                                   |
 
-* [文档](src/reallive/README.md)
 
-### 后台管理系统前端部分
 
-* [文档](src/reallive-admin-web/README.md)
-* [演示](https://admin.reallive.parzulpan.cn)
+## 项目截图
 
-### 客户端部分
+待更新...
 
-* 桌面端 - Qt 实现
-  * [文档](src/reallive-qt/README.md)
-* 桌面端 - Electron 实现
-  * [文档](src/reallive-electron/README.md)
-* Web 端
-  * 待实现...
-* App 端
-  * 待实现...
+
 
 ## 开源协议
 
@@ -34,6 +35,8 @@
 2. 不能以盈利为目的，不能插入任何形式的广告；
 3. 注明原项目出处；
 4. 继承相同协议。
+
+
 
 ## 免责声明
 
