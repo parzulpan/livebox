@@ -1,8 +1,8 @@
-<img src="assets/img/logo@128x128.png"></img>
+<div align="center"><img src="assets/img/logo@128x128.png"></img></div>
 
 <h1 align="center">RealLive</h1>
 
-<center>简体中文  |  <a href="README-th_CN.md">繁体中文</a>  |  <a href="README-en.md">English</a></center>
+<div align="center">简体中文  |  <a href="README-th_CN.md">繁体中文</a>  |  <a href="README-en.md">English</a></div>
 
 > 一个跨平台的网络媒体聚合应用，支持直播视频、高清电视和广播电台的在线观看或收听。
 
