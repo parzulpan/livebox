@@ -7,7 +7,7 @@ configparser==5.0.0
 future==0.18.2
 idna==2.9
 isort==5.5.1
-Jinja2==2.11.2
+Jinja2==2.11.3
 lazy-object-proxy==1.4.3
 MarkupSafe==1.1.1
 mccabe==0.6.1
