@@ -13,7 +13,7 @@ import sys
 
 from PyQt5.QtCore import QTranslator, QCoreApplication, Qt
 from PyQt5.QtWidgets import QApplication
-from pyqt5_material import apply_stylesheet
+from qt_material import apply_stylesheet
 
 from utils.common import get_theme
 from widgets.main_widget import MainWindow

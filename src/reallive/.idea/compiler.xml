@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="reallive-admin" />
+        <module name="reallive-monitor" />
+        <module name="reallive-test" />
+        <module name="reallive-third-party" />
+        <module name="reallive-auth" />
+        <module name="reallive-search" />
+        <module name="reallive-mbg" />
+        <module name="reallive-user" />
+        <module name="reallive-common" />
+        <module name="reallive-gateway" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="reallive" target="11" />
+      <module name="reallive-admin" target="11" />
+      <module name="reallive-auth" target="11" />
+      <module name="reallive-common" target="11" />
+      <module name="reallive-gateway" target="11" />
+      <module name="reallive-mbg" target="11" />
+      <module name="reallive-monitor" target="11" />
+      <module name="reallive-search" target="11" />
+      <module name="reallive-test" target="11" />
+      <module name="reallive-third-party" target="11" />
+      <module name="reallive-user" target="11" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="reallive-admin" options="-parameters" />
+      <module name="reallive-auth" options="-parameters" />
+      <module name="reallive-common" options="-parameters" />
+      <module name="reallive-gateway" options="-parameters" />
+      <module name="reallive-mbg" options="-parameters" />
+      <module name="reallive-monitor" options="-parameters" />
+      <module name="reallive-search" options="-parameters" />
+      <module name="reallive-test" options="-parameters" />
+      <module name="reallive-third-party" options="-parameters" />
+      <module name="reallive-user" options="-parameters" />
+    </option>
+  </component>
+</project>

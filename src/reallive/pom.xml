@@ -29,10 +29,10 @@
   </modules>
 
   <properties>
-    <java.version>1.8</java.version>
+    <java.version>11</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
     <docker.host>https://192.168.65.65:2375</docker.host>
     <docker.maven.plugin.version>1.2.2</docker.maven.plugin.version>
     <spring-cloud.version>Hoxton.SR8</spring-cloud.version>
@@ -53,6 +53,7 @@
     <knife4j.version>2.0.4</knife4j.version>
     <reallive-common.version>2.0.0-SNAPSHOT</reallive-common.version>
     <reallive-mbg.version>2.0.0-SNAPSHOT</reallive-mbg.version>
+    <rocketmq-version>2.1.1</rocketmq-version>
   </properties>
 
   <dependencies>
@@ -65,6 +66,11 @@
     <dependency>
       <groupId>com.alibaba.cloud</groupId>
       <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.apache.rocketmq/rocketmq-spring-boot-starter -->
+    <dependency>
+      <groupId>org.apache.rocketmq</groupId>
+      <artifactId>rocketmq-spring-boot-starter</artifactId>
     </dependency>
     <!--openfeign-->
     <dependency>
@@ -186,6 +192,11 @@
         <artifactId>reallive-mbg</artifactId>
         <version>${reallive-mbg.version}</version>
       </dependency>
+      <dependency>
+        <groupId>org.apache.rocketmq</groupId>
+        <artifactId>rocketmq-spring-boot-starter</artifactId>
+        <version>${rocketmq-version}</version>
+      </dependency>
 
     </dependencies>
   </dependencyManagement>
@@ -211,7 +222,7 @@
           <!--</execution>-->
           <!--</executions>-->
           <configuration>
-            <imageName>mall/${project.artifactId}:${project.version}</imageName>
+            <imageName>reallive/${project.artifactId}:${project.version}</imageName>
             <dockerHost>${docker.host}</dockerHost>
             <baseImage>java:8</baseImage>
             <entryPoint>["java", "-jar", "-Dspring.profiles.active=prod","/${project.build.finalName}.jar"]</entryPoint>

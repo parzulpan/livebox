@@ -2,7 +2,7 @@
 
 <h1 align="center">RealLive</h1>
 
-<div align="center">简体中文  |  <a href="README-th_CN.md">繁体中文</a>  |  <a href="README-en.md">English</a></div>
+<div align="center">简体中文  |  <a href="README-en.md">English</a></div>
 
 > 一个跨平台的网络媒体聚合应用，支持直播视频、高清电视和广播电台的在线观看或收听。
 
@@ -10,42 +10,21 @@
 
 ## 快速开始
 
-| 项目                              | 文档                                     | 演示                                        |
-| --------------------------------- | ---------------------------------------- | ------------------------------------------- |
-| 后台部分                          | [文档](src/reallive/README.md)           | 无                                          |
-| 后台系统前端部分                  | [文档](src/reallive-admin-web/README.md) | [演示](https://admin.reallive.parzulpan.cn) |
-| 客户端部分 桌面端 - Qt 实现       | [文档](src/reallive-qt/README.md)        | 无                                          |
-| 客户端部分 桌面端 - Electron 实现 | [文档](src/reallive-electron/README.md)  | 无                                          |
-| 客户端部分 Web 端                 | 待实现...                                | 待实现...                                   |
-| 客户端部分 App 端                 | 待实现...                                | 待实现...                                   |
+项目详细说明请[查看文档](http://showdoc.parzulpan.cn/web/#/11/54)
+
+持续更新中，有任何疑问和建议，欢迎加入 QQ 群 [RealLive项目讨论群：893364757](./assets/img/QQ群.jpg) 讨论，或者提 [issue](https://github.com/parzulpan/reallive/issues) 。
+
+
+
+## 技术架构
+
+待更新...
 
 
 
 ## 项目截图
 
 待更新...
-
-
-## 加入项目
-
-该项目目前桌面端基本已经完成，后端正在开发，移动端和 Web 待开发。这个项目将长期维护，有任何好的想法，欢迎大家加入我们或者提出建议。
-
-**项目规划：**
-
-|  |  |
-| --- | --- |
-|  ![项目规划1](./assets/desktop/项目规划1.png) | ![项目规划2](./assets/desktop/项目规划2.png) |
-| ![项目规划3](./assets/desktop/项目规划3.png) | ![项目规划4](./assets/desktop/项目规划4.png) |
-
-**你的收获：**
-
-* 正如项目规划所示，你将体验到真实的团队协作方式和项目开发流程；
-* 增强自己的硬实力，学习更多的技术，不管是前端还是后端，甚至是测试；
-* 增强自己的软实力，开源精神、协调沟通能力、项目推动能力、执行力等都将得到提升。
-
-**反馈渠道：**
-
-持续更新中，有任何疑问和建议，欢迎加入 QQ 群 [RealLive项目讨论群：893364757](./assets/img/QQ群.jpg) 讨论，或者提 [issue](https://github.com/parzulpan/real-live/issues) 。
 
 
 

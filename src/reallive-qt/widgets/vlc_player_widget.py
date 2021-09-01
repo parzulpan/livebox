@@ -22,15 +22,15 @@ from utils.path_helper import PathHelper
 from utils.common import *
 
 
-# # 设置VLC库路径，需在import vlc之前
-# if get_system_platform() == CommonEnum.WindowsPlatform:
-#     os.environ['PYTHON_VLC_MODULE_PATH'] = PathHelper.get_python_vlc_module_path("Windows")
-# elif get_system_platform() == CommonEnum.LinuxPlatform:
-#     os.environ['PYTHON_VLC_MODULE_PATH'] = PathHelper.get_python_vlc_module_path("Linux")
-# elif get_system_platform() == CommonEnum.DarwinPlatform:
-#     os.environ['PYTHON_VLC_MODULE_PATH'] = PathHelper.get_python_vlc_module_path("Darwin")
-# else:
-#     os.environ['PYTHON_VLC_MODULE_PATH'] = PathHelper.get_python_vlc_module_path("Windows")
+# 设置VLC库路径，需在import vlc之前
+if get_system_platform() == CommonEnum.WindowsPlatform:
+    os.environ['PYTHON_VLC_MODULE_PATH'] = PathHelper.get_python_vlc_module_path("Windows")
+elif get_system_platform() == CommonEnum.LinuxPlatform:
+    os.environ['PYTHON_VLC_MODULE_PATH'] = PathHelper.get_python_vlc_module_path("Linux")
+elif get_system_platform() == CommonEnum.DarwinPlatform:
+    os.environ['PYTHON_VLC_MODULE_PATH'] = PathHelper.get_python_vlc_module_path("Darwin")
+else:
+    os.environ['PYTHON_VLC_MODULE_PATH'] = PathHelper.get_python_vlc_module_path("Windows")
 
 import vlc
 
