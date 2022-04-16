@@ -1,0 +1,19 @@
+{
+  "name": "reallive-electron",
+  "version": "1.0.0",
+  "description": "reallive desktop",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://github.com/parzulpan/reallive",
+  "keywords": [
+    "reallive",
+    "Electron"
+  ],
+  "author": "parzulpan",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "electron": "^18.0.3"
+  }
+}
