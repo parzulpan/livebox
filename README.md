@@ -1,4 +1,4 @@
-<div align="center"><img src="assets/img/logo@128x128.png"></img></div>
+<div align="center"><img src="docs/logo@128x128.png"></img></div>
 
 <h1 align="center">RealLive</h1>
 
