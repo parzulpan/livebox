@@ -2,7 +2,7 @@
 
 <h1 align="center">RealLive</h1>
 
-<div align="center">简体中文  |  <a href="README-en.md">English</a></div>
+<div align="center">简体中文  |  <a href="README-EN.md">English</a></div>
 
 > 一个跨平台的网络媒体聚合应用，支持直播视频、高清电视和广播电台的在线观看或收听。
 
@@ -10,22 +10,12 @@
 
 ## 快速开始
 
-项目详细说明请[查看文档](http://showdoc.parzulpan.cn/web/#/11/54)
-
-持续更新中，有任何疑问和建议，欢迎加入 QQ 群 [RealLive项目讨论群：893364757](./assets/img/QQ群.jpg) 讨论，或者提 [issue](https://github.com/parzulpan/reallive/issues) 。
-
-
-
-## 技术架构
-
 待更新...
 
 
-
-## 项目截图
+## 项目架构
 
 待更新...
-
 
 
 ## 开源协议
@@ -36,7 +26,6 @@
 2. 不能以盈利为目的，不能插入任何形式的广告；
 3. 注明原项目出处；
 4. 继承相同协议。
-
 
 
 ## 免责声明

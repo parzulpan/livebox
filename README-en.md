@@ -7,25 +7,14 @@
 > A cross-platform network media aggregation application that supports online viewing or listening of live video, high-definition TV and radio stations.
 
 
-
 ## Quick start
 
-For detailed project description, please [View Document](http://showdoc.parzulpan.cn/web/#/11/59).
-
-In the continuous update, if you have any questions or suggestions, please join the Telegram group [RealLive Discussion Gruop](t.me/GitHubRealLive) to discuss, or raise [issue](https://github.com/parzulpan/reallive/issues).
-
+pending upgrade...
 
 
 ## Technology Architecture
 
 pending upgrade...
-
-
-
-## Project screenshot
-
-pending upgrade...
-
 
 
 ## Open source agreement
@@ -36,7 +25,6 @@ This project complies with [GNU General Public License v3.0](./LICENSE). If you 
 2. Not for the purpose of profit, not to insert any form of advertisement;
 3. Indicate the source of the original project;
 4. Inherit the same agreement.
-
 
 
 ## Disclaimer

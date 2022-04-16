@@ -19,12 +19,14 @@ reallive
 ├── assets -- 项目资源
     ├── sql -- 数据库文件
     ├── config -- 配置中心文件
-├── reallive-admin -- 后台管理服务
-├── reallive-user -- 用户服务
 ├── reallive-common -- 所有服务的公共依赖、工具类及通用代码模块
 ├── reallive-gateway -- API 网关服务
 ├── reallive-monitor -- 监控服务
+├── reallive-user -- 用户服务
 ├── reallive-search -- 检索服务
+├── reallive-msg -- 消息服务
+├── reallive-live -- 直播服务
+├── reallive-admin -- 后台管理服务
 ```
 
 ## 搭建步骤
