@@ -1,0 +1,10 @@
+# Created by .ignore support plugin (hsz.mobi)
+*.pyc
+__pycache__
+.idea
+vlc
+_build/release
+_build/dist
+_build/build
+.DS_Store、
+venv
