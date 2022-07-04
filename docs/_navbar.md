@@ -1,6 +1,0 @@
-* [首页](/)
-* [桌面端](/desktop/README.md)
-* [移动端](/mobile/README.md)
-* [Web 端](/web/README.md)
-* [后端](/admin/README.md)
-* [其他](/)
