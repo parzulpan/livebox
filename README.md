@@ -38,5 +38,5 @@
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=parzulpan/livebox&type=Date)](https://star-history.com/#livebox/livebox&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=parzulpan/livebox&type=Date)](https://star-history.com/#parzulpan/livebox&Date)
 
