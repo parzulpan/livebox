@@ -1,6 +1,6 @@
 <div align="center"><img src="docs/logo@128x128.png"></img></div>
 
-<h1 align="center">RealLive</h1>
+<h1 align="center">LiveBox</h1>
 
 <div align="center">简体中文  |  <a href="README-EN.md">English</a></div>
 
@@ -35,4 +35,8 @@
 
 ## 参考致谢
 * [real-url](https://github.com/wbt5/real-url)
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=parzulpan/livebox&type=Date)](https://star-history.com/#livebox/livebox&Date)
 
