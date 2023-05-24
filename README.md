@@ -2,7 +2,7 @@
 
 <h1 align="center">LiveBox</h1>
 
-<div align="center">简体中文  |  <a href="README-EN.md">English</a></div>
+<div align="center">简体中文  |  <a href="README-en.md">English</a></div>
 
 > 一个跨平台的网络媒体聚合应用，支持直播视频、高清电视和广播电台的在线观看或收听。
 
